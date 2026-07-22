@@ -1,0 +1,233 @@
+#VERSION 0.1 de GastosApp  09/04/2026
+Creamos la aplicación con funciones sencillas:
+- Agregar categoría de gastos
+- Colores y UX/UI agradable para el usuario
+- Botón para eliminar
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 1.1 FINOVA  10/04/2026
+Agregamos nuevas funciones. También le cambiamos el nombre a FINOVA.
+- Gráficas de gastos
+- Calendario para ver gastos por día
+- Nuevo logo
+- Animaciones mínimas
+- Botón de editar en historial
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 2.0 FINOVA  19/04/2026
+Rediseño completo de la arquitectura y nuevas funcionalidades:
+
+Nuevas funciones:
+- Sistema de perfiles (múltiples usuarios en el mismo dispositivo)
+- Presupuesto por categoría con alertas al 90% y 100%
+- Gastos recurrentes (arriendos, suscripciones, servicios)
+- Meta de ahorro mensual con anillo de progreso
+- Límite de gasto diario con barra de progreso
+- Racha de registro de gastos
+- Resumen semanal con barras por día
+- Gráfica de tendencia de los últimos 6 meses
+- Tendencias del mes vs mes anterior con proyección
+- Deudas y préstamos (yo debo / me deben)
+- Recordatorios en el calendario con notificaciones
+- Calculadora integrada
+- Importar extracto bancario en CSV
+- Exportar backup JSON y CSV/Excel
+- Soporte multimoneda (COP, USD, MXN) con tasas en tiempo real
+- Soporte bilingüe (Español / English)
+- Tema claro y oscuro
+- PWA instalable
+- Onboarding para nuevos usuarios
+- Tutorial interactivo
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 2.1 FINOVA  21/04/2026
+Módulo completo de seguridad:
+
+- PIN de 4 dígitos para proteger el acceso
+- Cifrado AES-256-GCM de todos los datos en localStorage
+- Código de respaldo de 8 dígitos en caso de olvidar el PIN
+- Re-cifrado automático al cambiar el PIN
+- Descifrado limpio al desactivar el PIN
+- Bloqueo automático por 5 minutos de inactividad
+- Bloqueo temporal de 1 minuto tras 5 intentos fallidos
+- Bloqueo al enviar la app al background
+- Validación estricta de importación JSON (esquema, tipos, rangos, sanitización)
+- Protección contra CSV Injection al exportar
+- Content Security Policy (CSP) contra scripts externos
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 2.2 FINOVA  23/04/2026
+Bug fixes y mejoras:
+
+- Fix fecha local vs UTC (ya no muestra el día siguiente en Colombia)
+- Fix conversión de moneda con precisión correcta de decimales
+- Textos del módulo PIN traducidos correctamente al cambiar idioma
+- Exportación de archivos funcionando en Android APK (Capacitor Filesystem)
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 2.3 FINOVA  28/04/2026
+Nuevas funcionalidades:
+
+- Foto del recibo adjunta a cada gasto
+  · Tomar foto con cámara o elegir de galería
+  · Compresión automática (máx 800px, 70% calidad)
+  · Miniatura visible en el historial
+  · Vista completa al tocar la imagen
+  · Protegida por el cifrado AES si el PIN está activo
+  · Disponible al agregar y al editar gastos
+
+- Metas de ahorro múltiples
+  · Nombre, emoji, monto objetivo y fecha límite por meta
+  · Abonos manuales con modal dedicado
+  · Proyección automática de cuándo se alcanzará la meta
+  · Barra de progreso con colores según estado
+  · Alerta visual cuando vence en menos de 30 días
+  · Notificación al completar una meta
+  · Ordenadas por urgencia y completitud
+
+- Widget de pantalla de inicio (Android)
+  · Muestra total del mes, límite diario con % y racha
+  · Se actualiza cada vez que el usuario abre la app
+  · Colores dinámicos según estado del límite diario
+  · Tap en el widget abre FINOVA directamente
+
+- Resumen semanal automático
+  · Notificación cada domingo a las 8pm
+  · Incluye total gastado, comparación vs semana anterior
+  · Muestra categoría con más gasto y racha actual
+  · Activable/desactivable desde Configuración
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 2.4 FINOVA  18/05/2026
+Nuevas funcionalidades:
+
+- Backup automático en Google Drive
+  · Login con cuenta Google via OAuth 2.0
+  · Backup automático cada 5 minutos si hay conexión
+  · Backup inmediato cada vez que se agrega un gasto
+  · Restaurar datos desde Drive con un toque
+  · Token se renueva silenciosamente en segundo plano
+  · Datos guardados en carpeta privada (appDataFolder)
+  · Solo el usuario tiene acceso a sus datos
+  · Funciona en web y Android APK
+
+- Rediseño UI fintech
+  · Tipografía Inter profesional
+  · Hero card con gradiente en pantalla inicio
+  · Nav inferior sin emojis, estilo serio
+  · Variables CSS mejoradas con --radius y --font
+
+---------------------------------------------------------------------------------------------------------
+
+#VERSION 3.0 FINOVA  08/06/2026
+Mayor actualización hasta la fecha — IA integrada y rediseño completo:
+
+FINO AI — Asistente financiero inteligente:
+  · Chat conversacional sobre tus finanzas personales
+  · Reporte mensual automático con insights y recomendaciones
+  · OCR de facturas con IA — toma foto y se llenan los datos automáticamente
+  · Análisis predictivo de gastos futuros con Llama 4 Scout
+  · Historial de chat persistente entre sesiones
+  · Botón flotante accesible desde cualquier sección
+  · Powered by Groq + Llama 3.3 70B (gratis para todos los usuarios)
+  · Proxy seguro via Netlify Functions (API key nunca expuesta)
+
+Rediseño premium completo:
+  · Fondo negro puro #080808 con cards sutiles #111111
+  · Iconos Lucide en toda la interfaz (reemplaza emojis)
+  · Splash screen animado al abrir la app
+  · Transiciones suaves entre secciones
+  · Gráficas personalizadas con paleta FINOVA (verdes y teales)
+  · Botón flotante de IA accesible globalmente
+
+Nuevas funcionalidades:
+  · Compartir resumen mensual como imagen (WhatsApp/redes)
+  · Reporte financiero en PDF con análisis de IA
+  · Notificaciones inteligentes de retención
+      - Recordatorio de almuerzo (1pm) con gastos del día
+      - Resumen nocturno personalizado (9pm)
+      - Alerta de racha en peligro (8pm si no registró nada)
+      - Alerta de fin de mes (últimos 3 días)
+      - Se reprograman automáticamente al registrar un gasto
+  · Onboarding simplificado — menos pasos, más directo
+  · Mini navegación en pantalla inicio — tabs de Semana, Límite, Racha y Meta en una sola card
+
+Google Drive mejorado:
+  · Auto-refresh del token OAuth — se renueva automáticamente al expirar sin desconectar Drive
+  · Backup inmediato al agregar un gasto con manejo de token expirado
+  · Sin necesidad de reconectar manualmente cuando expira la sesión
+
+Bug fixes:
+  · Fix bug de perfiles — los gastos ya no se pierden al cambiar de perfil
+  · Fix función T() no definida al iniciar la app
+  · Fix notificaciones no disponibles en APK Android
+  · Fix diseño botón predicciones FINO AI
+  · Fix Google Drive no actualizaba al agregar un gasto
+
+Landing page profesional:
+  · finovanet.netlify.app — página de presentación
+  · finovanet.netlify.app/app — acceso directo a la app
+  · Capturas reales, sección de funciones, precios y CTA
+  · Diseño responsive para móvil y escritorio
+
+Publicación y distribución:
+  · Publicado en Product Hunt
+  · APK disponible en GitHub Releases
+  · Términos y condiciones + Política de privacidad (Ley 1581 Colombia)
+
+---------------------------------------------------------------------------------------------------------
+
+PRÓXIMAS VERSIONES:
+
+#VERSION 3.1 — Exportación avanzada
+- [ ] Exportar metas de ahorro en el backup JSON
+- [ ] Mejorar reporte PDF — portada más visual
+
+#VERSION 3.2 — Mejoras de experiencia
+- [ ] Resumen anual — ver el año completo de gastos
+- [ ] Estados vacíos ilustrados
+- [ ] Swipe para eliminar gastos en historial
+
+#VERSION 4.0 — Sync y comunidad
+- [ ] Modo familiar (compartir perfil entre dispositivos)
+- [ ] Integración directa con bancos colombianos
+- [ ] Apple Watch / WearOS companion app
+- [ ] iOS — App Store
+
+---------------------------------------------------------------------------------------------------------
+
+BUGS CONOCIDOS:
+- Ninguno actualmente ✅
+
+---------------------------------------------------------------------------------------------------------
+
+NOTAS TÉCNICAS:
+- Stack: HTML + CSS + JavaScript vanilla (sin frameworks)
+- Empaquetado: Capacitor 8 para Android APK
+- Almacenamiento: localStorage con cifrado AES-256-GCM opcional
+- Gráficas: Chart.js con paleta personalizada FINOVA
+- Tasas de cambio: Frankfurter API (tiempo real)
+- IA: Groq API (Llama 3.3 70B + Llama 4 Scout Vision) via Netlify Functions
+- OCR: Llama 4 Scout 17B con soporte de imágenes
+- PDF: jsPDF + html2canvas
+- Iconos: Lucide Icons
+- Seguridad: PIN + AES-256-GCM + CSP + biometría nativa
+- Google Drive: OAuth 2.0 con auto-refresh de token
+- Hosting: Netlify (web + serverless functions)
+- Distribución Android: GitHub Releases
+- Compatibilidad: Android 8+, iOS 14+, Chrome, Firefox, Safari
+- PWA: instalable en cualquier dispositivo
+- URLs: finovanet.netlify.app (landing) · finovanet.netlify.app/app (app)
+
+
+API DE DEEPSEEK
+sk-14b297fd026345b397e810efde1c46ec
+
+API DE GROQ
+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
