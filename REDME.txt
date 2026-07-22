@@ -226,8 +226,3 @@ NOTAS TÉCNICAS:
 - URLs: finovanet.netlify.app (landing) · finovanet.netlify.app/app (app)
 
 
-API DE DEEPSEEK
-sk-14b297fd026345b397e810efde1c46ec
-
-API DE GROQ
-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
