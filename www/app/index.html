@@ -6678,9 +6678,20 @@ If you can't read a field, use null.`;
 
     // Limpiar y parsear JSON
     const jsonMatch = texto.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error("No se encontró JSON en la respuesta");
-    const jsonLimpio = jsonMatch[0].trim();
-    const resultado = JSON.parse(jsonLimpio);
+    if (!jsonMatch) {
+      throw new Error(idioma === "es"
+        ? "No se pudo extraer los datos de la factura automáticamente."
+        : "Could not extract receipt data automatically.");
+    }
+
+    let resultado;
+    try {
+      resultado = JSON.parse(jsonMatch[0].trim());
+    } catch(err) {
+      throw new Error(idioma === "es"
+        ? "Estructura de respuesta no válida."
+        : "Invalid response format.");
+    }
 
     // Rellenar campos
     if (resultado.monto) {
@@ -6716,7 +6727,7 @@ If you can't read a field, use null.`;
     console.error("Error analizando factura:", e);
     btn.disabled = false;
     btn.innerHTML = `<i data-lucide="scan-text" style="width:14px;height:14px;"></i> ${idioma === "es" ? "Analizar factura con IA" : "Analyze receipt with AI"}`;
-    toast(idioma === "es" ? "No se pudo leer la factura ❌" : "Could not read receipt ❌", "error");
+    toast(e.message || (idioma === "es" ? "No se pudo leer la factura ❌" : "Could not read receipt ❌"), "warn");
   }
 }
 

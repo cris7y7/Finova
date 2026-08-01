@@ -70,13 +70,12 @@ exports.handler = async function(event, context) {
 
     const modelCandidates = esVision
       ? [
+          "llama-3.2-11b-vision-preview",
+          "llama-3.2-90b-vision-preview",
           "llama-3.2-11b-vision-instruct",
           "llama-3.2-90b-vision-instruct",
           "llama-3.2-11b-vision",
-          "llama-3.2-90b-vision",
-          "llama-3.2-11b-vision-preview",
-          "llama-3.2-90b-vision-preview",
-          "llama-3.3-70b-versatile"
+          "llama-3.2-90b-vision"
         ]
       : ["llama-3.3-70b-versatile"];
 
@@ -84,17 +83,6 @@ exports.handler = async function(event, context) {
     let lastStatus = 500;
 
     for (const model of modelCandidates) {
-      let payloadMessages = body.messages;
-      if (esVision && !model.includes("vision")) {
-        payloadMessages = body.messages.map(m => {
-          if (Array.isArray(m.content)) {
-            const textPart = m.content.find(c => c.type === "text")?.text || "Analiza los datos de la factura";
-            return { role: m.role, content: textPart };
-          }
-          return m;
-        });
-      }
-
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -103,7 +91,7 @@ exports.handler = async function(event, context) {
         },
         body: JSON.stringify({
           model,
-          messages: payloadMessages,
+          messages: body.messages,
           max_tokens: 1500,
           temperature: 0.3
         })
@@ -124,7 +112,10 @@ exports.handler = async function(event, context) {
       }
     }
 
-    const errorMsg = lastData?.error?.message || "No se pudo procesar la imagen con los modelos de Groq";
+    const errorMsg = esVision
+      ? "El servicio de OCR con IA en Groq no está disponible actualmente. Por favor ingresa los datos de la factura manualmente."
+      : (lastData?.error?.message || "No se pudo procesar la solicitud con Groq");
+
     return json(lastStatus, event, { error: errorMsg, detail: lastData });
 
   } catch(e) {
