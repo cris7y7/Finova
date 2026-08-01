@@ -40,6 +40,7 @@ function validarMessages(messages) {
 }
 
 exports.handler = async function(event, context) {
+  console.log("=== FUNCION IA V2 ===");
   const headers = corsHeaders(event);
 
   if (event.httpMethod === "OPTIONS") {
@@ -74,7 +75,7 @@ exports.handler = async function(event, context) {
         "Authorization": `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: esVision ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.3-70b-versatile",
+        model: esVision ? "llama-3.2-11b-vision-preview" : "llama-3.3-70b-versatile",
         messages: body.messages,
         max_tokens: 1500,
         temperature: 0.3

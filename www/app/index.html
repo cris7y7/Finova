@@ -6643,7 +6643,7 @@ Si no puedes leer algún campo, usa null.`
 Use one of these categories: Food, Transport, Entertainment, Services, Health, Education, Clothing, Others.
 If you can't read a field, use null.`;
 
-    const res = await fetch("https://finovanet.netlify.app/.netlify/functions/ia", {
+    const res = await fetch(IA_PROXY_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -6667,6 +6667,11 @@ If you can't read a field, use null.`;
         vision: true
       })
     });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error?.message || errData.error || `HTTP ${res.status}`);
+    }
 
     const data = await res.json();
     const texto = data.choices?.[0]?.message?.content || "";
