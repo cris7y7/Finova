@@ -56,8 +56,10 @@ exports.handler = async function(event, context) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  if (!GROQ_API_KEY) {
-    return json(500, event, { error: "GROQ_API_KEY no configurada" });
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+
+  if (!GROQ_API_KEY && !GEMINI_API_KEY) {
+    return json(500, event, { error: "API Key de IA no configurada" });
   }
 
   try {
@@ -66,6 +68,61 @@ exports.handler = async function(event, context) {
 
     if (!validarMessages(body.messages)) {
       return json(400, event, { error: "Payload de mensajes invalido" });
+    }
+
+    // 1. Intentar visión con Gemini Flash si hay GEMINI_API_KEY disponible
+    if (esVision && GEMINI_API_KEY) {
+      try {
+        const userMsg = body.messages.find(m => m.role === "user");
+        let base64Url = "";
+        let promptText = "";
+
+        if (Array.isArray(userMsg?.content)) {
+          const imgPart = userMsg.content.find(c => c.type === "image_url");
+          const textPart = userMsg.content.find(c => c.type === "text");
+          base64Url = imgPart?.image_url?.url || "";
+          promptText = textPart?.text || "";
+        }
+
+        if (base64Url && promptText) {
+          const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
+          const base64Data = base64Url.split(",")[1];
+
+          const geminiRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [
+                    { inline_data: { mime_type: mimeType, data: base64Data } },
+                    { text: promptText }
+                  ]
+                }],
+                generationConfig: { response_mime_type: "application/json" }
+              })
+            }
+          );
+
+          if (geminiRes.ok) {
+            const geminiData = await geminiRes.json();
+            const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            if (textOut) {
+              return json(200, event, {
+                choices: [{ message: { content: textOut } }]
+              });
+            }
+          }
+        }
+      } catch(errGemini) {
+        console.warn("Gemini Vision failed, falling back to Groq:", errGemini.message);
+      }
+    }
+
+    // 2. Intentar modelos con Groq
+    if (!GROQ_API_KEY) {
+      return json(500, event, { error: "GROQ_API_KEY no configurada para chat" });
     }
 
     const modelCandidates = esVision
@@ -113,7 +170,7 @@ exports.handler = async function(event, context) {
     }
 
     const errorMsg = esVision
-      ? "El servicio de OCR con IA en Groq no está disponible actualmente. Por favor ingresa los datos de la factura manualmente."
+      ? "El servicio de OCR con IA no está disponible actualmente en Groq. Si deseas OCR activo, agrega GEMINI_API_KEY en Netlify."
       : (lastData?.error?.message || "No se pudo procesar la solicitud con Groq");
 
     return json(lastStatus, event, { error: errorMsg, detail: lastData });
