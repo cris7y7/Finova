@@ -6,8 +6,8 @@ Creamos la aplicación con funciones sencillas:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 1.1 NOVYRA  10/04/2026
-Agregamos nuevas funciones. También le cambiamos el nombre a NOVYRA.
+#VERSION 1.1 NOVIRA  10/04/2026
+Agregamos nuevas funciones. También le cambiamos el nombre a NOVIRA.
 - Gráficas de gastos
 - Calendario para ver gastos por día
 - Nuevo logo
@@ -16,7 +16,7 @@ Agregamos nuevas funciones. También le cambiamos el nombre a NOVYRA.
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.0 NOVYRA  19/04/2026
+#VERSION 2.0 NOVIRA  19/04/2026
 Rediseño completo de la arquitectura y nuevas funcionalidades:
 
 Nuevas funciones:
@@ -43,7 +43,7 @@ Nuevas funciones:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.1 NOVYRA  21/04/2026
+#VERSION 2.1 NOVIRA  21/04/2026
 Módulo completo de seguridad:
 
 - PIN de 4 dígitos para proteger el acceso
@@ -60,7 +60,7 @@ Módulo completo de seguridad:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.2 NOVYRA  23/04/2026
+#VERSION 2.2 NOVIRA  23/04/2026
 Bug fixes y mejoras:
 
 - Fix fecha local vs UTC (ya no muestra el día siguiente en Colombia)
@@ -70,7 +70,7 @@ Bug fixes y mejoras:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.3 NOVYRA  28/04/2026
+#VERSION 2.3 NOVIRA  28/04/2026
 Nuevas funcionalidades:
 
 - Foto del recibo adjunta a cada gasto
@@ -94,7 +94,7 @@ Nuevas funcionalidades:
   · Muestra total del mes, límite diario con % y racha
   · Se actualiza cada vez que el usuario abre la app
   · Colores dinámicos según estado del límite diario
-  · Tap en el widget abre NOVYRA directamente
+  · Tap en el widget abre NOVIRA directamente
 
 - Resumen semanal automático
   · Notificación cada domingo a las 8pm
@@ -104,7 +104,7 @@ Nuevas funcionalidades:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.4 NOVYRA  18/05/2026
+#VERSION 2.4 NOVIRA  18/05/2026
 Nuevas funcionalidades:
 
 - Backup automático en Google Drive
@@ -125,10 +125,10 @@ Nuevas funcionalidades:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 3.0 NOVYRA  08/06/2026
+#VERSION 3.0 NOVIRA  08/06/2026
 Mayor actualización hasta la fecha — IA integrada y rediseño completo:
 
-NOVY AI — Asistente financiero inteligente:
+NOVI AI — Asistente financiero inteligente:
   · Chat conversacional sobre tus finanzas personales
   · Reporte mensual automático con insights y recomendaciones
   · OCR de facturas con IA — toma foto y se llenan los datos automáticamente
@@ -143,7 +143,7 @@ Rediseño premium completo:
   · Iconos Lucide en toda la interfaz (reemplaza emojis)
   · Splash screen animado al abrir la app
   · Transiciones suaves entre secciones
-  · Gráficas personalizadas con paleta NOVYRA (verdes y teales)
+  · Gráficas personalizadas con paleta NOVIRA (verdes y teales)
   · Botón flotante de IA accesible globalmente
 
 Nuevas funcionalidades:
@@ -167,7 +167,7 @@ Bug fixes:
   · Fix bug de perfiles — los gastos ya no se pierden al cambiar de perfil
   · Fix función T() no definida al iniciar la app
   · Fix notificaciones no disponibles en APK Android
-  · Fix diseño botón predicciones NOVY AI
+  · Fix diseño botón predicciones NOVI AI
   · Fix Google Drive no actualizaba al agregar un gasto
 
 Landing page profesional:
@@ -211,7 +211,7 @@ NOTAS TÉCNICAS:
 - Stack: HTML + CSS + JavaScript vanilla (sin frameworks)
 - Empaquetado: Capacitor 8 para Android APK
 - Almacenamiento: localStorage con cifrado AES-256-GCM opcional
-- Gráficas: Chart.js con paleta personalizada NOVYRA
+- Gráficas: Chart.js con paleta personalizada NOVIRA
 - Tasas de cambio: Frankfurter API (tiempo real)
 - IA: Groq API (Llama 3.3 70B + Llama 4 Scout Vision) via Netlify Functions
 - OCR: Llama 4 Scout 17B con soporte de imágenes
