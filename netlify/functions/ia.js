@@ -75,7 +75,7 @@ exports.handler = async function(event, context) {
         "Authorization": `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: esVision ? "llama-3.2-11b-vision-preview" : "llama-3.3-70b-versatile",
+        model: esVision ? "llama-3.2-90b-vision-preview" : "llama-3.3-70b-versatile",
         messages: body.messages,
         max_tokens: 1500,
         temperature: 0.3
