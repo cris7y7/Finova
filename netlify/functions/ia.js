@@ -68,23 +68,64 @@ exports.handler = async function(event, context) {
       return json(400, event, { error: "Payload de mensajes invalido" });
     }
 
-    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: esVision ? "llama-3.2-90b-vision-preview" : "llama-3.3-70b-versatile",
-        messages: body.messages,
-        max_tokens: 1500,
-        temperature: 0.3
-      })
-    });
+    const modelCandidates = esVision
+      ? [
+          "llama-3.2-11b-vision-instruct",
+          "llama-3.2-90b-vision-instruct",
+          "llama-3.2-11b-vision",
+          "llama-3.2-90b-vision",
+          "llama-3.2-11b-vision-preview",
+          "llama-3.2-90b-vision-preview",
+          "llama-3.3-70b-versatile"
+        ]
+      : ["llama-3.3-70b-versatile"];
 
-    const data = await res.json();
+    let lastData = null;
+    let lastStatus = 500;
 
-    return json(res.ok ? 200 : res.status, event, data);
+    for (const model of modelCandidates) {
+      let payloadMessages = body.messages;
+      if (esVision && !model.includes("vision")) {
+        payloadMessages = body.messages.map(m => {
+          if (Array.isArray(m.content)) {
+            const textPart = m.content.find(c => c.type === "text")?.text || "Analiza los datos de la factura";
+            return { role: m.role, content: textPart };
+          }
+          return m;
+        });
+      }
+
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          messages: payloadMessages,
+          max_tokens: 1500,
+          temperature: 0.3
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        return json(200, event, data);
+      }
+
+      lastData = data;
+      lastStatus = res.status;
+      console.warn(`Groq model ${model} failed (${res.status}):`, data.error?.message);
+
+      if (res.status !== 400 && res.status !== 404) {
+        break;
+      }
+    }
+
+    const errorMsg = lastData?.error?.message || "No se pudo procesar la imagen con los modelos de Groq";
+    return json(lastStatus, event, { error: errorMsg, detail: lastData });
 
   } catch(e) {
     return json(500, event, { error: e.message });
