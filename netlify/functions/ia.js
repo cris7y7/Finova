@@ -1,4 +1,4 @@
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "https://novyranet.netlify.app,https://finovanet.netlify.app,https://localhost,http://localhost,http://localhost:8888,http://localhost:5500")
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "https://novyranet.netlify.app,https://localhost,http://localhost,http://localhost:8888,http://localhost:5500")
   .split(",")
   .map(origin => origin.trim())
   .filter(Boolean);

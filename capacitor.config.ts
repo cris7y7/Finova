@@ -1,15 +1,15 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.finova.app',
-  appName: 'FINOVA',
+  appId: 'com.novyra.app',
+  appName: 'NOVYRA',
   webDir: 'www/app',
   server: {
     androidScheme: 'https'
   },
   plugins: {
     LocalNotifications: {
-      smallIcon: 'ic_stat_finova',
+      smallIcon: 'ic_stat_novyra',
       iconColor: '#1ea84e'
     }
   }

@@ -6,7 +6,7 @@
   default-src 'self';
   script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://accounts.google.com https://unpkg.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  connect-src 'self' https://api.frankfurter.app https://generativelanguage.googleapis.com https://api.anthropic.com https://cdn.jsdelivr.net https://accounts.google.com https://www.googleapis.com https://oauth2.googleapis.com https://api.deepseek.com https://api.groq.com https://finovanet.netlify.app https://unpkg.com https://cdn.jsdelivr.net https://cdn.jsdelivr.net;
+  connect-src 'self' https://api.frankfurter.app https://generativelanguage.googleapis.com https://api.anthropic.com https://cdn.jsdelivr.net https://accounts.google.com https://www.googleapis.com https://oauth2.googleapis.com https://api.deepseek.com https://api.groq.com https://novyranet.netlify.app https://unpkg.com https://cdn.jsdelivr.net https://cdn.jsdelivr.net;
   img-src 'self' data: blob: https://www.google.com;
   font-src 'self' https://fonts.gstatic.com;
   object-src 'none';
@@ -23,8 +23,8 @@
 <meta name="theme-color" content="#020617">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="FINOVA">
-<title>FINOVA</title>
+<meta name="apple-mobile-web-app-title" content="NOVYRA">
+<title>NOVYRA</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -785,7 +785,7 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
 .gasto-foto{width:42px;height:42px;border-radius:8px;object-fit:cover;cursor:pointer;border:1px solid var(--border);flex-shrink:0;}
 
 
-/* ══ IA FINOVA ══ */
+/* ══ IA NOVYRA ══ */
 .ia-msg{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:90%;}
 .ia-msg.usuario{background:rgba(30,168,78,.1);border:1px solid rgba(30,168,78,.2);color:var(--text);align-self:flex-end;margin-left:auto;}
 .ia-msg.asistente{background:var(--card2);border:1px solid var(--border);color:var(--text2);align-self:flex-start;}
@@ -846,7 +846,7 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
 
 <!-- PIN LOCK -->
 <div id="pinLock" style="display:none;">
-  <div class="pin-logo">FINOVA</div>
+  <div class="pin-logo">NOVYRA</div>
   <div class="pin-titulo" id="pinTitulo">Ingresa tu PIN</div>
   <div class="pin-sub"    id="pinSub">Accede a tus finanzas de forma segura</div>
   <div class="pin-dots">
@@ -1034,7 +1034,7 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
 
 <div class="logo-container">
   <div class="logo-wrap">
-    <h1 class="logo" onclick="toggleQuick()" style="cursor:pointer;">FINOVA</h1>
+    <h1 class="logo" onclick="toggleQuick()" style="cursor:pointer;">NOVYRA</h1>
     <p class="sub" id="L-sub"></p>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
@@ -1176,7 +1176,7 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
   <!-- Card compartir (oculta, para captura) -->
   <div id="shareCard" style="position:fixed;left:-9999px;top:0;width:380px;background:#080808;border-radius:24px;padding:28px 24px;font-family:'Inter',sans-serif;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-      <div style="font-size:28px;font-weight:900;letter-spacing:3px;color:#1ea84e;">FINOVA</div>
+      <div style="font-size:28px;font-weight:900;letter-spacing:3px;color:#1ea84e;">NOVYRA</div>
       <div style="font-size:11px;color:#3d4d5c;font-weight:600;" id="shareCardFecha"></div>
     </div>
     <div style="font-size:11px;color:#3d4d5c;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">Resumen del mes</div>
@@ -1201,7 +1201,7 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);">
-      <div style="font-size:11px;color:#3d4d5c;">finovanet.netlify.app</div>
+      <div style="font-size:11px;color:#3d4d5c;">novyranet.netlify.app</div>
       <div style="font-size:11px;color:#1ea84e;font-weight:700;">Mejora tu vida 💚</div>
     </div>
   </div>
@@ -1681,12 +1681,12 @@ body.light .cal-rojo{background:#fee2e2;color:#7f1d1d;}
 
 <!-- FOOTER -->
 <footer style="text-align:center;padding:20px 16px 100px;border-top:1px solid var(--border);margin-top:8px;">
-  <a id="btnDescargarApk" href="https://github.com/cris7y7/Finova/releases/download/v3.0.0/FINOVA-v3.0.apk" 
+  <a id="btnDescargarApk" href="https://github.com/cris7y7/Novyra/releases/download/v3.0.0/NOVYRA-v3.0.apk" 
      download
      style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;margin-bottom:16px;box-shadow:0 4px 14px rgba(34,197,94,.3);">
     <i data-lucide="download" style="width:16px;height:16px;"></i> Descargar para Android
   </a>
-  <p style="font-size:12px;color:var(--hint);margin:0 0 8px;">© 2026 FINOVA · Cristian Gil</p>
+  <p style="font-size:12px;color:var(--hint);margin:0 0 8px;">© 2026 NOVYRA · Cristian Gil</p>
   <div style="display:flex;justify-content:center;gap:16px;">
     <span onclick="abrirModal('terminos')" style="font-size:12px;color:var(--verde);cursor:pointer;text-decoration:underline;">Términos y condiciones</span>
     <span onclick="abrirModal('privacidad')" style="font-size:12px;color:var(--verde);cursor:pointer;text-decoration:underline;">Política de privacidad</span>
@@ -1710,14 +1710,14 @@ const legalTextos = {
   terminos: {
     titulo: "Términos y condiciones",
     contenido: `<p><strong>Última actualización: Mayo 2026</strong></p>
-    <p>Al usar FINOVA, aceptas estos términos. Si no estás de acuerdo, por favor no uses la app.</p>
-    <p><strong>1. Uso de la app</strong><br>FINOVA es una herramienta gratuita de gestión de finanzas
+    <p>Al usar NOVYRA, aceptas estos términos. Si no estás de acuerdo, por favor no uses la app.</p>
+    <p><strong>1. Uso de la app</strong><br>NOVYRA es una herramienta gratuita de gestión de finanzas
     personales. Puedes usarla libremente para registrar tus gastos, presupuestos y metas de ahorro.
     Para usar la app debes ser mayor de 18 años, o contar con autorización de tu representante legal
     si eres menor de edad.</p>
-    <p><strong>2. Propiedad intelectual</strong><br>FINOVA y todo su contenido son propiedad de
+    <p><strong>2. Propiedad intelectual</strong><br>NOVYRA y todo su contenido son propiedad de
     Cristian Gil. Queda prohibida su copia, distribución o modificación sin autorización.</p>
-    <p><strong>3. Limitación de responsabilidad</strong><br>FINOVA no es un servicio financiero
+    <p><strong>3. Limitación de responsabilidad</strong><br>NOVYRA no es un servicio financiero
     profesional. La información mostrada es solo de referencia personal. Cristian Gil no se hace
     responsable de decisiones financieras tomadas con base en la app. Tampoco somos responsables
     por pérdida de datos ocasionada por desinstalación, fallo del dispositivo o eliminación
@@ -1727,20 +1727,20 @@ const legalTextos = {
     conformidad con la Ley 1480 de 2011 (Estatuto del Consumidor).</p>
     <p><strong>5. Cambios</strong><br>Nos reservamos el derecho de modificar estos términos en
     cualquier momento. Los cambios serán notificados mediante actualización de la app.</p>
-    <p><strong>Contacto:</strong> finovausers@gmail.com</p>`
+    <p><strong>Contacto:</strong> novyrausers@gmail.com</p>`
   },
   privacidad: {
     titulo: "Política de privacidad",
     contenido: `<p><strong>Última actualización: Mayo 2026</strong></p>
-    <p>En FINOVA respetamos tu privacidad. Esta política describe cómo tratamos tu información,
+    <p>En NOVYRA respetamos tu privacidad. Esta política describe cómo tratamos tu información,
     en cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia.</p>
-    <p><strong>1. Datos que recopilamos</strong><br>FINOVA no recopila ni transmite tus datos
+    <p><strong>1. Datos que recopilamos</strong><br>NOVYRA no recopila ni transmite tus datos
     personales a servidores externos. Toda la información que ingresas se almacena localmente
     en tu dispositivo. La app puede registrar información técnica anónima del dispositivo
     (versión del SO, identificador de instalación) únicamente para mejorar la estabilidad
     de la app. Esta información no permite tu identificación personal.</p>
     <p><strong>2. Google Drive</strong><br>Si activas el respaldo en Google Drive, tus datos se
-    sincronizan con tu cuenta personal de Google. FINOVA no tiene acceso a esa información;
+    sincronizan con tu cuenta personal de Google. NOVYRA no tiene acceso a esa información;
     la sincronización ocurre directamente entre tu dispositivo y Google, sujeta a las
     condiciones de privacidad de Google LLC.</p>
     <p><strong>3. Seguridad</strong><br>Tus datos pueden protegerse con PIN y cifrado AES-256
@@ -1750,16 +1750,16 @@ const legalTextos = {
     prueba de la autorización otorgada para su tratamiento; (c) revocar la autorización y/o
     solicitar la supresión de tus datos; (d) presentar quejas ante la Superintendencia de
     Industria y Comercio (SIC). Para ejercer estos derechos contáctanos en
-    finovausers@gmail.com. Responderemos en máximo 15 días hábiles.</p>
-    <p><strong>5. Menores de edad</strong><br>FINOVA no está dirigida a menores de 18 años.
+    novyrausers@gmail.com. Responderemos en máximo 15 días hábiles.</p>
+    <p><strong>5. Menores de edad</strong><br>NOVYRA no está dirigida a menores de 18 años.
     El uso por parte de menores requiere supervisión y autorización de su representante legal.</p>
-    <p><strong>6. Terceros</strong><br>FINOVA no comparte, vende ni transfiere tus datos a
+    <p><strong>6. Terceros</strong><br>NOVYRA no comparte, vende ni transfiere tus datos a
     terceros, salvo los casos descritos en la sección de Google Drive o los exigidos por ley.</p>
     <p><strong>7. Cambios a esta política</strong><br>Podemos actualizar esta política en cualquier
     momento. Te notificaremos sobre cambios significativos mediante actualización en la app.
     El uso continuado implica tu aceptación.</p>
-    <p><strong>Contacto:</strong> finovausers@gmail.com</p>
-    <p>© 2026 FINOVA. Todos los derechos reservados.</p>`
+    <p><strong>Contacto:</strong> novyrausers@gmail.com</p>
+    <p>© 2026 NOVYRA. Todos los derechos reservados.</p>`
   }
 };
 
@@ -1787,7 +1787,7 @@ function cerrarModalLegal() {
   <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);">
     <div style="display:flex;align-items:center;gap:8px;">
       <i data-lucide="bot" style="width:18px;height:18px;color:#2db85a;"></i>
-      <span style="font-size:14px;font-weight:800;color:#e8edf2;">FINO AI</span>
+      <span style="font-size:14px;font-weight:800;color:#e8edf2;">NOVY AI</span>
     </div>
     <button onclick="toggleIAModal()" style="background:rgba(255,255,255,0.06);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;color:#7a8a99;display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-shadow:none;">✕</button>
   </div>
@@ -2073,7 +2073,7 @@ function iaChatKeydown2(e) {
       background:linear-gradient(90deg,#1ea84e,#2db85a);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
       background-clip:text;
-    ">FINOVA</div>
+    ">NOVYRA</div>
     <!-- Tagline -->
     <div style="font-size:13px;color:#3d4d5c;font-weight:500;letter-spacing:1px;">
       Mejora tu vida
@@ -2174,17 +2174,17 @@ es:{
   // ETIQUETAS
   etiquetaLabel:"Etiqueta (opcional)",                  // FIX: antes faltaba
   // ONBOARDING
-  ob0Titulo:"Bienvenido a FINOVA",ob0Desc:"Tu app de finanzas personales. Registra gastos, controla tu presupuesto y cumple tus metas.",ob0Btn:"Empezar",
+  ob0Titulo:"Bienvenido a NOVYRA",ob0Desc:"Tu app de finanzas personales. Registra gastos, controla tu presupuesto y cumple tus metas.",ob0Btn:"Empezar",
   ob1Titulo:"¿Cuál es tu ingreso mensual?",ob1Desc:"Te ayudamos a calcular cuánto puedes gastar y ahorrar. Puedes cambiarlo después.",ob1Btn:"Continuar",ob1Skip:"Saltar",
   ob2Titulo:"Elige tu moneda",ob2Desc:"Todos tus gastos se mostrarán en esta moneda.",ob2Btn:"Continuar",
   ob3Titulo:"Recordatorios de pagos 🔔",ob3Desc:"Toca cualquier día en el calendario para agregar recordatorios de pagos.",ob3Btn:"¡Genial!",ob3Skip:"Siguiente",
-  ob4Titulo:"¡Todo listo! 🎉",ob4Desc:"¿Quieres ver un tutorial de cómo funciona FINOVA?",ob4Btn:"Ver tutorial 📖",ob4Skip:"Empezar →",
+  ob4Titulo:"¡Todo listo! 🎉",ob4Desc:"¿Quieres ver un tutorial de cómo funciona NOVYRA?",ob4Btn:"Ver tutorial 📖",ob4Skip:"Empezar →",
   // TUTORIAL
   tutTitle:"📖 Tutorial",tutBtn:"📖 Ver tutorial",verTutorial:"Ver tutorial",
   tut:[
     {icon:"🏠",titulo:"Pantalla principal",desc:"Registra gastos con monto, categoría y nota. Usa la calculadora integrada. Ve el resumen semanal y el límite diario."},
     {icon:"📋",titulo:"Historial",desc:"Todos tus gastos ordenados por fecha. Busca por texto o monto, filtra por mes o categoría, y ordena como prefieras."},
-    {icon:"📊",titulo:"Presupuesto",desc:"Define límites mensuales por categoría. FINOVA te alerta al 90% y al 100% del límite."},
+    {icon:"📊",titulo:"Presupuesto",desc:"Define límites mensuales por categoría. NOVYRA te alerta al 90% y al 100% del límite."},
     {icon:"📈",titulo:"Tendencias",desc:"Compara gastos con el mes anterior, ve la proyección al fin de mes y analiza la tendencia de los últimos 6 meses."},
     {icon:"📅",titulo:"Calendario con recordatorios",desc:"Toca cualquier día para ver gastos o agregar recordatorios. Un punto amarillo indica días con recordatorio."},
     {icon:"🎯",titulo:"Meta y límite diario",desc:"Define tu ingreso, meta de ahorro y límite de gasto por día. El anillo y la barra muestran tu progreso en tiempo real."},
@@ -2192,7 +2192,7 @@ es:{
   ],
   // CSV
   csvTitle:"🏦 Importar extracto del banco",
-  csvDesc:"Importa un CSV de tu banco. FINOVA detecta fecha, monto y descripción automáticamente.",
+  csvDesc:"Importa un CSV de tu banco. NOVYRA detecta fecha, monto y descripción automáticamente.",
   csvImportar:"✅ Importar gastos detectados",
   csvPreviewTit:"Vista previa:",
   csvOk:(n)=>`${n} gastos importados ✅`,csvVacio:"No se detectaron gastos válidos",csvError:"Error al leer el archivo",
@@ -2200,20 +2200,20 @@ es:{
   notifTitle:"🔔 Notificaciones",btnActivarNotif:"🔔 Activar notificaciones",btnProbarNotif:"🧪 Probar",
   notifActivas:"Notificaciones activas ✅",notifInactivas:"No activadas",
   notifBloqueadas:"Bloqueadas — actívalas en Ajustes",notifNoSop:"No disponibles",
-  notifBienvenidaTitulo:"FINOVA activado 🎉",notifBienvenidaCuerpo:"Recibirás alertas de presupuesto y ahorro.",
-  notifPruebaTitulo:"FINOVA — Prueba 🧪",notifPruebaCuerpo:"Las notificaciones funcionan correctamente.",
+  notifBienvenidaTitulo:"NOVYRA activado 🎉",notifBienvenidaCuerpo:"Recibirás alertas de presupuesto y ahorro.",
+  notifPruebaTitulo:"NOVYRA — Prueba 🧪",notifPruebaCuerpo:"Las notificaciones funcionan correctamente.",
   recuerdoTitle:"⏰ Recordatorios",recuerdoHoraLabel:"Recordatorio diario a hora fija",recuerdoHoraBtn:"Guardar",
   recuerdo24hLabel:"Alerta si no registras en 24h",recuerdo24hOn:"Activado",recuerdo24hOff:"Desactivado",
   recuerdoHoraActivo:(h)=>`Activo · todos los días a las ${h}`,recuerdoHoraInactivo:"No configurado",
   recuerdo24hActivoEstado:"Activo · alerta si no registras en 24h",recuerdo24hInactivo:"Desactivado",
-  recuerdoTituloSinGastos:"📝 ¿Ya registraste tus gastos?",recuerdoCuerpoSinGastos:"No has registrado nada hoy. ¡Abre FINOVA!",
+  recuerdoTituloSinGastos:"📝 ¿Ya registraste tus gastos?",recuerdoCuerpoSinGastos:"No has registrado nada hoy. ¡Abre NOVYRA!",
   recuerdoTituloConGastos:"📊 Resumen del día",recuerdoCuerpoConGastos:(t)=>`Hoy gastaste ${t}. ¡Buen trabajo!`,
   recuerdo24hTitulo:"⏰ Llevas 24h sin registrar",recuerdo24hCuerpo:"No has registrado ningún gasto en las últimas 24 horas.",
   peligroTitle:"⚠️ Zona de peligro",resetBtn:"🗑️ Borrar todos los datos",
   resetConfirm:"¿Seguro? Se borrarán TODOS los datos del perfil actual.",
   calTip:"💡 Toca cualquier día para ver gastos o agregar un recordatorio de pago.",
   sinRecMes:"Sin recordatorios este mes.",
-  recNotifTitulo:"🔔 Recordatorio FINOVA",recNotifCuerpo:(t)=>`Hoy: ${t}`,
+  recNotifTitulo:"🔔 Recordatorio NOVYRA",recNotifCuerpo:(t)=>`Hoy: ${t}`,
   recGuardadoOk:"Recordatorio guardado 🔔",recGuardadoFail:"Escribe un título",recElimOk:"Recordatorio eliminado",
   recFormLabel:"+ Nuevo recordatorio",recGuardarBtn:"🔔 Guardar recordatorio",
   recTipoPago:"💳 Pago",recTipoNota:"📝 Nota",recTipoMeta:"🎯 Meta",
@@ -2246,7 +2246,7 @@ es:{
   hIA: "Análisis IA",
   navIA: "IA",
   btnReporteIA: "🤖 Generar reporte del mes",
-  iaKeyDesc: "FINOVA AI usa el servicio seguro configurado para la app.",
+  iaKeyDesc: "NOVYRA AI usa el servicio seguro configurado para la app.",
 
     // Español
   hMetas: "Metas de ahorro",
@@ -2283,9 +2283,9 @@ es:{
   fnFrecQuincenal: "Quincenal",
   fnFrecSemanal: "Semanal",
   fnBtnAgregarIngreso: "+ Agregar ingreso",
-  ob_titulo_0: "Bienvenido a FINOVA",
+  ob_titulo_0: "Bienvenido a NOVYRA",
   ob_desc_0: "Tu asistente financiero con IA.",
-  ob_feat1_title: "FINO AI",
+  ob_feat1_title: "NOVY AI",
   ob_feat1_desc: "Chatea con tu asistente financiero",
   ob_feat2_title: "Seguridad total",
   ob_feat2_desc: "Cifrado AES-256 + biometría",
@@ -2294,7 +2294,7 @@ es:{
   ob_btn_0: "Empezar →",
   ob_titulo_1: "¿Cuál es tu moneda?",
   ob_desc_1: "Puedes cambiarla después en configuración.",
-  ob_btn_1: "Ir a FINOVA →",
+  ob_btn_1: "Ir a NOVYRA →",
   ob_skip_1: "Saltar por ahora",
 
 },
@@ -2354,42 +2354,42 @@ en:{
   limiteDiarioNoConf:"No daily limit configured.",
   ordFecha:"Date",ordMonto:"Amount",ordCat:"Category",
   etiquetaLabel:"Tag (optional)",
-  ob0Titulo:"Welcome to FINOVA",ob0Desc:"Your personal finance app. Track expenses, control your budget and reach your savings goals.",ob0Btn:"Get started",
+  ob0Titulo:"Welcome to NOVYRA",ob0Desc:"Your personal finance app. Track expenses, control your budget and reach your savings goals.",ob0Btn:"Get started",
   ob1Titulo:"What's your monthly income?",ob1Desc:"We'll help you track how much you can spend and save. You can change it later.",ob1Btn:"Continue",ob1Skip:"Skip",
   ob2Titulo:"Choose your currency",ob2Desc:"All your expenses will be shown in this currency.",ob2Btn:"Continue",
   ob3Titulo:"Payment reminders 🔔",ob3Desc:"Tap any day in the calendar to add payment reminders.",ob3Btn:"Got it!",ob3Skip:"Next",
-  ob4Titulo:"You're all set! 🎉",ob4Desc:"Would you like a quick tutorial on how FINOVA works?",ob4Btn:"View tutorial 📖",ob4Skip:"Start →",
+  ob4Titulo:"You're all set! 🎉",ob4Desc:"Would you like a quick tutorial on how NOVYRA works?",ob4Btn:"View tutorial 📖",ob4Skip:"Start →",
   tutTitle:"📖 Tutorial",tutBtn:"📖 View tutorial",verTutorial:"View tutorial",
   tut:[
     {icon:"🏠",titulo:"Home screen",desc:"Log expenses with amount, category and note. Use the built-in calculator. View the weekly summary and daily limit."},
     {icon:"📋",titulo:"History",desc:"All expenses sorted by date. Search by text or amount, filter by month or category, sort as you prefer."},
-    {icon:"📊",titulo:"Budget",desc:"Set monthly limits by category. FINOVA alerts you at 90% and 100% of the limit."},
+    {icon:"📊",titulo:"Budget",desc:"Set monthly limits by category. NOVYRA alerts you at 90% and 100% of the limit."},
     {icon:"📈",titulo:"Trends",desc:"Compare spending with the previous month, see end-of-month projection and 6-month trend."},
     {icon:"📅",titulo:"Calendar with reminders",desc:"Tap any day to view expenses or add reminders. A yellow dot marks days with reminders."},
     {icon:"🎯",titulo:"Goal & daily limit",desc:"Set income, savings goal and daily spending limit. The ring and bar show your real-time progress."},
     {icon:"⚙️",titulo:"Settings",desc:"Change language, currency, theme, enable notifications, import bank CSV, export data and manage profiles."},
   ],
   csvTitle:"🏦 Import bank statement",
-  csvDesc:"Import a CSV from your bank. FINOVA auto-detects date, amount and description.",
+  csvDesc:"Import a CSV from your bank. NOVYRA auto-detects date, amount and description.",
   csvImportar:"✅ Import detected expenses",csvPreviewTit:"Preview:",
   csvOk:(n)=>`${n} expenses imported ✅`,csvVacio:"No valid expenses detected",csvError:"Error reading file",
   notifTitle:"🔔 Notifications",btnActivarNotif:"🔔 Enable notifications",btnProbarNotif:"🧪 Test",
   notifActivas:"Notifications enabled ✅",notifInactivas:"Not enabled",
   notifBloqueadas:"Blocked — enable in Settings",notifNoSop:"Not available",
-  notifBienvenidaTitulo:"FINOVA enabled 🎉",notifBienvenidaCuerpo:"You'll receive budget and savings alerts.",
-  notifPruebaTitulo:"FINOVA — Test 🧪",notifPruebaCuerpo:"Notifications are working correctly.",
+  notifBienvenidaTitulo:"NOVYRA enabled 🎉",notifBienvenidaCuerpo:"You'll receive budget and savings alerts.",
+  notifPruebaTitulo:"NOVYRA — Test 🧪",notifPruebaCuerpo:"Notifications are working correctly.",
   recuerdoTitle:"⏰ Reminders",recuerdoHoraLabel:"Daily reminder at fixed time",recuerdoHoraBtn:"Save",
   recuerdo24hLabel:"Alert if no expenses in 24h",recuerdo24hOn:"Enabled",recuerdo24hOff:"Disabled",
   recuerdoHoraActivo:(h)=>`Active · every day at ${h}`,recuerdoHoraInactivo:"Not configured",
   recuerdo24hActivoEstado:"Active · alert if no log in 24h",recuerdo24hInactivo:"Disabled",
-  recuerdoTituloSinGastos:"📝 Did you log your expenses?",recuerdoCuerpoSinGastos:"You haven't logged anything today. Open FINOVA!",
+  recuerdoTituloSinGastos:"📝 Did you log your expenses?",recuerdoCuerpoSinGastos:"You haven't logged anything today. Open NOVYRA!",
   recuerdoTituloConGastos:"📊 Daily summary",recuerdoCuerpoConGastos:(t)=>`You spent ${t} today. Great job!`,
   recuerdo24hTitulo:"⏰ 24h without logging",recuerdo24hCuerpo:"You haven't logged any expense in the last 24 hours.",
   peligroTitle:"⚠️ Danger zone",resetBtn:"🗑️ Delete all data",
   resetConfirm:"Are you sure? ALL data for the current profile will be deleted.",
   calTip:"💡 Tap any day to view expenses or add a payment reminder.",
   sinRecMes:"No reminders this month.",
-  recNotifTitulo:"🔔 FINOVA Reminder",recNotifCuerpo:(t)=>`Today: ${t}`,
+  recNotifTitulo:"🔔 NOVYRA Reminder",recNotifCuerpo:(t)=>`Today: ${t}`,
   recGuardadoOk:"Reminder saved 🔔",recGuardadoFail:"Write a title",recElimOk:"Reminder deleted",
   recFormLabel:"+ New reminder",recGuardarBtn:"🔔 Save reminder",
   recTipoPago:"💳 Payment",recTipoNota:"📝 Note",recTipoMeta:"🎯 Goal",
@@ -2421,7 +2421,7 @@ en:{
   hIA: "AI Analysis",
   navIA: "AI",
   btnReporteIA: "🤖 Generate monthly report",
-  iaKeyDesc: "FINOVA AI uses the secure service configured for the app.",
+  iaKeyDesc: "NOVYRA AI uses the secure service configured for the app.",
   hMetas: "Savings goals",
   navMetas: "Goals",
   nuevaMetaTitle: "+ New goal",
@@ -2456,9 +2456,9 @@ en:{
   fnFrecQuincenal: "Biweekly",
   fnFrecSemanal: "Weekly",
   fnBtnAgregarIngreso: "+ Add income",
-  ob_titulo_0: "Welcome to FINOVA",
+  ob_titulo_0: "Welcome to NOVYRA",
   ob_desc_0: "Your AI-powered financial assistant.",
-  ob_feat1_title: "FINO AI",
+  ob_feat1_title: "NOVY AI",
   ob_feat1_desc: "Chat with your financial assistant",
   ob_feat2_title: "Full security",
   ob_feat2_desc: "AES-256 encryption + biometrics",
@@ -2467,7 +2467,7 @@ en:{
   ob_btn_0: "Get started →",
   ob_titulo_1: "What's your currency?",
   ob_desc_1: "You can change it later in settings.",
-  ob_btn_1: "Go to FINOVA →",
+  ob_btn_1: "Go to NOVYRA →",
   ob_skip_1: "Skip for now",
 
 }};
@@ -3278,7 +3278,7 @@ function verificarLimiteDiario(nuevo){
   if(!lim)return;
   let total=totalHoyGastos();
   let pct=(total/lim)*100;
-  if(pct>=100){toast(T("limiteDiarioSuperado"),"error");enviarNotif("🚨 FINOVA",T("limiteDiarioSuperado"),2010);}
+  if(pct>=100){toast(T("limiteDiarioSuperado"),"error");enviarNotif("🚨 NOVYRA",T("limiteDiarioSuperado"),2010);}
   else if(pct>=80){toast(T("limiteDiarioAlerta",Math.round(pct)),"warn");}
 }
 function renderLimiteDiario(){
@@ -3552,8 +3552,8 @@ function actualizarGrafica(){
   if(!Object.keys(r).length){ctx.clearRect(0,0,cv.width,cv.height);if(vacio)vacio.style.display="block";if(chart){chart.destroy();chart=null;}return;}
   if(vacio)vacio.style.display="none";if(chart)chart.destroy();
 
-  // Paleta FINOVA
-  const paletaFinova = [
+  // Paleta NOVYRA
+  const paletaNovyra = [
     "#1ea84e","#0e9e8e","#2d6a4f","#40916c","#74c69d",
     "#1b4332","#52b788","#95d5b2","#d8f3dc","#081c15"
   ];
@@ -3564,7 +3564,7 @@ function actualizarGrafica(){
       labels:Object.keys(r),
       datasets:[{
         data:Object.values(r).map(v=>moneda==="COP"?v:v*(tasas[moneda]||1)),
-        backgroundColor: paletaFinova,
+        backgroundColor: paletaNovyra,
         borderWidth: 0,
         borderRadius: 4,
         hoverOffset: 8,
@@ -3618,7 +3618,7 @@ function actualizarGrafica6(){
   if(data.every(v=>v===0)){if(vacio)vacio.style.display="block";if(chart6){chart6.destroy();chart6=null;}ctx.clearRect(0,0,cv.width,cv.height);return;}
   if(vacio)vacio.style.display="none";if(chart6)chart6.destroy();
 
-  // Gradiente FINOVA
+  // Gradiente NOVYRA
   const gradient = ctx.createLinearGradient(0, 0, 0, cv.offsetHeight || 130);
   gradient.addColorStop(0, "rgba(30,168,78,0.3)");
   gradient.addColorStop(1, "rgba(30,168,78,0.0)");
@@ -3740,7 +3740,7 @@ async function renderMeta(gastoMesCOP){
   let alcanza=disp>=meta.ahorro,col=alcanza?"#22c55e":disp>0?"#f59e0b":"#ef4444";
   let el_a=document.getElementById("metaAhorro");if(el_a){el_a.innerText=fmtMoneda(Math.max(disp,0));el_a.style.color=col;}
   let el_e=document.getElementById("metaEstado");if(el_e)el_e.innerText=alcanza?T("metaAlcanza",fmtMoneda(meta.ahorro)):disp<=0?T("metaSuperada"):T("metaFaltan",fmtMoneda(meta.ahorro-disp));
-  if(disp<=0)await enviarNotif("❌ FINOVA",T("metaSuperada"),1003);
+  if(disp<=0)await enviarNotif("❌ NOVYRA",T("metaSuperada"),1003);
   let cv=document.getElementById("metaCanvas"),cx=cv.getContext("2d");
   cx.clearRect(0,0,84,84);
   cx.beginPath();cx.arc(42,42,32,0,Math.PI*2);cx.strokeStyle=tema==="light"?"#e2e8f0":"#1e293b";cx.lineWidth=9;cx.stroke();
@@ -3800,7 +3800,7 @@ async function aplicarRecurrentes(){
     gastos.push({id:Date.now()+Math.random(),monto:r.monto,categoria:r.categoria,fecha:new Date().toISOString(),esRecurrente:true,recId:r.id,nota:T("gastoRec")});n++;
   });
   if(!n)return toast(T("tRecYa"));
-  guardar();mostrar();toast(T("tRecN",n));await enviarNotif("🔁 FINOVA",T("tRecN",n),1004);
+  guardar();mostrar();toast(T("tRecN",n));await enviarNotif("🔁 NOVYRA",T("tRecN",n),1004);
 }
 
 
@@ -3844,7 +3844,7 @@ async function generarReportePDF() {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(36);
     doc.setTextColor(...VERDE);
-    doc.text("FINOVA", ancho / 2, 40, { align: "center" });
+    doc.text("NOVYRA", ancho / 2, 40, { align: "center" });
 
     // Tagline
     doc.setFontSize(11);
@@ -3914,7 +3914,7 @@ async function generarReportePDF() {
     doc.setFontSize(8);
     doc.setTextColor(...TEXTO2);
     doc.setFont("helvetica", "normal");
-    doc.text("finovanet.netlify.app  ·  Generado por FINOVA", ancho / 2, alto - 10, { align: "center" });
+    doc.text("novyranet.netlify.app  ·  Generado por NOVYRA", ancho / 2, alto - 10, { align: "center" });
     doc.setFillColor(...VERDE);
     doc.rect(0, alto - 2, ancho, 2, "F");
 
@@ -3930,7 +3930,7 @@ async function generarReportePDF() {
     doc.setFontSize(18);
     doc.setTextColor(...VERDE);
     doc.setFont("helvetica", "bold");
-    doc.text("Análisis FINO AI", 20, 20);
+    doc.text("Análisis NOVY AI", 20, 20);
 
     doc.setDrawColor(...BORDE);
     doc.line(20, 25, ancho - 20, 25);
@@ -4005,7 +4005,7 @@ Sé específico con los números. Máximo 300 palabras en total.`;
 
     doc.setFontSize(8);
     doc.setTextColor(...TEXTO2);
-    doc.text("finovanet.netlify.app  ·  Generado por FINOVA", ancho / 2, alto - 10, { align: "center" });
+    doc.text("novyranet.netlify.app  ·  Generado por NOVYRA", ancho / 2, alto - 10, { align: "center" });
     doc.setFillColor(...VERDE);
     doc.rect(0, alto - 2, ancho, 2, "F");
 
@@ -4047,7 +4047,7 @@ Sé específico con los números. Máximo 300 palabras en total.`;
 
     doc.setFontSize(8);
     doc.setTextColor(...TEXTO2);
-    doc.text("finovanet.netlify.app  ·  Generado por FINOVA", ancho / 2, alto - 10, { align: "center" });
+    doc.text("novyranet.netlify.app  ·  Generado por NOVYRA", ancho / 2, alto - 10, { align: "center" });
     doc.setFillColor(...VERDE);
     doc.rect(0, alto - 2, ancho, 2, "F");
 
@@ -4145,7 +4145,7 @@ Sé específico con los números. Máximo 300 palabras en total.`;
     doc.text(document.getElementById("totalMes")?.innerText || "—", ancho - 18, yG, { align: "right" });
 
   // ── DESCARGAR ──
-  const nombreArchivo = `FINOVA-reporte-${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, "0")}.pdf`;
+  const nombreArchivo = `NOVYRA-reporte-${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, "0")}.pdf`;
 
   if (Capacitor?.isNativePlatform()) {
     const pdfBase64 = doc.output("datauristring").split(",")[1];
@@ -4260,7 +4260,7 @@ function exportarBackup() {
   const json = JSON.stringify(d, null, 2);
   const blob = new Blob([json], { type: "application/json" });
   const fechaHoy = new Date().toISOString().split("T")[0];
-  const nombreArchivo = `finova_backup_${fechaHoy}.json`;
+  const nombreArchivo = `novyra_backup_${fechaHoy}.json`;
 
   // Web Share API — funciona bien en Android PWA
   if (navigator.share && navigator.canShare) {
@@ -4268,7 +4268,7 @@ function exportarBackup() {
     if (navigator.canShare({ files: [file] })) {
       navigator.share({
         files: [file],
-        title: "FINOVA Backup",
+        title: "NOVYRA Backup",
       }).then(() => toast(T("tExportOk")))
         .catch(err => {
           // Usuario canceló — no es error real
@@ -4338,7 +4338,7 @@ function exportarCSV() {
     if (navigator.canShare({ files: [file] })) {
       navigator.share({
         files: [file],
-        title: "FINOVA Gastos",
+        title: "NOVYRA Gastos",
       }).then(() => toast(T("tExportCSVOk")))
         .catch(err => {
           if (err.name !== "AbortError") descargarArchivo(blob, nombreArchivo);
@@ -4519,7 +4519,7 @@ function validarBackup(d) {
 
   // 7. Límite de errores — si hay muchos probablemente es un archivo malicioso
   if (errores.length > 10) {
-    return { ok: false, errores: ["El archivo contiene demasiados errores. Verifica que sea un backup válido de FINOVA."] };
+    return { ok: false, errores: ["El archivo contiene demasiados errores. Verifica que sea un backup válido de NOVYRA."] };
   }
 
   return { ok: errores.length === 0, errores };
@@ -4841,7 +4841,7 @@ async function programarNotificacionesInteligentes() {
       if (gastosHoy === 0) {
         cuerpoNoche = rachaActual > 3
           ? `⚠️ Tu racha de ${rachaActual} días está en peligro. ¡Registra algo!`
-          : "No registraste nada hoy. FINOVA te ayuda a entender tu dinero 💚";
+          : "No registraste nada hoy. NOVYRA te ayuda a entender tu dinero 💚";
       } else {
         cuerpoNoche = `✅ ${gastosHoy} gasto${gastosHoy > 1 ? "s" : ""} registrado${gastosHoy > 1 ? "s" : ""} hoy. ¡Racha de ${rachaActual} días!`;
       }
@@ -5280,7 +5280,7 @@ async function compartirResumen() {
     // Intentar compartir nativo (móvil)
     if (navigator.share && navigator.canShare({ files: [file] })) {
       await navigator.share({
-        title: "Mi resumen FINOVA",
+        title: "Mi resumen NOVYRA",
         text: `Mi resumen financiero de ${mesNombre} 💚`,
         files: [file]
       });
@@ -5453,7 +5453,7 @@ function mostrarPinLock(modo = "unlock") {
  const textos = {
   set: {
     t: idioma === "es" ? "Crear PIN"      : "Create PIN",
-    s: idioma === "es" ? "Elige 4 dígitos para proteger FINOVA" : "Choose 4 digits to protect FINOVA"
+    s: idioma === "es" ? "Elige 4 dígitos para proteger NOVYRA" : "Choose 4 digits to protect NOVYRA"
   },
   confirm: {
     t: idioma === "es" ? "Confirmar PIN"  : "Confirm PIN",
@@ -5804,8 +5804,8 @@ function renderConfigPin() {
     cont.innerHTML = `
       <div class="info-box" style="margin-bottom:10px;">
         ${es
-          ? "Protege FINOVA con PIN de 4 dígitos y <strong>cifrado AES-256</strong>. Nadie podrá leer tus datos aunque acceda al dispositivo."
-          : "Protect FINOVA with a 4-digit PIN and <strong>AES-256 encryption</strong>. Nobody can read your data even with device access."}
+          ? "Protege NOVYRA con PIN de 4 dígitos y <strong>cifrado AES-256</strong>. Nadie podrá leer tus datos aunque acceda al dispositivo."
+          : "Protect NOVYRA with a 4-digit PIN and <strong>AES-256 encryption</strong>. Nobody can read your data even with device access."}
       </div>
       <button onclick="mostrarPinLock('set')" style="font-size:13px;">🔒 ${es ? "Activar PIN + Cifrado" : "Enable PIN + Encryption"}</button>`;
   }
@@ -5826,7 +5826,7 @@ function mostrarPinLock(modo = "unlock") {
   });
 
   const textos = {
-    set: { t: idioma === "es" ? "Crear PIN" : "Create PIN", s: idioma === "es" ? "Elige 4 dígitos para proteger FINOVA" : "Choose 4 digits to protect FINOVA" },
+    set: { t: idioma === "es" ? "Crear PIN" : "Create PIN", s: idioma === "es" ? "Elige 4 dígitos para proteger NOVYRA" : "Choose 4 digits to protect NOVYRA" },
     confirm: { t: idioma === "es" ? "Confirmar PIN" : "Confirm PIN", s: idioma === "es" ? "Ingresa el PIN de nuevo" : "Enter PIN again" },
     unlock: { t: idioma === "es" ? "Ingresa tu PIN" : "Enter your PIN", s: idioma === "es" ? "Accede a tus finanzas de forma segura" : "Access your finances securely" },
     reencrypt: { t: idioma === "es" ? "PIN actual" : "Current PIN", s: idioma === "es" ? "Ingresa tu PIN actual para continuar" : "Enter your current PIN to continue" }
@@ -5913,7 +5913,7 @@ function construirContextoFinanciero() {
   const totalMeDeban = deudas.filter(d=>d.tipo==="medeban"&&!d.pagada).reduce((s,d)=>s+d.monto,0);
 
   return `
-Eres un asesor financiero personal experto llamado FINOVA AI. Analiza los datos financieros del usuario y da consejos prácticos, concretos y personalizados. Responde siempre en ${idioma === "es" ? "español" : "inglés"}.
+Eres un asesor financiero personal experto llamado NOVYRA AI. Analiza los datos financieros del usuario y da consejos prácticos, concretos y personalizados. Responde siempre en ${idioma === "es" ? "español" : "inglés"}.
 
 DATOS FINANCIEROS DEL USUARIO:
 - Moneda: ${moneda}
@@ -6137,8 +6137,8 @@ async function enviarMensajeIA() {
     iaChatHistorial.push({
       role: "assistant",
       content: idioma === "es"
-        ? "¡Hola! Soy FINOVA AI. He analizado tus datos financieros y estoy listo para ayudarte. ¿Qué quieres saber?"
-        : "Hi! I'm FINOVA AI. I've analyzed your financial data and I'm ready to help. What would you like to know?"
+        ? "¡Hola! Soy NOVYRA AI. He analizado tus datos financieros y estoy listo para ayudarte. ¿Qué quieres saber?"
+        : "Hi! I'm NOVYRA AI. I've analyzed your financial data and I'm ready to help. What would you like to know?"
     });
   }
 
@@ -6194,8 +6194,8 @@ function iaTab(tab) {
     document.getElementById("iaChat").innerHTML = `
       <div class="ia-msg asistente">
         🤖 ${idioma === "es"
-          ? "¡Hola! Soy FINOVA AI. Pregúntame sobre tus gastos, cómo ahorrar más, o pídeme un análisis específico."
-          : "Hi! I'm FINOVA AI. Ask me about your expenses, how to save more, or request a specific analysis."}
+          ? "¡Hola! Soy NOVYRA AI. Pregúntame sobre tus gastos, cómo ahorrar más, o pídeme un análisis específico."
+          : "Hi! I'm NOVYRA AI. Ask me about your expenses, how to save more, or request a specific analysis."}
       </div>`;
   }
 }
@@ -6488,8 +6488,8 @@ async function programarResumenSemanal() {
     : `-${fmtMoneda(Math.abs(diff))}`;
 
   const titulo = idioma === "es"
-    ? "📊 Tu resumen semanal — FINOVA"
-    : "📊 Your weekly summary — FINOVA";
+    ? "📊 Tu resumen semanal — NOVYRA"
+    : "📊 Your weekly summary — NOVYRA";
 
   const cuerpo = idioma === "es"
     ? `Gastaste ${fmtMoneda(totalSemana)} esta semana (${diffStr} vs semana anterior). ${topCat ? `Mayor gasto: ${topCat[0]}.` : ""} Racha: ${racha} días 🔥`
@@ -6776,7 +6776,7 @@ function limpiarFormularioFoto() {
 // ══════════════════════════════════════════
 const DRIVE_CLIENT_ID = "670694817798-do0b02vuvtt8236qeo3d4bi3b7m71q5b.apps.googleusercontent.com";
 const DRIVE_SCOPES    = "https://www.googleapis.com/auth/drive.appdata";
-const DRIVE_FILE_NAME = "finova_backup.json";
+const DRIVE_FILE_NAME = "novyra_backup.json";
 
 let driveTokenClient  = null;
 let driveAccessToken  = null;
@@ -6955,7 +6955,7 @@ async function buscarArchivoDrive() {
     const data = await res.json();
     if (data.files && data.files.length > 0) {
       driveFileId = data.files[0].id;
-      android.util.Log.d && android.util.Log.d("FINOVA", "Archivo Drive encontrado: " + driveFileId);
+      android.util.Log.d && android.util.Log.d("NOVYRA", "Archivo Drive encontrado: " + driveFileId);
     }
   } catch(e) { console.error("Error buscando archivo Drive:", e); }
 }
@@ -7517,8 +7517,8 @@ async function autenticarBiometria() {
     const { BiometricAuthNative } = window.Capacitor.Plugins;
     await BiometricAuthNative.internalAuthenticate({
       reason: idioma === "es"
-        ? "Accede a FINOVA"
-        : "Access FINOVA",
+        ? "Accede a NOVYRA"
+        : "Access NOVYRA",
       cancelTitle: idioma === "es" ? "Usar PIN" : "Use PIN",
     });
     // Autenticación exitosa — desbloquear
@@ -7606,8 +7606,8 @@ function renderConfigBio() {
     cont.innerHTML = `
       <div class="info-box" style="margin-bottom:10px;">
         ${es
-          ? "Desbloquea FINOVA con tu huella dactilar o Face ID sin necesidad de ingresar el PIN."
-          : "Unlock FINOVA with your fingerprint or Face ID without entering your PIN."}
+          ? "Desbloquea NOVYRA con tu huella dactilar o Face ID sin necesidad de ingresar el PIN."
+          : "Unlock NOVYRA with your fingerprint or Face ID without entering your PIN."}
       </div>
       <button onclick="activarBiometria()" style="font-size:13px;">
         👆 ${es ? "Activar biometría" : "Enable biometrics"}
@@ -7872,7 +7872,7 @@ window.onload = async function(){
 
 
 // PWA
-const _m={name:"FINOVA - Finanzas Personales",short_name:"FINOVA",start_url:"./",display:"standalone",background_color:"#020617",theme_color:"#22c55e",orientation:"portrait",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23022c22'/><text y='72' x='50' text-anchor='middle' font-size='60' font-family='Segoe UI' font-weight='900' fill='%2322c55e'>F</text></svg>",sizes:"any",type:"image/svg+xml"}]};
+const _m={name:"NOVYRA - Finanzas Personales",short_name:"NOVYRA",start_url:"./",display:"standalone",background_color:"#020617",theme_color:"#22c55e",orientation:"portrait",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23022c22'/><text y='72' x='50' text-anchor='middle' font-size='60' font-family='Segoe UI' font-weight='900' fill='%2322c55e'>F</text></svg>",sizes:"any",type:"image/svg+xml"}]};
 const _b=new Blob([JSON.stringify(_m)],{type:"application/json"});
 const _l=document.createElement("link");_l.rel="manifest";_l.href=URL.createObjectURL(_b);document.head.appendChild(_l);
 let deferredPrompt=null;
