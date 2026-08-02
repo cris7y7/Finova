@@ -56,7 +56,7 @@ exports.handler = async function(event, context) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY;
 
   if (!GROQ_API_KEY && !GEMINI_API_KEY) {
     return json(500, event, { error: "API Key de IA no configurada" });
