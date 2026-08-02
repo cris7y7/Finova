@@ -5878,7 +5878,7 @@ document.addEventListener("visibilitychange", () => {
 // ══════════════════════════════════════════
 // IA ANÁLISIS — PROXY SEGURO
 // ══════════════════════════════════════════
-const IA_PROXY_URL = (window.location.protocol.startsWith("http") && !window.location.hostname.includes("localhost")) ? "/.netlify/functions/ia" : "https://novyranet.netlify.app/.netlify/functions/ia";
+const IA_PROXY_URL = (window.location.protocol.startsWith("http") && !window.location.hostname.includes("localhost")) ? "/api/ia" : "https://novyranet.netlify.app/api/ia";
 let iaChatHistorial = [];
 
 // ── Contexto financiero ────────────────────
