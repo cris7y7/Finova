@@ -95,19 +95,14 @@ exports.handler = async function(event, context) {
           const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
           const base64Data = base64Url.split(",")[1];
 
-          const geminiModels = [
-            "gemini-1.5-flash-latest",
-            "gemini-2.0-flash-exp",
-            "gemini-1.5-pro-latest",
-            "gemini-2.0-flash",
-            "gemini-1.5-flash"
-          ];
+          const geminiApiVersions = ["v1beta", "v1"];
+          const geminiModels = ["gemini-1.5-flash-latest", "gemini-2.0-flash-exp", "gemini-1.5-pro-latest", "gemini-2.0-flash"];
           let lastGeminiErr = "";
 
-          for (const gModel of geminiModels) {
-            const geminiRes = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/${gModel}:generateContent?key=${GEMINI_API_KEY.trim()}`,
-              {
+          for (const ver of geminiApiVersions) {
+            for (const gModel of geminiModels) {
+              const url = `https://generativelanguage.googleapis.com/${ver}/models/${gModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
+              const geminiRes = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -118,21 +113,21 @@ exports.handler = async function(event, context) {
                     ]
                   }]
                 })
-              }
-            );
+              });
 
-            const geminiData = await geminiRes.json();
+              const geminiData = await geminiRes.json();
 
-            if (geminiRes.ok) {
-              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              if (textOut) {
-                return json(200, event, {
-                  choices: [{ message: { content: textOut } }]
-                });
+              if (geminiRes.ok) {
+                const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                if (textOut) {
+                  return json(200, event, {
+                    choices: [{ message: { content: textOut } }]
+                  });
+                }
+              } else {
+                lastGeminiErr = `${gModel} (${ver}): ${geminiData.error?.message || geminiRes.status}`;
+                console.warn(`Gemini error (${url}):`, lastGeminiErr);
               }
-            } else {
-              lastGeminiErr = geminiData.error?.message || `HTTP ${geminiRes.status}`;
-              console.warn(`Gemini ${gModel} error (${geminiRes.status}):`, lastGeminiErr);
             }
           }
 
