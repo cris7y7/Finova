@@ -56,7 +56,14 @@ exports.handler = async function(event, context) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY;
+  let GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY || process.env.GEMINI_APIKEY;
+
+  if (!GEMINI_API_KEY) {
+    const dynamicKeyName = Object.keys(process.env).find(k => /gemini|google_api/i.test(k));
+    if (dynamicKeyName) {
+      GEMINI_API_KEY = process.env[dynamicKeyName];
+    }
+  }
 
   if (!GROQ_API_KEY && !GEMINI_API_KEY) {
     return json(500, event, { error: "API Key de IA no configurada" });
@@ -70,7 +77,7 @@ exports.handler = async function(event, context) {
       return json(400, event, { error: "Payload de mensajes invalido" });
     }
 
-    // 1. Intentar visión con Gemini Flash si hay GEMINI_API_KEY disponible
+    // 1. Intentar visión con Gemini Flash (2.0 y 1.5) si hay GEMINI_API_KEY disponible
     if (esVision && GEMINI_API_KEY) {
       try {
         const userMsg = body.messages.find(m => m.role === "user");
@@ -88,35 +95,41 @@ exports.handler = async function(event, context) {
           const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
           const base64Data = base64Url.split(",")[1];
 
-          const geminiRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{
-                  parts: [
-                    { inline_data: { mime_type: mimeType, data: base64Data } },
-                    { text: promptText }
-                  ]
-                }],
-                generationConfig: { response_mime_type: "application/json" }
-              })
-            }
-          );
+          const geminiModels = ["gemini-2.0-flash", "gemini-1.5-flash"];
+          for (const gModel of geminiModels) {
+            const geminiRes = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${gModel}:generateContent?key=${GEMINI_API_KEY.trim()}`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  contents: [{
+                    parts: [
+                      { inline_data: { mime_type: mimeType, data: base64Data } },
+                      { text: promptText }
+                    ]
+                  }],
+                  generationConfig: { response_mime_type: "application/json" }
+                })
+              }
+            );
 
-          if (geminiRes.ok) {
-            const geminiData = await geminiRes.json();
-            const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            if (textOut) {
-              return json(200, event, {
-                choices: [{ message: { content: textOut } }]
-              });
+            if (geminiRes.ok) {
+              const geminiData = await geminiRes.json();
+              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+              if (textOut) {
+                return json(200, event, {
+                  choices: [{ message: { content: textOut } }]
+                });
+              }
+            } else {
+              const errTxt = await geminiRes.text();
+              console.warn(`Gemini ${gModel} status ${geminiRes.status}:`, errTxt);
             }
           }
         }
       } catch(errGemini) {
-        console.warn("Gemini Vision failed, falling back to Groq:", errGemini.message);
+        console.warn("Gemini Vision failed:", errGemini.message);
       }
     }
 
