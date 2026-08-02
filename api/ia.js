@@ -66,37 +66,44 @@ export default async function handler(req, res) {
           const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
           const base64Data = base64Url.split(",")[1];
 
-          const geminiApiVersions = ["v1beta", "v1"];
-          const geminiModels = ["gemini-1.5-flash-latest", "gemini-2.0-flash-exp", "gemini-1.5-pro-latest", "gemini-2.0-flash"];
+          const geminiCandidates = [
+            { ver: "v1beta", model: "gemini-1.5-flash" },
+            { ver: "v1beta", model: "gemini-1.5-flash-latest" },
+            { ver: "v1beta", model: "gemini-2.0-flash-exp" }
+          ];
+
           let lastGeminiErr = "";
 
-          for (const ver of geminiApiVersions) {
-            for (const gModel of geminiModels) {
-              const url = `https://generativelanguage.googleapis.com/${ver}/models/${gModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
-              const geminiRes = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  contents: [{
-                    parts: [
-                      { inline_data: { mime_type: mimeType, data: base64Data } },
-                      { text: promptText }
-                    ]
-                  }]
-                })
-              });
+          for (const item of geminiCandidates) {
+            const url = `https://generativelanguage.googleapis.com/${item.ver}/models/${item.model}:generateContent?key=${GEMINI_API_KEY.trim()}`;
+            const geminiRes = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [
+                    { inline_data: { mime_type: mimeType, data: base64Data } },
+                    { text: promptText }
+                  ]
+                }]
+              })
+            });
 
-              const geminiData = await geminiRes.json();
+            const geminiData = await geminiRes.json();
 
-              if (geminiRes.ok) {
-                const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                if (textOut) {
-                  return res.status(200).json({
-                    choices: [{ message: { content: textOut } }]
-                  });
-                }
-              } else {
-                lastGeminiErr = `${gModel} (${ver}): ${geminiData.error?.message || geminiRes.status}`;
+            if (geminiRes.ok) {
+              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+              if (textOut) {
+                return res.status(200).json({
+                  choices: [{ message: { content: textOut } }]
+                });
+              }
+            } else {
+              lastGeminiErr = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+              if (geminiRes.status === 429 || lastGeminiErr.toLowerCase().includes("quota") || lastGeminiErr.toLowerCase().includes("exceeded")) {
+                return res.status(429).json({
+                  error: "⏳ Se alcanzó el límite de solicitudes gratuitas de Google Gemini por minuto. Por favor reintenta en 30 segundos."
+                });
               }
             }
           }
