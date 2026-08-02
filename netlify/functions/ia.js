@@ -96,6 +96,8 @@ exports.handler = async function(event, context) {
           const base64Data = base64Url.split(",")[1];
 
           const geminiModels = ["gemini-2.0-flash", "gemini-1.5-flash"];
+          let lastGeminiErr = "";
+
           for (const gModel of geminiModels) {
             const geminiRes = await fetch(
               `https://generativelanguage.googleapis.com/v1beta/models/${gModel}:generateContent?key=${GEMINI_API_KEY.trim()}`,
@@ -108,14 +110,14 @@ exports.handler = async function(event, context) {
                       { inline_data: { mime_type: mimeType, data: base64Data } },
                       { text: promptText }
                     ]
-                  }],
-                  generationConfig: { response_mime_type: "application/json" }
+                  }]
                 })
               }
             );
 
+            const geminiData = await geminiRes.json();
+
             if (geminiRes.ok) {
-              const geminiData = await geminiRes.json();
               const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
               if (textOut) {
                 return json(200, event, {
@@ -123,13 +125,18 @@ exports.handler = async function(event, context) {
                 });
               }
             } else {
-              const errTxt = await geminiRes.text();
-              console.warn(`Gemini ${gModel} status ${geminiRes.status}:`, errTxt);
+              lastGeminiErr = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+              console.warn(`Gemini ${gModel} error (${geminiRes.status}):`, lastGeminiErr);
             }
+          }
+
+          if (lastGeminiErr) {
+            return json(400, event, { error: `Gemini API Error: ${lastGeminiErr}` });
           }
         }
       } catch(errGemini) {
         console.warn("Gemini Vision failed:", errGemini.message);
+        return json(500, event, { error: `Error conectando con Gemini: ${errGemini.message}` });
       }
     }
 
