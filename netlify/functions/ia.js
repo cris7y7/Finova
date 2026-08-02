@@ -95,50 +95,36 @@ exports.handler = async function(event, context) {
           const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
           const base64Data = base64Url.split(",")[1];
 
-          const geminiCandidates = [
-            { ver: "v1beta", model: "gemini-1.5-flash" },
-            { ver: "v1beta", model: "gemini-1.5-flash-latest" },
-            { ver: "v1beta", model: "gemini-2.0-flash-exp" }
-          ];
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
+          const geminiRes = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  { inline_data: { mime_type: mimeType, data: base64Data } },
+                  { text: promptText }
+                ]
+              }]
+            })
+          });
 
-          let lastGeminiErr = "";
+          const geminiData = await geminiRes.json();
 
-          for (const item of geminiCandidates) {
-            const url = `https://generativelanguage.googleapis.com/${item.ver}/models/${item.model}:generateContent?key=${GEMINI_API_KEY.trim()}`;
-            const geminiRes = await fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{
-                  parts: [
-                    { inline_data: { mime_type: mimeType, data: base64Data } },
-                    { text: promptText }
-                  ]
-                }]
-              })
-            });
-
-            const geminiData = await geminiRes.json();
-
-            if (geminiRes.ok) {
-              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              if (textOut) {
-                return json(200, event, {
-                  choices: [{ message: { content: textOut } }]
-                });
-              }
-            } else {
-              lastGeminiErr = geminiData.error?.message || `HTTP ${geminiRes.status}`;
-              if (geminiRes.status === 429 || lastGeminiErr.toLowerCase().includes("quota") || lastGeminiErr.toLowerCase().includes("exceeded")) {
-                return json(429, event, {
-                  error: "⏳ Se alcanzó el límite de solicitudes gratuitas de Google Gemini por minuto. Por favor reintenta en 30 segundos."
-                });
-              }
+          if (geminiRes.ok) {
+            const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            if (textOut) {
+              return json(200, event, {
+                choices: [{ message: { content: textOut } }]
+              });
             }
-          }
-
-          if (lastGeminiErr) {
-            return json(400, event, { error: `Gemini API Error: ${lastGeminiErr}` });
+          } else {
+            const errText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+            if (geminiRes.status === 429 || errText.toLowerCase().includes("quota") || errText.toLowerCase().includes("exceeded")) {
+              return json(429, event, {
+                error: "⏳ Se alcanzó el límite de solicitudes gratuitas de Google Gemini por minuto. Por favor reintenta en 30 segundos."
+              });
+            }
           }
         }
       } catch(errGemini) {
