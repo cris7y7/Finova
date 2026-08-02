@@ -95,7 +95,13 @@ exports.handler = async function(event, context) {
           const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
           const base64Data = base64Url.split(",")[1];
 
-          const geminiModels = ["gemini-2.0-flash", "gemini-1.5-flash"];
+          const geminiModels = [
+            "gemini-1.5-flash-latest",
+            "gemini-2.0-flash-exp",
+            "gemini-1.5-pro-latest",
+            "gemini-2.0-flash",
+            "gemini-1.5-flash"
+          ];
           let lastGeminiErr = "";
 
           for (const gModel of geminiModels) {
