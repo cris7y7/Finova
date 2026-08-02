@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   }
 
   if (!GROQ_API_KEY && !GEMINI_API_KEY) {
-    return res.status(500).json({ error: "API Key de IA no configurada" });
+    return res.status(500).json({ error: "Faltan las API Keys de IA. Por favor agrega GROQ_API_KEY o GEMINI_API_KEY en las variables de entorno." });
   }
 
   try {
@@ -45,84 +45,71 @@ export default async function handler(req, res) {
     const esVision = body.vision === true;
 
     if (!validarMessages(body.messages)) {
-      return res.status(400).json({ error: "Payload de mensajes invalido" });
+      return res.status(400).json({ error: "Payload de mensajes inválido" });
     }
 
-    // 1. Intentar visión con Gemini Flash si hay GEMINI_API_KEY disponible
-    if (esVision && GEMINI_API_KEY) {
-      try {
-        const userMsg = body.messages.find(m => m.role === "user");
-        let base64Url = "";
-        let promptText = "";
+    // 1. Si es Visión / OCR (foto de factura)
+    if (esVision) {
+      if (GEMINI_API_KEY) {
+        try {
+          const userMsg = body.messages.find(m => m.role === "user");
+          let base64Url = "";
+          let promptText = "";
 
-        if (Array.isArray(userMsg?.content)) {
-          const imgPart = userMsg.content.find(c => c.type === "image_url");
-          const textPart = userMsg.content.find(c => c.type === "text");
-          base64Url = imgPart?.image_url?.url || "";
-          promptText = textPart?.text || "";
-        }
-
-        if (base64Url && promptText) {
-          const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
-          const base64Data = base64Url.split(",")[1];
-
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
-          const geminiRes = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{
-                parts: [
-                  { inline_data: { mime_type: mimeType, data: base64Data } },
-                  { text: promptText }
-                ]
-              }]
-            })
-          });
-
-          const geminiData = await geminiRes.json();
-
-          if (geminiRes.ok) {
-            const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            if (textOut) {
-              return res.status(200).json({
-                choices: [{ message: { content: textOut } }]
-              });
-            }
-          } else {
-            const errText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
-            if (geminiRes.status === 429 || errText.toLowerCase().includes("quota") || errText.toLowerCase().includes("exceeded")) {
-              return res.status(429).json({
-                error: "⏳ Se alcanzó el límite de solicitudes gratuitas de Google Gemini por minuto. Por favor reintenta en 30 segundos."
-              });
-            }
-            return res.status(400).json({ error: `Gemini Error: ${errText}` });
+          if (Array.isArray(userMsg?.content)) {
+            const imgPart = userMsg.content.find(c => c.type === "image_url");
+            const textPart = userMsg.content.find(c => c.type === "text");
+            base64Url = imgPart?.image_url?.url || "";
+            promptText = textPart?.text || "";
           }
+
+          if (base64Url && promptText) {
+            const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
+            const base64Data = base64Url.split(",")[1];
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
+            const geminiRes = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [
+                    { inline_data: { mime_type: mimeType, data: base64Data } },
+                    { text: promptText }
+                  ]
+                }]
+              })
+            });
+
+            const geminiData = await geminiRes.json();
+
+            if (geminiRes.ok) {
+              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+              if (textOut) {
+                return res.status(200).json({
+                  choices: [{ message: { content: textOut } }]
+                });
+              }
+            } else {
+              const errText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+              if (geminiRes.status === 429 || errText.toLowerCase().includes("quota") || errText.toLowerCase().includes("exceeded")) {
+                return res.status(429).json({
+                  error: "⏳ Límite de solicitudes de Google Gemini alcanzado. Reintenta en 30 segundos."
+                });
+              }
+              return res.status(400).json({ error: `Gemini Error: ${errText}` });
+            }
+          }
+        } catch(errGemini) {
+          return res.status(500).json({ error: `Error conectando con Gemini: ${errGemini.message}` });
         }
-        }
-      } catch(errGemini) {
-        return res.status(500).json({ error: `Error conectando con Gemini: ${errGemini.message}` });
       }
+
+      return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable GEMINI_API_KEY en tu proyecto." });
     }
 
-    // 2. Intentar modelos con Groq
-    if (!GROQ_API_KEY) {
-      return res.status(500).json({ error: "GROQ_API_KEY no configurada para chat" });
-    }
-
-    const modelCandidates = esVision
-      ? [
-          "llama-3.2-11b-vision-preview",
-          "llama-3.2-90b-vision-preview",
-          "llama-3.2-11b-vision-instruct",
-          "llama-3.2-90b-vision-instruct"
-        ]
-      : ["llama-3.3-70b-versatile"];
-
-    let lastData = null;
-    let lastStatus = 500;
-
-    for (const model of modelCandidates) {
+    // 2. Si es Chat o Reporte de Texto
+    if (GROQ_API_KEY) {
       const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -130,7 +117,7 @@ export default async function handler(req, res) {
           "Authorization": `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model,
+          model: "llama-3.3-70b-versatile",
           messages: body.messages,
           max_tokens: 1500,
           temperature: 0.3
@@ -138,20 +125,33 @@ export default async function handler(req, res) {
       });
 
       const data = await groqRes.json();
-
       if (groqRes.ok) {
         return res.status(200).json(data);
       }
-
-      lastData = data;
-      lastStatus = groqRes.status;
+      return res.status(groqRes.status).json({ error: data.error?.message || "Error en Groq API" });
     }
 
-    const errorMsg = esVision
-      ? "El servicio de OCR con IA no está disponible actualmente en Groq. Si deseas OCR activo, agrega GEMINI_API_KEY."
-      : (lastData?.error?.message || "No se pudo procesar la solicitud con Groq");
+    if (GEMINI_API_KEY) {
+      const textMsg = body.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
+      const geminiRes = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: textMsg }] }]
+        })
+      });
+      const geminiData = await geminiRes.json();
+      if (geminiRes.ok) {
+        const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        return res.status(200).json({
+          choices: [{ message: { content: textOut } }]
+        });
+      }
+      return res.status(geminiRes.status).json({ error: geminiData.error?.message || "Error en Gemini API" });
+    }
 
-    return res.status(lastStatus).json({ error: errorMsg, detail: lastData });
+    return res.status(500).json({ error: "No hay proveedor de IA disponible." });
 
   } catch(e) {
     return res.status(500).json({ error: e.message });
