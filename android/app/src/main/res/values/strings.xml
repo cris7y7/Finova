@@ -1,0 +1,10 @@
+<?xml version='1.1' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NOVYRA</string>
+    <string name="title_activity_main">NOVYRA</string>
+    <string name="package_name">com.novyra.app</string>
+    <string name="custom_url_scheme">com.novyra.app</string>
+    <string name="appwidget_text">NOVYRA</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Tu asistente financiero</string>
+</resources>

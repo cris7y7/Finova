@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background"
+    android:padding="12dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/widget_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOVYRA"
+        android:textColor="#22c55e"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Este mes"
+        android:textColor="#94a3b8"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/widget_total_mes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$0"
+        android:textColor="#e2e8f0"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎯 Límite diario"
+        android:textColor="#94a3b8"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/widget_limite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="—"
+        android:textColor="#22c55e"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔥 Racha"
+        android:textColor="#94a3b8"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/widget_racha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 días"
+        android:textColor="#22c55e"
+        android:textSize="11sp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

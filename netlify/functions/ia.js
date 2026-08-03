@@ -93,7 +93,7 @@ exports.handler = async function(event, context) {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
                 "HTTP-Referer": "https://novyra-eight.vercel.app",
-                "X-Title": "NOVIRA App"
+                "X-Title": "NOVYRA App"
               },
               body: JSON.stringify({
                 model: orModel,
@@ -203,7 +203,7 @@ exports.handler = async function(event, context) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
           "HTTP-Referer": "https://novyra-eight.vercel.app",
-          "X-Title": "NOVIRA App"
+          "X-Title": "NOVYRA App"
         },
         body: JSON.stringify({
           model: "openrouter/free",

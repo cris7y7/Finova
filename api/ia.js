@@ -78,7 +78,7 @@ export default async function handler(req, res) {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
                 "HTTP-Referer": "https://novyra-eight.vercel.app",
-                "X-Title": "NOVIRA App"
+                "X-Title": "NOVYRA App"
               },
               body: JSON.stringify({
                 model: orModel,
@@ -190,7 +190,7 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
           "HTTP-Referer": "https://novyra-eight.vercel.app",
-          "X-Title": "NOVIRA App"
+          "X-Title": "NOVYRA App"
         },
         body: JSON.stringify({
           model: "openrouter/free",
