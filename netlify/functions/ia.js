@@ -59,10 +59,11 @@ exports.handler = async function(event, context) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
   const geminiKeys = obtenerGeminiKeys();
 
-  if (!GROQ_API_KEY && geminiKeys.length === 0) {
-    return json(500, event, { error: "Faltan las API Keys de IA. Por favor agrega GROQ_API_KEY o GEMINI_API_KEY." });
+  if (!GROQ_API_KEY && !OPENROUTER_API_KEY && geminiKeys.length === 0) {
+    return json(500, event, { error: "Faltan las API Keys de IA. Por favor agrega OPENROUTER_API_KEY, GROQ_API_KEY o GEMINI_API_KEY." });
   }
 
   try {
@@ -74,6 +75,41 @@ exports.handler = async function(event, context) {
     }
 
     if (esVision) {
+      if (OPENROUTER_API_KEY) {
+        try {
+          const openRouterModels = [
+            "meta-llama/llama-3.2-11b-vision-instruct:free",
+            "google/gemini-2.0-flash-exp:free",
+            "qwen/qwen-2-vl-7b-instruct:free"
+          ];
+
+          for (const orModel of openRouterModels) {
+            const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
+                "HTTP-Referer": "https://novyra.app",
+                "X-Title": "NOVIRA App"
+              },
+              body: JSON.stringify({
+                model: orModel,
+                messages: body.messages,
+                max_tokens: 1500,
+                temperature: 0.2
+              })
+            });
+
+            if (orRes.ok) {
+              const orData = await orRes.json();
+              return json(200, event, orData);
+            }
+          }
+        } catch(errOR) {
+          console.warn("OpenRouter Vision fallback failed:", errOR.message);
+        }
+      }
+
       if (geminiKeys.length > 0) {
         try {
           const userMsg = body.messages.find(m => m.role === "user");
@@ -136,7 +172,7 @@ exports.handler = async function(event, context) {
 
             if (isQuotaErr) {
               return json(429, event, {
-                error: "⏳ Límite de cuota alcanzado en Gemini. Reintenta en unos segundos o agrega una 2da API Key en Vercel."
+                error: "⏳ Límite de cuota alcanzado en Gemini. Agrega OPENROUTER_API_KEY o una 2da Gemini Key en Vercel."
               });
             }
 
@@ -147,7 +183,30 @@ exports.handler = async function(event, context) {
         }
       }
 
-      return json(400, event, { error: "El servicio de OCR requiere configurar la variable GEMINI_API_KEY." });
+      return json(400, event, { error: "El servicio de OCR requiere configurar la variable OPENROUTER_API_KEY o GEMINI_API_KEY." });
+    }
+
+    if (OPENROUTER_API_KEY) {
+      const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
+          "HTTP-Referer": "https://novyra.app",
+          "X-Title": "NOVIRA App"
+        },
+        body: JSON.stringify({
+          model: "meta-llama/llama-3.3-70b-instruct:free",
+          messages: body.messages,
+          max_tokens: 1500,
+          temperature: 0.3
+        })
+      });
+
+      if (orRes.ok) {
+        const data = await orRes.json();
+        return json(200, event, data);
+      }
     }
 
     if (GROQ_API_KEY) {

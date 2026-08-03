@@ -42,10 +42,11 @@ export default async function handler(req, res) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
   const geminiKeys = obtenerGeminiKeys();
 
-  if (!GROQ_API_KEY && geminiKeys.length === 0) {
-    return res.status(500).json({ error: "Faltan las API Keys de IA. Por favor agrega GROQ_API_KEY o GEMINI_API_KEY en las variables de entorno." });
+  if (!GROQ_API_KEY && !OPENROUTER_API_KEY && geminiKeys.length === 0) {
+    return res.status(500).json({ error: "Faltan las API Keys de IA. Por favor agrega OPENROUTER_API_KEY, GROQ_API_KEY o GEMINI_API_KEY en las variables de entorno." });
   }
 
   try {
@@ -58,6 +59,43 @@ export default async function handler(req, res) {
 
     // 1. Si es Visión / OCR (foto de factura)
     if (esVision) {
+      // 1.A. Probar con OpenRouter API si está configurada (Modelos de Visión Gratis sin límites severos)
+      if (OPENROUTER_API_KEY) {
+        try {
+          const openRouterModels = [
+            "meta-llama/llama-3.2-11b-vision-instruct:free",
+            "google/gemini-2.0-flash-exp:free",
+            "qwen/qwen-2-vl-7b-instruct:free"
+          ];
+
+          for (const orModel of openRouterModels) {
+            const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
+                "HTTP-Referer": "https://novyra.app",
+                "X-Title": "NOVIRA App"
+              },
+              body: JSON.stringify({
+                model: orModel,
+                messages: body.messages,
+                max_tokens: 1500,
+                temperature: 0.2
+              })
+            });
+
+            if (orRes.ok) {
+              const orData = await orRes.json();
+              return res.status(200).json(orData);
+            }
+          }
+        } catch(errOR) {
+          console.warn("OpenRouter Vision fallback failed:", errOR.message);
+        }
+      }
+
+      // 1.B. Probar con Gemini API
       if (geminiKeys.length > 0) {
         try {
           const userMsg = body.messages.find(m => m.role === "user");
@@ -120,7 +158,7 @@ export default async function handler(req, res) {
 
             if (isQuotaErr) {
               return res.status(429).json({
-                error: "⏳ Límite de cuota alcanzado en Gemini. Reintenta en unos segundos o agrega una 2da API Key en Vercel."
+                error: "⏳ Límite de cuota alcanzado en Gemini. Agrega OPENROUTER_API_KEY o una 2da Gemini Key en Vercel."
               });
             }
 
@@ -131,10 +169,33 @@ export default async function handler(req, res) {
         }
       }
 
-      return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable GEMINI_API_KEY en tu proyecto." });
+      return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable OPENROUTER_API_KEY o GEMINI_API_KEY." });
     }
 
-    // 2. Si es Chat o Reporte de Texto
+    // 2. Si es Chat o Reporte de Texto (Usar Groq / OpenRouter / Gemini)
+    if (OPENROUTER_API_KEY) {
+      const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
+          "HTTP-Referer": "https://novyra.app",
+          "X-Title": "NOVIRA App"
+        },
+        body: JSON.stringify({
+          model: "meta-llama/llama-3.3-70b-instruct:free",
+          messages: body.messages,
+          max_tokens: 1500,
+          temperature: 0.3
+        })
+      });
+
+      if (orRes.ok) {
+        const data = await orRes.json();
+        return res.status(200).json(data);
+      }
+    }
+
     if (GROQ_API_KEY) {
       const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -161,7 +222,6 @@ export default async function handler(req, res) {
       const textMsg = body.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
       const model = workingModelCache || "gemini-2.0-flash";
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKeys[0]}`;
-      
       const geminiRes = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
