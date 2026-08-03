@@ -1,3 +1,37 @@
+let modeloGeminiCache = null;
+
+async function obtenerModeloGeminiValido(apiKey) {
+  if (modeloGeminiCache) return modeloGeminiCache;
+
+  const keyClean = apiKey.trim();
+  const preferredModels = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b", "gemini-1.5-pro", "gemini-2.0-flash-exp"];
+
+  try {
+    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${keyClean}`);
+    if (listRes.ok) {
+      const listData = await listRes.json();
+      if (Array.isArray(listData.models)) {
+        const availableNames = listData.models
+          .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes("generateContent"))
+          .map(m => m.name.replace("models/", ""));
+
+        const matched = preferredModels.find(c => availableNames.includes(c))
+                     || availableNames.find(n => n.includes("flash"))
+                     || availableNames[0];
+
+        if (matched) {
+          modeloGeminiCache = matched;
+          return matched;
+        }
+      }
+    }
+  } catch (e) {
+    console.warn("No se pudo consultar ListModels de Gemini:", e.message);
+  }
+
+  return "gemini-1.5-flash";
+}
+
 function validarMessages(messages) {
   if (!Array.isArray(messages) || messages.length < 1 || messages.length > 30) return false;
 
@@ -67,7 +101,9 @@ export default async function handler(req, res) {
             const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
             const base64Data = base64Url.split(",")[1];
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
+            const targetModel = await obtenerModeloGeminiValido(GEMINI_API_KEY);
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
+            
             const geminiRes = await fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -97,7 +133,7 @@ export default async function handler(req, res) {
                   error: "⏳ Límite de solicitudes de Google Gemini alcanzado. Reintenta en 30 segundos."
                 });
               }
-              return res.status(400).json({ error: `Gemini Error: ${errText}` });
+              return res.status(400).json({ error: `Gemini Error (${targetModel}): ${errText}` });
             }
           }
         } catch(errGemini) {
@@ -133,7 +169,9 @@ export default async function handler(req, res) {
 
     if (GEMINI_API_KEY) {
       const textMsg = body.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY.trim()}`;
+      const targetModel = await obtenerModeloGeminiValido(GEMINI_API_KEY);
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
+      
       const geminiRes = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
