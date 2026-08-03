@@ -40,7 +40,7 @@ function obtenerGeminiKeys() {
     if (/gemini|google_api|google_key/i.test(envKey)) {
       const val = process.env[envKey];
       if (val && typeof val === "string") {
-        val.split(",").map(k => k.trim()).filter(Boolean).forEach(k => keysSet.add(k));
+        val.split(",").map(k => k.trim().replace(/^["']|["']$/g, "")).filter(Boolean).forEach(k => keysSet.add(k));
       }
     }
   }
