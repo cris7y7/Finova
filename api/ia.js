@@ -77,7 +77,7 @@ export default async function handler(req, res) {
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-                "HTTP-Referer": "https://novyra-eight.vercel.app",
+                "HTTP-Referer": req.headers.referer || "https://novyra.vercel.app",
                 "X-Title": "NOVYRA App"
               },
               body: JSON.stringify({

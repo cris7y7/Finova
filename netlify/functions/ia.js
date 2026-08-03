@@ -92,7 +92,7 @@ exports.handler = async function(event, context) {
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-                "HTTP-Referer": "https://novyra-eight.vercel.app",
+                "HTTP-Referer": (event.headers && (event.headers.referer || event.headers.Referer)) || "https://novyra.vercel.app",
                 "X-Title": "NOVYRA App"
               },
               body: JSON.stringify({
