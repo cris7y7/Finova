@@ -59,7 +59,7 @@ exports.handler = async function(event, context) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+  const OPENROUTER_API_KEY = (process.env.OPENROUTER_API_KEY || "").trim().replace(/^["']|["']$/g, "");
   const geminiKeys = obtenerGeminiKeys();
 
   if (!GROQ_API_KEY && !OPENROUTER_API_KEY && geminiKeys.length === 0) {
@@ -78,18 +78,21 @@ exports.handler = async function(event, context) {
       if (OPENROUTER_API_KEY) {
         try {
           const openRouterModels = [
-            "meta-llama/llama-3.2-11b-vision-instruct:free",
+            "openrouter/free",
             "google/gemini-2.0-flash-exp:free",
+            "meta-llama/llama-3.2-11b-vision-instruct:free",
             "qwen/qwen-2-vl-7b-instruct:free"
           ];
+
+          let lastOrErr = "";
 
           for (const orModel of openRouterModels) {
             const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
-                "HTTP-Referer": "https://novyra.app",
+                "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+                "HTTP-Referer": "https://novyra-eight.vercel.app",
                 "X-Title": "NOVIRA App"
               },
               body: JSON.stringify({
@@ -100,13 +103,20 @@ exports.handler = async function(event, context) {
               })
             });
 
+            const orData = await orRes.json();
             if (orRes.ok) {
-              const orData = await orRes.json();
               return json(200, event, orData);
+            } else {
+              lastOrErr = orData.error?.message || `HTTP ${orRes.status}`;
+              console.warn(`OpenRouter ${orModel} error (${orRes.status}):`, lastOrErr);
             }
           }
+
+          if (lastOrErr) {
+            return json(400, event, { error: `OpenRouter Error: ${lastOrErr}` });
+          }
         } catch(errOR) {
-          console.warn("OpenRouter Vision fallback failed:", errOR.message);
+          return json(500, event, { error: `Error en OpenRouter: ${errOR.message}` });
         }
       }
 
@@ -191,12 +201,12 @@ exports.handler = async function(event, context) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
-          "HTTP-Referer": "https://novyra.app",
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "HTTP-Referer": "https://novyra-eight.vercel.app",
           "X-Title": "NOVIRA App"
         },
         body: JSON.stringify({
-          model: "meta-llama/llama-3.3-70b-instruct:free",
+          model: "openrouter/free",
           messages: body.messages,
           max_tokens: 1500,
           temperature: 0.3

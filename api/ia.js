@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+  const OPENROUTER_API_KEY = (process.env.OPENROUTER_API_KEY || "").trim().replace(/^["']|["']$/g, "");
   const geminiKeys = obtenerGeminiKeys();
 
   if (!GROQ_API_KEY && !OPENROUTER_API_KEY && geminiKeys.length === 0) {
@@ -59,22 +59,25 @@ export default async function handler(req, res) {
 
     // 1. Si es Visión / OCR (foto de factura)
     if (esVision) {
-      // 1.A. Probar con OpenRouter API si está configurada (Modelos de Visión Gratis sin límites severos)
+      // 1.A. Usar OpenRouter si OPENROUTER_API_KEY está presente
       if (OPENROUTER_API_KEY) {
         try {
           const openRouterModels = [
-            "meta-llama/llama-3.2-11b-vision-instruct:free",
+            "openrouter/free",
             "google/gemini-2.0-flash-exp:free",
+            "meta-llama/llama-3.2-11b-vision-instruct:free",
             "qwen/qwen-2-vl-7b-instruct:free"
           ];
+
+          let lastOrErr = "";
 
           for (const orModel of openRouterModels) {
             const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
-                "HTTP-Referer": "https://novyra.app",
+                "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+                "HTTP-Referer": "https://novyra-eight.vercel.app",
                 "X-Title": "NOVIRA App"
               },
               body: JSON.stringify({
@@ -85,17 +88,24 @@ export default async function handler(req, res) {
               })
             });
 
+            const orData = await orRes.json();
             if (orRes.ok) {
-              const orData = await orRes.json();
               return res.status(200).json(orData);
+            } else {
+              lastOrErr = orData.error?.message || `HTTP ${orRes.status}`;
+              console.warn(`OpenRouter ${orModel} error (${orRes.status}):`, lastOrErr);
             }
           }
+
+          if (lastOrErr) {
+            return res.status(400).json({ error: `OpenRouter Error: ${lastOrErr}` });
+          }
         } catch(errOR) {
-          console.warn("OpenRouter Vision fallback failed:", errOR.message);
+          return res.status(500).json({ error: `Error en OpenRouter: ${errOR.message}` });
         }
       }
 
-      // 1.B. Probar con Gemini API
+      // 1.B. Fallback a Gemini API si hay Gemini Keys
       if (geminiKeys.length > 0) {
         try {
           const userMsg = body.messages.find(m => m.role === "user");
@@ -172,18 +182,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable OPENROUTER_API_KEY o GEMINI_API_KEY." });
     }
 
-    // 2. Si es Chat o Reporte de Texto (Usar Groq / OpenRouter / Gemini)
+    // 2. Si es Chat o Reporte de Texto (Usar OpenRouter / Groq / Gemini)
     if (OPENROUTER_API_KEY) {
       const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
-          "HTTP-Referer": "https://novyra.app",
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "HTTP-Referer": "https://novyra-eight.vercel.app",
           "X-Title": "NOVIRA App"
         },
         body: JSON.stringify({
-          model: "meta-llama/llama-3.3-70b-instruct:free",
+          model: "openrouter/free",
           messages: body.messages,
           max_tokens: 1500,
           temperature: 0.3
