@@ -1,37 +1,3 @@
-let modeloGeminiCache = null;
-
-async function obtenerModeloGeminiValido(apiKey) {
-  if (modeloGeminiCache) return modeloGeminiCache;
-
-  const keyClean = apiKey.trim();
-  const preferredModels = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b", "gemini-1.5-pro", "gemini-2.0-flash-exp"];
-
-  try {
-    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${keyClean}`);
-    if (listRes.ok) {
-      const listData = await listRes.json();
-      if (Array.isArray(listData.models)) {
-        const availableNames = listData.models
-          .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes("generateContent"))
-          .map(m => m.name.replace("models/", ""));
-
-        const matched = preferredModels.find(c => availableNames.includes(c))
-                     || availableNames.find(n => n.includes("flash"))
-                     || availableNames[0];
-
-        if (matched) {
-          modeloGeminiCache = matched;
-          return matched;
-        }
-      }
-    }
-  } catch (e) {
-    console.warn("No se pudo consultar ListModels de Gemini:", e.message);
-  }
-
-  return "gemini-1.5-flash";
-}
-
 function validarMessages(messages) {
   if (!Array.isArray(messages) || messages.length < 1 || messages.length > 30) return false;
 
@@ -45,6 +11,18 @@ function validarMessages(messages) {
     }
     return false;
   });
+}
+
+function obtenerGeminiKeys() {
+  const raw = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY || process.env.GEMINI_APIKEY || "";
+  if (!raw) {
+    const dynamicKeyName = Object.keys(process.env).find(k => /gemini|google_api/i.test(k));
+    if (dynamicKeyName && process.env[dynamicKeyName]) {
+      return process.env[dynamicKeyName].split(",").map(k => k.trim()).filter(Boolean);
+    }
+    return [];
+  }
+  return raw.split(",").map(k => k.trim()).filter(Boolean);
 }
 
 export default async function handler(req, res) {
@@ -61,16 +39,9 @@ export default async function handler(req, res) {
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
-  let GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY || process.env.GEMINI_APIKEY;
+  const geminiKeys = obtenerGeminiKeys();
 
-  if (!GEMINI_API_KEY) {
-    const dynamicKeyName = Object.keys(process.env).find(k => /gemini|google_api/i.test(k));
-    if (dynamicKeyName) {
-      GEMINI_API_KEY = process.env[dynamicKeyName];
-    }
-  }
-
-  if (!GROQ_API_KEY && !GEMINI_API_KEY) {
+  if (!GROQ_API_KEY && geminiKeys.length === 0) {
     return res.status(500).json({ error: "Faltan las API Keys de IA. Por favor agrega GROQ_API_KEY o GEMINI_API_KEY en las variables de entorno." });
   }
 
@@ -84,7 +55,7 @@ export default async function handler(req, res) {
 
     // 1. Si es Visión / OCR (foto de factura)
     if (esVision) {
-      if (GEMINI_API_KEY) {
+      if (geminiKeys.length > 0) {
         try {
           const userMsg = body.messages.find(m => m.role === "user");
           let base64Url = "";
@@ -101,40 +72,46 @@ export default async function handler(req, res) {
             const mimeType = base64Url.split(";")[0].split(":")[1] || "image/jpeg";
             const base64Data = base64Url.split(",")[1];
 
-            const targetModel = await obtenerModeloGeminiValido(GEMINI_API_KEY);
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
-            
-            const geminiRes = await fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{
-                  parts: [
-                    { inline_data: { mime_type: mimeType, data: base64Data } },
-                    { text: promptText }
-                  ]
-                }]
-              })
-            });
+            let lastErrText = "";
 
-            const geminiData = await geminiRes.json();
+            // Probar las llaves disponibles (con rotación rápida en caso de cuota)
+            for (const key of geminiKeys) {
+              const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+              const geminiRes = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  contents: [{
+                    parts: [
+                      { inline_data: { mime_type: mimeType, data: base64Data } },
+                      { text: promptText }
+                    ]
+                  }]
+                })
+              });
 
-            if (geminiRes.ok) {
-              const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              if (textOut) {
-                return res.status(200).json({
-                  choices: [{ message: { content: textOut } }]
-                });
+              const geminiData = await geminiRes.json();
+
+              if (geminiRes.ok) {
+                const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                if (textOut) {
+                  return res.status(200).json({
+                    choices: [{ message: { content: textOut } }]
+                  });
+                }
+              } else {
+                lastErrText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+                console.warn("Gemini key error, intentando siguiente llave si existe:", lastErrText);
               }
-            } else {
-              const errText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
-              if (geminiRes.status === 429 || errText.toLowerCase().includes("quota") || errText.toLowerCase().includes("exceeded")) {
-                return res.status(429).json({
-                  error: "⏳ Límite de solicitudes de Google Gemini alcanzado. Reintenta en 30 segundos."
-                });
-              }
-              return res.status(400).json({ error: `Gemini Error (${targetModel}): ${errText}` });
             }
+
+            if (lastErrText.toLowerCase().includes("quota") || lastErrText.toLowerCase().includes("exceeded")) {
+              return res.status(429).json({
+                error: "⏳ Límite de cuota alcanzado en Gemini. Reintenta en unos segundos o agrega una 2da API Key en Vercel."
+              });
+            }
+
+            return res.status(400).json({ error: `Gemini Error: ${lastErrText}` });
           }
         } catch(errGemini) {
           return res.status(500).json({ error: `Error conectando con Gemini: ${errGemini.message}` });
@@ -144,7 +121,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable GEMINI_API_KEY en tu proyecto." });
     }
 
-    // 2. Si es Chat o Reporte de Texto
+    // 2. Si es Chat o Reporte de Texto (Usar Groq si está disponible para velocidad ilimitada)
     if (GROQ_API_KEY) {
       const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -167,11 +144,9 @@ export default async function handler(req, res) {
       return res.status(groqRes.status).json({ error: data.error?.message || "Error en Groq API" });
     }
 
-    if (GEMINI_API_KEY) {
+    if (geminiKeys.length > 0) {
       const textMsg = body.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
-      const targetModel = await obtenerModeloGeminiValido(GEMINI_API_KEY);
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${GEMINI_API_KEY.trim()}`;
-      
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKeys[0]}`;
       const geminiRes = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
