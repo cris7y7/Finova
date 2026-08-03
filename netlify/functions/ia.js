@@ -35,15 +35,16 @@ function validarMessages(messages) {
 }
 
 function obtenerGeminiKeys() {
-  const raw = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_KEY || process.env.GEMINI_APIKEY || "";
-  if (!raw) {
-    const dynamicKeyName = Object.keys(process.env).find(k => /gemini|google_api/i.test(k));
-    if (dynamicKeyName && process.env[dynamicKeyName]) {
-      return process.env[dynamicKeyName].split(",").map(k => k.trim()).filter(Boolean);
+  const keysSet = new Set();
+  for (const envKey of Object.keys(process.env)) {
+    if (/gemini|google_api|google_key/i.test(envKey)) {
+      const val = process.env[envKey];
+      if (val && typeof val === "string") {
+        val.split(",").map(k => k.trim()).filter(Boolean).forEach(k => keysSet.add(k));
+      }
     }
-    return [];
   }
-  return raw.split(",").map(k => k.trim()).filter(Boolean);
+  return Array.from(keysSet);
 }
 
 exports.handler = async function(event, context) {
