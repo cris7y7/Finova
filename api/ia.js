@@ -1,3 +1,5 @@
+let workingModelCache = null;
+
 function validarMessages(messages) {
   if (!Array.isArray(messages) || messages.length < 1 || messages.length > 30) return false;
 
@@ -73,39 +75,49 @@ export default async function handler(req, res) {
             const base64Data = base64Url.split(",")[1];
 
             let lastErrText = "";
+            let isQuotaErr = false;
 
-            // Probar las llaves disponibles (con rotación rápida en caso de cuota)
+            const modelsToTry = workingModelCache
+              ? [workingModelCache]
+              : ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"];
+
             for (const key of geminiKeys) {
-              const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
-              const geminiRes = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  contents: [{
-                    parts: [
-                      { inline_data: { mime_type: mimeType, data: base64Data } },
-                      { text: promptText }
-                    ]
-                  }]
-                })
-              });
+              for (const model of modelsToTry) {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+                const geminiRes = await fetch(url, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    contents: [{
+                      parts: [
+                        { inline_data: { mime_type: mimeType, data: base64Data } },
+                        { text: promptText }
+                      ]
+                    }]
+                  })
+                });
 
-              const geminiData = await geminiRes.json();
+                const geminiData = await geminiRes.json();
 
-              if (geminiRes.ok) {
-                const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                if (textOut) {
-                  return res.status(200).json({
-                    choices: [{ message: { content: textOut } }]
-                  });
+                if (geminiRes.ok) {
+                  const textOut = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                  if (textOut) {
+                    workingModelCache = model; // Memorizar el modelo activo que funciona
+                    return res.status(200).json({
+                      choices: [{ message: { content: textOut } }]
+                    });
+                  }
+                } else {
+                  lastErrText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
+                  if (geminiRes.status === 429 || lastErrText.toLowerCase().includes("quota") || lastErrText.toLowerCase().includes("exceeded")) {
+                    isQuotaErr = true;
+                    break; // Probar siguiente API key
+                  }
                 }
-              } else {
-                lastErrText = geminiData.error?.message || `HTTP ${geminiRes.status}`;
-                console.warn("Gemini key error, intentando siguiente llave si existe:", lastErrText);
               }
             }
 
-            if (lastErrText.toLowerCase().includes("quota") || lastErrText.toLowerCase().includes("exceeded")) {
+            if (isQuotaErr) {
               return res.status(429).json({
                 error: "⏳ Límite de cuota alcanzado en Gemini. Reintenta en unos segundos o agrega una 2da API Key en Vercel."
               });
@@ -121,7 +133,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "El servicio de OCR requiere configurar la variable GEMINI_API_KEY en tu proyecto." });
     }
 
-    // 2. Si es Chat o Reporte de Texto (Usar Groq si está disponible para velocidad ilimitada)
+    // 2. Si es Chat o Reporte de Texto
     if (GROQ_API_KEY) {
       const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -146,7 +158,9 @@ export default async function handler(req, res) {
 
     if (geminiKeys.length > 0) {
       const textMsg = body.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKeys[0]}`;
+      const model = workingModelCache || "gemini-2.0-flash";
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKeys[0]}`;
+      
       const geminiRes = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
