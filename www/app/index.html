@@ -2391,12 +2391,78 @@
       margin: 16px 0;
     }
 
+    /* ══ REGISTRO DE GASTO HERO FORM ══ */
+    .monto-hero-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--card2);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 6px 14px;
+      margin-bottom: 10px;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .monto-hero-wrap:focus-within {
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3.5px var(--verde-xs), 0 4px 16px rgba(30, 168, 78, 0.12);
+      background: var(--input2);
+    }
+
+    .monto-hero-input {
+      flex: 1;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      font-size: 26px !important;
+      font-weight: 800 !important;
+      color: var(--verde) !important;
+      letter-spacing: -0.5px;
+      padding: 6px 0 !important;
+      margin: 0 !important;
+      outline: none !important;
+    }
+
+    .monto-hero-sym {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--hint);
+      margin-right: 8px;
+      user-select: none;
+    }
+
+    .btn-calc-hero {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--input);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .btn-calc-hero:hover {
+      background: var(--input2);
+      color: var(--text);
+      border-color: var(--border2);
+      transform: scale(1.05);
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
-      padding: 3px 10px;
+      gap: 4px;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       background: var(--input);
       border: 1px solid var(--border);
@@ -2404,13 +2470,83 @@
       margin-right: 6px;
       margin-top: 6px;
       cursor: pointer;
-      transition: all .2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .tag:hover {
+      border-color: var(--border2);
+      color: var(--text);
+      transform: translateY(-1px);
     }
 
     .tag.sel {
-      background: rgba(34, 197, 94, .1);
-      border-color: var(--verde);
+      background: var(--verde-sm);
+      border-color: rgba(34, 197, 94, 0.35);
       color: var(--verde);
+      box-shadow: 0 2px 8px var(--verde-xs);
+    }
+
+    .tag#et-lujo.sel {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+    }
+
+    .tag#et-urgente.sel {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .tag#et-ahorro.sel {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+    }
+
+    .foto-recibo-wrap {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .foto-recibo-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .foto-recibo-btns button {
+      flex: 1;
+      margin-top: 4px;
+      padding: 9px 12px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    #btnGasto {
+      margin-top: 14px;
+      padding: 13px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1ea84e 0%, #169343 100%);
+      box-shadow: 0 6px 20px rgba(30, 168, 78, 0.25);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #btnGasto:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 24px rgba(30, 168, 78, 0.38);
+    }
+
+    #btnGasto:active {
+      transform: scale(0.97);
     }
 
     .info-box {
@@ -3566,53 +3702,74 @@
 
       <!-- Formulario agregar gasto — siempre visible -->
       <div class="card">
-        <h3 id="L-h-registro"></h3>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <div class="input-icon-wrap" style="flex:1;">
-            <input type="number" id="monto" min="0" style="margin-top:0;">
-            <span class="input-icon" id="monedaSym">$</span>
-          </div>
-          <button onclick="abrirCalc()" class="btn-gris btn-sm"
-            style="flex-shrink:0;height:44px;width:44px;margin-top:0;padding:0;">
+        <h3 id="L-h-registro">
+          <i data-lucide="plus-circle" style="width:18px;height:18px;color:var(--verde);"></i>
+          <span>Registrar Gasto</span>
+        </h3>
+
+        <!-- Monto Hero Input Widget -->
+        <div class="monto-hero-wrap">
+          <span class="monto-hero-sym" id="monedaSym">$</span>
+          <input type="number" id="monto" min="0" placeholder="0" class="monto-hero-input" autocomplete="off" step="any">
+          <button type="button" onclick="abrirCalc()" class="btn-calc-hero" title="Calculadora">
             <i data-lucide="calculator" style="width:18px;height:18px;"></i>
           </button>
         </div>
-        <input type="date" id="fechaGasto">
+
+        <!-- Row: Fecha y Categoría -->
+        <div class="input-row" style="margin-top:6px;">
+          <div>
+            <input type="date" id="fechaGasto" style="margin-top:0;">
+          </div>
+          <div>
+            <select id="categoria" style="margin-top:0;"></select>
+          </div>
+        </div>
+
         <div id="fechaChip" class="fecha-chip" style="display:none">
           <i data-lucide="calendar" style="width:12px;height:12px;"></i> <span id="fechaTxt"></span>
         </div>
-        <select id="categoria"></select>
-        <input type="text" id="nuevaCat">
-        <button class="btn-gris" onclick="agregarCategoria()"><span id="L-addcat"></span></button>
-        <textarea id="nota" rows="2" style="margin-top:9px;"></textarea>
-        <div style="margin-top:8px;">
-          <div style="font-size:11px;color:var(--hint);margin-bottom:5px;" id="L-etiquetaLabel"></div>
+
+        <!-- Inline agregar nueva categoría -->
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <input type="text" id="nuevaCat" style="margin-top:0;flex:1;" placeholder="Nueva categoría custom...">
+          <button class="btn-gris btn-sm" onclick="agregarCategoria()" style="width:auto;margin-top:0;padding:0 14px;"><span id="L-addcat"></span></button>
+        </div>
+
+        <!-- Concepto / Nota -->
+        <textarea id="nota" rows="2" style="margin-top:9px;" placeholder="Nota o concepto (ej. Almuerzo con amigos)..."></textarea>
+
+        <!-- Etiquetas & Recibos -->
+        <div style="margin-top:10px;">
+          <div style="font-size:11px;font-weight:700;color:var(--hint);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;" id="L-etiquetaLabel">Etiqueta</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <span class="tag" id="et-ninguna" onclick="selEtiqueta('')">—</span>
-            <span class="tag" id="et-necesario" onclick="selEtiqueta('necesario')">✅ Nec.</span>
+            <span class="tag" id="et-ninguna" onclick="selEtiqueta('')">— Ninguna</span>
+            <span class="tag" id="et-necesario" onclick="selEtiqueta('necesario')">✅ Necesario</span>
             <span class="tag" id="et-lujo" onclick="selEtiqueta('lujo')">💜 Lujo</span>
-            <span class="tag" id="et-urgente" onclick="selEtiqueta('urgente')">🔴 Urg.</span>
+            <span class="tag" id="et-urgente" onclick="selEtiqueta('urgente')">🔴 Urgente</span>
             <span class="tag" id="et-ahorro" onclick="selEtiqueta('ahorro')">💙 Ahorro</span>
           </div>
+
           <div class="foto-recibo-wrap">
-            <div style="font-size:11px;color:var(--hint);margin-bottom:4px;" id="L-fotoLabel">📷 Foto del recibo
-              (opcional)</div>
+            <div style="font-size:11px;font-weight:700;color:var(--hint);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;" id="L-fotoLabel">📷 Foto del recibo (opcional)</div>
             <div class="foto-recibo-btns">
-              <button class="btn-gris" onclick="abrirCamara()" type="button">📷 <span
-                  id="L-fotoCamara">Cámara</span></button>
-              <button class="btn-gris" onclick="abrirGaleria()" type="button">🖼️ <span
-                  id="L-fotoGaleria">Galería</span></button>
+              <button class="btn-gris" onclick="abrirCamara()" type="button">📷 <span id="L-fotoCamara">Cámara</span></button>
+              <button class="btn-gris" onclick="abrirGaleria()" type="button">🖼️ <span id="L-fotoGaleria">Galería</span></button>
             </div>
             <input type="file" id="inputFoto" accept="image/*" style="display:none;" onchange="procesarFoto(event)">
-            <input type="file" id="inputCamara" accept="image/*" capture="environment" style="display:none;"
-              onchange="procesarFoto(event)">
+            <input type="file" id="inputCamara" accept="image/*" capture="environment" style="display:none;" onchange="procesarFoto(event)">
             <div id="fotoPreviewWrap" style="display:none;" class="foto-preview-wrap">
               <img id="fotoPreview" class="foto-preview" onclick="verFotoCompleta(this.src)">
               <button class="foto-delete" onclick="eliminarFotoTemp()">✕</button>
             </div>
           </div>
         </div>
-        <button id="btnGasto" onclick="agregarGasto()"><span id="L-btnGasto"></span></button>
+
+        <!-- Submit Button -->
+        <button id="btnGasto" onclick="agregarGasto()">
+          <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+          <span id="L-btnGasto">Guardar gasto</span>
+        </button>
       </div>
 
       <!-- Resumen stats — siempre visible -->
