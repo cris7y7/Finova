@@ -9031,31 +9031,48 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
 
         const btn = document.getElementById("btnAnalizarFactura");
         btn.disabled = true;
-        btn.innerHTML = `<span class="spinner"></span>${idioma === "es" ? "Analizando..." : "Analyzing..."}`;
+        btn.innerHTML = `<span class="spinner"></span>${idioma === "es" ? "Comprimiendo y analizando..." : "Compressing and analyzing..."}`;
 
         try {
-          const base64Data = fotoTempBase64.split(",")[1];
-          const mimeType = fotoTempBase64.split(";")[0].split(":")[1];
+          // Comprimir imagen a máximo 1200px para carga ultrarrápida
+          const imgBase64List = await new Promise((resolve) => {
+            comprimirImagen(fotoTempBase64, 1200, 0.85, (compressed) => resolve(compressed));
+          });
+
+          const base64Data = imgBase64List.split(",")[1];
+          const mimeType = imgBase64List.split(";")[0].split(":")[1] || "image/jpeg";
 
           const prompt = idioma === "es"
-            ? `Analiza esta imagen de una factura o recibo y extrae la información. Responde SOLO con un JSON válido sin texto adicional, con este formato exacto:
+            ? `Analiza detalladamente esta imagen de un recibo, tiquete o factura de compra y extrae los datos principales.
+Responde ÚNICAMENTE con un objeto JSON válido sin bloques markdown ni texto adicional, con esta estructura exacta:
 {
   "monto": 25000,
   "categoria": "Comida",
-  "fecha": "2026-06-07",
-  "nota": "descripción breve del gasto"
+  "fecha": "YYYY-MM-DD",
+  "nota": "Nombre del Comercio - Detalle breve"
 }
-Para la categoría usa una de estas: Comida, Transporte, Ocio, Servicios, Salud, Educación, Ropa, Otros.
-Si no puedes leer algún campo, usa null.`
-            : `Analyze this receipt image and extract the information. Respond ONLY with valid JSON, no additional text:
+
+REGLAS DE EXTRACCIÓN:
+1. "monto": Busca el "TOTAL", "TOTAL A PAGAR", "VALOR NETO" o "GRAN TOTAL" cobrado. Devuelve SOLO el número entero (sin puntos de miles, comas ni símbolos de moneda). Si ves 25.000 COP, devuelve 25000.
+2. "categoria": Clasifica estrictamente en UNA de estas opciones según los ítems y el lugar: "Comida" (supermercado, restaurantes, cafés, alimentos), "Transporte" (gasolina, uber, peaje, pasajes), "Ocio" (cine, entretenimiento, bares), "Servicios" (luz, agua, internet, suscripciones, servicios públicos), "Salud" (farmacia, medicina, consultas), "Educación", "Ropa", "Otros".
+3. "fecha": Fecha del tiquete en formato YYYY-MM-DD. Si no tiene año, asume el año actual (${new Date().getFullYear()}). Si no la lees, usa null.
+4. "nota": Formato "Establecimiento - Productos principales". Ejemplo: "Éxito - Leche, Pan y Café". Máximo 60 caracteres.
+Si no logras leer algún campo, asigna null.`
+            : `Analyze this receipt or invoice image in detail and extract key information.
+Respond ONLY with a valid JSON object without markdown blocks or extra text, using this exact format:
 {
   "monto": 25000,
   "categoria": "Food",
-  "fecha": "2026-06-07",
-  "nota": "brief description"
+  "fecha": "YYYY-MM-DD",
+  "nota": "Merchant Name - Short items description"
 }
-Use one of these categories: Food, Transport, Entertainment, Services, Health, Education, Clothing, Others.
-If you can't read a field, use null.`;
+
+RULES:
+1. "monto": Extract the final "TOTAL", "TOTAL DUE", or "GRAND TOTAL". Return ONLY an integer number without currency symbols or thousand separators.
+2. "categoria": Map strictly to ONE of: "Food", "Transport", "Entertainment", "Services", "Health", "Education", "Clothing", "Others".
+3. "fecha": Date in YYYY-MM-DD format.
+4. "nota": Format as "Merchant Name - Key items". Max 60 chars.
+Assign null if unreadable.`;
 
           const res = await fetch(IA_PROXY_URL, {
             method: "POST",
@@ -9107,24 +9124,41 @@ If you can't read a field, use null.`;
               : "Invalid response format.");
           }
 
-          // Rellenar campos
-          if (resultado.monto) {
-            document.getElementById("monto").value = resultado.monto;
+          // Rellenar campos con sanitización avanzada
+          if (resultado.monto !== undefined && resultado.monto !== null) {
+            let valMonto = resultado.monto;
+            if (typeof valMonto === "string") {
+              // Limpiar símbolos de moneda y convertir puntos/comas de formato latino o inglés
+              valMonto = valMonto.replace(/[^\d.,]/g, "");
+              if (valMonto.includes(".") && valMonto.includes(",")) {
+                valMonto = valMonto.replace(/\./g, "").replace(",", ".");
+              } else if (valMonto.includes(".") && valMonto.split(".")[1].length === 3) {
+                valMonto = valMonto.replace(/\./g, "");
+              } else if (valMonto.includes(",")) {
+                valMonto = valMonto.replace(",", ".");
+              }
+              valMonto = parseFloat(valMonto);
+            }
+            if (!isNaN(valMonto) && valMonto > 0) {
+              document.getElementById("monto").value = valMonto;
+            }
           }
-          if (resultado.fecha) {
+
+          if (resultado.fecha && /^\d{4}-\d{2}-\d{2}$/.test(resultado.fecha)) {
             document.getElementById("fechaGasto").value = resultado.fecha;
             actualizarChip();
           }
+
           if (resultado.nota) {
-            document.getElementById("nota").value = resultado.nota;
+            document.getElementById("nota").value = String(resultado.nota).trim();
           }
+
           if (resultado.categoria) {
             const sel = document.getElementById("categoria");
-            // Buscar categoría más cercana
-            const cats = Array.from(sel.options).map(o => o.value.toLowerCase());
-            const catIA = resultado.categoria.toLowerCase();
-            const match = cats.find(c => c.includes(catIA) || catIA.includes(c));
-            if (match) sel.value = Array.from(sel.options).find(o => o.value.toLowerCase() === match)?.value;
+            const cats = Array.from(sel.options).map(o => ({ val: o.value, low: o.value.toLowerCase() }));
+            const catIA = String(resultado.categoria).toLowerCase();
+            const match = cats.find(c => c.low === catIA || c.low.includes(catIA) || catIA.includes(c.low));
+            if (match) sel.value = match.val;
           }
 
           btn.disabled = false;
