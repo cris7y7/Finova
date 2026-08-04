@@ -35,14 +35,14 @@
 
     :root {
       --verde: #1ea84e;
-      --verde-d: #168d40;
-      --verde-xs: rgba(30, 168, 78, .08);
+      --verde-d: #178a40;
+      --verde-xs: rgba(30, 168, 78, .07);
       --verde-sm: rgba(30, 168, 78, .15);
-      --bg: #090a0f;
-      --card: #12131a;
-      --card2: #181922;
-      --input: #1f202b;
-      --input2: #252736;
+      --bg: #040508;
+      --card: #0d0e14;
+      --card2: #14151e;
+      --input: #1a1b24;
+      --input2: #21222e;
       --muted: #8292a4;
       --hint: #475869;
       --hint2: #344352;
@@ -5908,14 +5908,19 @@ Be specific with numbers and very concise.`;
         "Otros": "📦"
       };
 
+      function normalizarTexto(txt) {
+        return (txt || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      }
+
       const KEYWORDS_CAT = {
-        "Comida": ["almuerzo", "cena", "desayuno", "comida", "restaurante", "rappi", "domicilio", "mcdonalds", "kfc", "burger", "pizza", "sushi", "starbucks", "café", "cafe", "panaderia", "panadería", "mercado", "éxito", "exito", "jumbo", "olimpica", "d1", "ara", "supermercado", "compras", "frutas", "verduras"],
-        "Transporte": ["uber", "didi", "cabify", "indriver", "taxi", "bus", "metro", "pasaje", "gasolina", "peaje", "parqueadero", "taller", "mecanico", "gasolinera", "bici"],
-        "Ocio": ["cine", "pelicula", "teatro", "concierto", "fiesta", "bar", "cerveza", "trago", "juego", "steam", "playstation", "xbox", "spotify", "netflix", "hbo", "disney", "prime"],
-        "Servicios": ["luz", "agua", "gas", "internet", "wifi", "arriendo", "alquiler", "celular", "claropay", "tigo", "movistar", "plan", "administracion", "recarga"],
-        "Salud": ["farmacia", "drogueria", "droguería", "medico", "médico", "doctor", "hospital", "clinica", "examen", "remedio", "pastillas", "optica", "dentista"],
-        "Mascotas": ["perro", "gato", "veterinario", "mascota", "comida perro", "comida gato", "purina"],
-        "Viajes": ["hotel", "vuelo", "tiquete", "pasaje avion", "airbnb", "resort", "hospedaje"],
+        "Comida": ["almuerzo", "cena", "desayuno", "comida", "restaurante", "rappi", "domicilio", "mcdonalds", "kfc", "burger", "pizza", "sushi", "starbucks", "cafe", "panaderia", "mercado", "exito", "jumbo", "olimpica", "d1", "ara", "supermercado", "compras", "frutas", "verduras", "carne", "pollo", "pan", "leche", "huevo", "snack"],
+        "Transporte": ["uber", "didi", "cabify", "indriver", "taxi", "bus", "metro", "pasaje", "gasolina", "peaje", "parqueadero", "taller", "mecanico", "gasolinera", "bici", "llanta", "aceite"],
+        "Ocio": ["cine", "pelicula", "teatro", "concierto", "fiesta", "bar", "cerveza", "trago", "juego", "steam", "playstation", "xbox", "spotify", "netflix", "hbo", "disney", "prime", "boleta"],
+        "Servicios": ["luz", "agua", "gas", "internet", "wifi", "arriendo", "alquiler", "celular", "claropay", "tigo", "movistar", "plan", "administracion", "recarga", "bateria", "baterias", "pila", "pilas", "cargador", "cable", "bombillo", "foco", "ferreteria", "reparacion", "herramienta"],
+        "Hogar": ["bateria", "baterias", "pila", "pilas", "bombillo", "foco", "mueble", "silla", "cama", "sabana", "toalla", "detergente", "jabon", "limpieza", "plato", "vaso", "ferreteria", "hogar"],
+        "Salud": ["farmacia", "drogueria", "medico", "doctor", "hospital", "clinica", "examen", "remedio", "pastillas", "optica", "dentista", "salud", "vitamina"],
+        "Mascotas": ["perro", "gato", "veterinario", "mascota", "purina", "comida perro", "comida gato", "arena"],
+        "Viajes": ["hotel", "vuelo", "tiquete", "pasaje avion", "airbnb", "resort", "hospedaje", "viaje"],
         "Ahorro": ["ahorro", "inversion", "deposito", "transferencia", "banco"]
       };
 
@@ -5923,7 +5928,8 @@ Be specific with numbers and very concise.`;
 
       function getEmojiCat(nombreCat) {
         if (!nombreCat) return "🏷️";
-        let matchKey = Object.keys(CAT_EMOJIS).find(k => nombreCat.toLowerCase().includes(k.toLowerCase()));
+        let nNorm = normalizarTexto(nombreCat);
+        let matchKey = Object.keys(CAT_EMOJIS).find(k => nNorm.includes(normalizarTexto(k)));
         return matchKey ? CAT_EMOJIS[matchKey] : "🏷️";
       }
 
@@ -5963,11 +5969,18 @@ Be specific with numbers and very concise.`;
       }
 
       function detectarAutoCategoria(texto) {
-        if (catManualModificada || !texto || texto.trim().length < 3) return;
-        const lower = texto.toLowerCase();
+        if (!texto || texto.trim().length < 2) return;
+        const norm = normalizarTexto(texto);
         for (const [catName, keywords] of Object.entries(KEYWORDS_CAT)) {
-          if (keywords.some(kw => lower.includes(kw))) {
-            let catMatch = categorias.find(c => c.toLowerCase() === catName.toLowerCase()) || (categorias.includes(catName) ? catName : null);
+          if (keywords.some(kw => norm.includes(normalizarTexto(kw)))) {
+            // Buscar si la categoría existe en categorias del usuario (ignorando mayúsculas/acentos)
+            let catMatch = categorias.find(c => normalizarTexto(c) === normalizarTexto(catName));
+            if (!catMatch) {
+              catMatch = categorias.find(c => normalizarTexto(c).includes(normalizarTexto(catName).slice(0, 4)));
+            }
+            if (!catMatch && (catName === "Servicios" || catName === "Hogar")) {
+              catMatch = categorias.find(c => normalizarTexto(c).includes("otro") || normalizarTexto(c).includes("serv") || normalizarTexto(c).includes("hogar"));
+            }
             if (catMatch) {
               seleccionarCatChip(catMatch, true);
               break;
