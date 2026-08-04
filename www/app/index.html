@@ -4890,12 +4890,18 @@
       function claveP(k) { return `${getPerfilActual()}__${k}`; }
 
       function cargarDatosPerfil() {
-        gastos = JSON.parse(localStorage.getItem(claveP("gastos"))) || [];
-        categorias = JSON.parse(localStorage.getItem(claveP("categorias"))) || ["Comida", "Transporte", "Ocio", "Servicios", "Otros"];
-        presupuesto = JSON.parse(localStorage.getItem(claveP("presupuesto"))) || {};
-        recurrentes = JSON.parse(localStorage.getItem(claveP("recurrentes"))) || [];
-        meta = JSON.parse(localStorage.getItem(claveP("meta"))) || { ahorro: 0, ingreso: 0 };
-        recordatoriosCal = JSON.parse(localStorage.getItem(claveP("recordatoriosCal"))) || {};
+        let gData = localStorage.getItem(claveP("gastos")) || localStorage.getItem("gastos");
+        gastos = gData ? JSON.parse(gData) : [];
+        let cData = localStorage.getItem(claveP("categorias")) || localStorage.getItem("categorias");
+        categorias = cData ? JSON.parse(cData) : ["Comida", "Transporte", "Ocio", "Servicios", "Otros"];
+        let pData = localStorage.getItem(claveP("presupuesto")) || localStorage.getItem("presupuesto");
+        presupuesto = pData ? JSON.parse(pData) : {};
+        let rData = localStorage.getItem(claveP("recurrentes")) || localStorage.getItem("recurrentes");
+        recurrentes = rData ? JSON.parse(rData) : [];
+        let mData = localStorage.getItem(claveP("meta")) || localStorage.getItem("meta");
+        meta = mData ? JSON.parse(mData) : { ahorro: 0, ingreso: 0 };
+        let rcData = localStorage.getItem(claveP("recordatoriosCal")) || localStorage.getItem("recordatoriosCal");
+        recordatoriosCal = rcData ? JSON.parse(rcData) : {};
       }
       function guardarDatosPerfil() {
         localStorage.setItem(claveP("gastos"), JSON.stringify(gastos));
