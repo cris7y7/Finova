@@ -5743,13 +5743,27 @@ Be specific with numbers and very concise.`;
         mostrar();
       }
 
+      function parseFechaLocal(fStr) {
+        if (!fStr) return new Date();
+        if (fStr instanceof Date) return fStr;
+        if (typeof fStr === "number") return new Date(fStr);
+        if (typeof fStr === "string") {
+          let s = fStr.trim();
+          if (s.length === 10 && /^\d{4}-\d{2}-\d{2}$/.test(s)) {
+            let [y, m, d] = s.split("-").map(Number);
+            return new Date(y, m - 1, d, 12, 0, 0);
+          }
+        }
+        return new Date(fStr);
+      }
+
       // ══════════════════════════════════════════
       // FILTROS
       // ══════════════════════════════════════════
       function rellenarFiltros() {
         let meses = {};
         gastos.forEach(g => {
-          let f = new Date(g.fecha);
+          let f = parseFechaLocal(g.fecha);
           let k = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, "0")}`;
           meses[k] = f.toLocaleDateString(T("locale"), { month: "long", year: "numeric" });
         });
@@ -5768,7 +5782,7 @@ Be specific with numbers and very concise.`;
       function mostrar() {
         let hoyStr = new Date().toDateString(), tD = 0, tM = 0, cD = 0, cM = 0;
         gastos.forEach(g => {
-          let f = new Date(g.fecha);
+          let f = parseFechaLocal(g.fecha);
           if (f.toDateString() === hoyStr) { tD += g.monto; cD++; }
           if (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) { tM += g.monto; cM++; }
         });
@@ -5784,7 +5798,7 @@ Be specific with numbers and very concise.`;
 
         // FIX: filtrar con búsqueda real (nota + categoría + monto)
         let filtrados = gastos.filter(g => {
-          let f = new Date(g.fecha);
+          let f = parseFechaLocal(g.fecha);
           let mk = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, "0")}`;
           if (fm && mk !== fm) return false;
           if (fc && g.categoria !== fc) return false;
@@ -5800,15 +5814,15 @@ Be specific with numbers and very concise.`;
         // Ordenar
         if (ordenHistorial === "monto") filtrados.sort((a, b) => b.monto - a.monto);
         else if (ordenHistorial === "cat") filtrados.sort((a, b) => a.categoria.localeCompare(b.categoria));
-        else filtrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        else filtrados.sort((a, b) => parseFechaLocal(b.fecha) - parseFechaLocal(a.fecha));
 
         let html = "";
         if (!filtrados.length) { html = `<div class="empty">${T("sinGastos")}</div>`; }
         else if (ordenHistorial === "fecha") {
           let grupos = {};
           filtrados.forEach(g => {
-            let clave = new Date(g.fecha).toLocaleDateString(T("locale"));
-            if (!grupos[clave]) grupos[clave] = { ts: new Date(g.fecha).getTime(), items: [] };
+            let clave = parseFechaLocal(g.fecha).toLocaleDateString(T("locale"));
+            if (!grupos[clave]) grupos[clave] = { ts: parseFechaLocal(g.fecha).getTime(), items: [] };
             grupos[clave].items.push(g);
           });
           Object.keys(grupos).sort((a, b) => grupos[b].ts - grupos[a].ts).forEach(f => {
@@ -5877,15 +5891,19 @@ Be specific with numbers and very concise.`;
       function analizar() {
         let dias = {}, tot = 0;
         gastos.forEach(g => {
-          let f = new Date(g.fecha);
+          let f = parseFechaLocal(g.fecha);
           if (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) {
             let d = f.getDate(); dias[d] = (dias[d] || 0) + g.monto; tot += g.monto;
           }
         });
-        let vals = Object.values(dias), prom = vals.length ? tot / vals.length : 0;
+        let diaHoyNum = new Date().getDate();
+        let prom = diaHoyNum > 0 ? tot / diaHoyNum : 0;
         let mxD = 0, mxV = 0; for (let d in dias) { if (dias[d] > mxV) { mxV = dias[d]; mxD = d; } }
         let el_p = document.getElementById("promedio"); if (el_p) el_p.innerText = fmtMoneda(prom);
-        let el_m = document.getElementById("mayorGasto"); if (el_m) el_m.innerText = mxD ? `${idioma === "en" ? "Day" : "Día"} ${mxD}` : "—";
+        let el_m = document.getElementById("mayorGasto");
+        if (el_m) {
+          el_m.innerText = mxD ? `${idioma === "en" ? "Day" : "Día"} ${mxD} (${fmtMoneda(mxV)})` : "—";
+        }
       }
 
       // ══════════════════════════════════════════
