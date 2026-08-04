@@ -2456,6 +2456,63 @@
       transform: scale(1.05);
     }
 
+    /* ══ CATEGORY CHIPS BAR ══ */
+    .cat-chips-wrap {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 0 8px;
+      margin-top: 4px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .cat-chips-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--input);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .cat-chip:hover {
+      border-color: var(--border2);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .cat-chip.sel {
+      background: var(--verde-sm);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: var(--verde);
+      font-weight: 700;
+      box-shadow: 0 2px 10px var(--verde-xs);
+    }
+
+    .cat-chip.auto-suggested {
+      animation: autoCatPulse 0.6s ease;
+    }
+
+    @keyframes autoCatPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+      50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+      100% { transform: scale(1); }
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
@@ -3722,8 +3779,14 @@
             <input type="date" id="fechaGasto" style="margin-top:0;">
           </div>
           <div>
-            <select id="categoria" style="margin-top:0;"></select>
+            <select id="categoria" style="margin-top:0;" onchange="renderCatChips(this.value)"></select>
           </div>
+        </div>
+
+        <!-- Selector de Categorías (Chips con Emojis) -->
+        <div style="margin-top:8px;">
+          <div style="font-size:11px;font-weight:700;color:var(--hint);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">Categoría</div>
+          <div id="catChipsContainer" class="cat-chips-wrap"></div>
         </div>
 
         <div id="fechaChip" class="fecha-chip" style="display:none">
@@ -3737,7 +3800,7 @@
         </div>
 
         <!-- Concepto / Nota -->
-        <textarea id="nota" rows="2" style="margin-top:9px;" placeholder="Nota o concepto (ej. Almuerzo con amigos)..."></textarea>
+        <textarea id="nota" rows="2" style="margin-top:9px;" placeholder="Nota o concepto (ej. Almuerzo con amigos)..." oninput="detectarAutoCategoria(this.value)"></textarea>
 
         <!-- Etiquetas & Recibos -->
         <div style="margin-top:10px;">
@@ -5814,14 +5877,95 @@ Be specific with numbers and very concise.`;
       // inicializarDrive();
 
       // ══════════════════════════════════════════
-      // CATEGORÍAS
+      // CATEGORÍAS & AUTO-CATEGORIZACIÓN INTELLIGENT
       // ══════════════════════════════════════════
+      const CAT_EMOJIS = {
+        "Comida": "🍔",
+        "Alimentación": "🍔",
+        "Restaurante": "🍽️",
+        "Mercado": "🛒",
+        "Supermercado": "🛒",
+        "Transporte": "🚗",
+        "Gasolina": "⛽",
+        "Ocio": "🎮",
+        "Entretenimiento": "🎬",
+        "Servicios": "💡",
+        "Hogar": "🏠",
+        "Salud": "💊",
+        "Educación": "📚",
+        "Mascotas": "🐾",
+        "Viajes": "✈️",
+        "Ropa": "👕",
+        "Tecnología": "💻",
+        "Ahorro": "💙",
+        "Suscripciones": "🍿",
+        "Otros": "📦"
+      };
+
+      const KEYWORDS_CAT = {
+        "Comida": ["almuerzo", "cena", "desayuno", "comida", "restaurante", "rappi", "domicilio", "mcdonalds", "kfc", "burger", "pizza", "sushi", "starbucks", "café", "cafe", "panaderia", "panadería", "mercado", "éxito", "exito", "jumbo", "olimpica", "d1", "ara", "supermercado", "compras", "frutas", "verduras"],
+        "Transporte": ["uber", "didi", "cabify", "indriver", "taxi", "bus", "metro", "pasaje", "gasolina", "peaje", "parqueadero", "taller", "mecanico", "gasolinera", "bici"],
+        "Ocio": ["cine", "pelicula", "teatro", "concierto", "fiesta", "bar", "cerveza", "trago", "juego", "steam", "playstation", "xbox", "spotify", "netflix", "hbo", "disney", "prime"],
+        "Servicios": ["luz", "agua", "gas", "internet", "wifi", "arriendo", "alquiler", "celular", "claropay", "tigo", "movistar", "plan", "administracion", "recarga"],
+        "Salud": ["farmacia", "drogueria", "droguería", "medico", "médico", "doctor", "hospital", "clinica", "examen", "remedio", "pastillas", "optica", "dentista"],
+        "Mascotas": ["perro", "gato", "veterinario", "mascota", "comida perro", "comida gato", "purina"],
+        "Viajes": ["hotel", "vuelo", "tiquete", "pasaje avion", "airbnb", "resort", "hospedaje"],
+        "Ahorro": ["ahorro", "inversion", "deposito", "transferencia", "banco"]
+      };
+
+      let catManualModificada = false;
+
+      function getEmojiCat(nombreCat) {
+        if (!nombreCat) return "🏷️";
+        let matchKey = Object.keys(CAT_EMOJIS).find(k => nombreCat.toLowerCase().includes(k.toLowerCase()));
+        return matchKey ? CAT_EMOJIS[matchKey] : "🏷️";
+      }
+
+      function renderCatChips(catSel = null, esAuto = false) {
+        const cont = document.getElementById("catChipsContainer");
+        if (!cont) return;
+
+        let ac = catSel || document.getElementById("categoria")?.value || categorias[0] || "Otros";
+
+        let html = categorias.map(c => {
+          let emoji = getEmojiCat(c);
+          let esActiva = c === ac;
+          let autoClass = (esActiva && esAuto) ? " auto-suggested" : "";
+          return `<span class="cat-chip${esActiva ? " sel" : ""}${autoClass}" onclick="seleccionarCatChip('${c}')">${emoji} ${c}</span>`;
+        }).join("");
+
+        cont.innerHTML = html;
+      }
+
+      function seleccionarCatChip(cat, esAuto = false) {
+        let sel = document.getElementById("categoria");
+        if (sel) sel.value = cat;
+        if (!esAuto) catManualModificada = true;
+        renderCatChips(cat, esAuto);
+      }
+
+      function detectarAutoCategoria(texto) {
+        if (catManualModificada || !texto || texto.trim().length < 3) return;
+        const lower = texto.toLowerCase();
+        for (const [catName, keywords] of Object.entries(KEYWORDS_CAT)) {
+          if (keywords.some(kw => lower.includes(kw))) {
+            let catMatch = categorias.find(c => c.toLowerCase() === catName.toLowerCase()) || (categorias.includes(catName) ? catName : null);
+            if (catMatch) {
+              seleccionarCatChip(catMatch, true);
+              break;
+            }
+          }
+        }
+      }
+
       function cargarCategorias() {
         ["categoria", "presCat", "recCat"].forEach(id => {
           let s = document.getElementById(id);
           if (s) s.innerHTML = categorias.map(c => `<option>${c}</option>`).join("");
         });
+        renderCatChips();
       }
+
       function agregarCategoria() {
         let n = document.getElementById("nuevaCat").value.trim();
         if (!n) return toast(T("tCatVacia"), "warn");
@@ -5947,7 +6091,7 @@ Be specific with numbers and very concise.`;
           etiquetaSel = ""; selEtiqueta("");
           toast(T("tGastoOk")); verificarPresupuesto(cat); verificarLimiteDiario(cop);
         }
-        guardar(); document.getElementById("monto").value = ""; document.getElementById("nota").value = ""; mostrar();
+        guardar(); document.getElementById("monto").value = ""; document.getElementById("nota").value = ""; catManualModificada = false; renderCatChips(); mostrar();
         limpiarFormularioFoto(); programarNotificacionesInteligentes().catch(e => console.warn("Notif:", e));
 
         // Al final de agregarGasto(), después de programarNotificacionesInteligentes
