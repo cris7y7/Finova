@@ -31,80 +31,80 @@
 
     :root {
       --verde: #1ea84e;
-      --verde-d: #178a40;
-      --verde-xs: rgba(30, 168, 78, .07);
-      --verde-sm: rgba(30, 168, 78, .12);
-      --bg: #080808;
-      --card: #111111;
-      --card2: #161616;
-      --input: #1c1c1c;
-      --input2: #202020;
-      --muted: #7a8a99;
-      --hint: #3d4d5c;
-      --hint2: #2d3d4c;
-      --border: rgba(255, 255, 255, 0.07);
-      --border2: rgba(255, 255, 255, 0.10);
-      --text: #e8edf2;
-      --text2: #a0adb8;
-      --shadow: 0 4px 20px rgba(0, 0, 0, .6);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .4);
-      --nav-bg: rgba(8, 8, 8, .97);
+      --verde-d: #168d40;
+      --verde-xs: rgba(30, 168, 78, .08);
+      --verde-sm: rgba(30, 168, 78, .15);
+      --bg: #090a0f;
+      --card: #12131a;
+      --card2: #181922;
+      --input: #1f202b;
+      --input2: #252736;
+      --muted: #8292a4;
+      --hint: #475869;
+      --hint2: #344352;
+      --border: rgba(255, 255, 255, 0.08);
+      --border2: rgba(255, 255, 255, 0.13);
+      --text: #edf2f7;
+      --text2: #a4b3c2;
+      --shadow: 0 8px 30px rgba(0, 0, 0, .45);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, .3);
+      --nav-bg: rgba(14, 15, 21, .94);
       --scheme: dark;
       --radius: 20px;
-      --radius-sm: 12px;
-      --radius-xs: 8px;
-      --font: 'Inter', system-ui, sans-serif;
+      --radius-sm: 14px;
+      --radius-xs: 10px;
+      --font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     /* ══ PALETAS DE COLOR ══ */
     body.paleta-azul {
       --verde: #2563eb;
       --verde-d: #1d4ed8;
-      --verde-xs: rgba(37, 99, 235, .07);
-      --verde-sm: rgba(37, 99, 235, .12);
-      --nav-bg: rgba(8, 8, 8, .97);
+      --verde-xs: rgba(37, 99, 235, .08);
+      --verde-sm: rgba(37, 99, 235, .15);
+      --nav-bg: rgba(14, 15, 21, .94);
     }
 
     body.paleta-morado {
       --verde: #7c3aed;
       --verde-d: #6d28d9;
-      --verde-xs: rgba(124, 58, 237, .07);
-      --verde-sm: rgba(124, 58, 237, .12);
-      --nav-bg: rgba(8, 8, 8, .97);
+      --verde-xs: rgba(124, 58, 237, .08);
+      --verde-sm: rgba(124, 58, 237, .15);
+      --nav-bg: rgba(14, 15, 21, .94);
     }
 
     body.paleta-naranja {
       --verde: #ea580c;
       --verde-d: #c2410c;
-      --verde-xs: rgba(234, 88, 12, .07);
-      --verde-sm: rgba(234, 88, 12, .12);
-      --nav-bg: rgba(8, 8, 8, .97);
+      --verde-xs: rgba(234, 88, 12, .08);
+      --verde-sm: rgba(234, 88, 12, .15);
+      --nav-bg: rgba(14, 15, 21, .94);
     }
 
     body.paleta-teal {
       --verde: #0e9e8e;
       --verde-d: #0a7d6e;
-      --verde-xs: rgba(14, 158, 142, .07);
-      --verde-sm: rgba(14, 158, 142, .12);
-      --nav-bg: rgba(8, 8, 8, .97);
+      --verde-xs: rgba(14, 158, 142, .08);
+      --verde-sm: rgba(14, 158, 142, .15);
+      --nav-bg: rgba(14, 15, 21, .94);
     }
 
     body.light {
-      --bg: #f0f4f8;
+      --bg: #f4f6f9;
       --card: #ffffff;
       --card2: #f8fafc;
-      --input: #eef2f7;
+      --input: #edf2f7;
       --input2: #e2e8f0;
       --muted: #475569;
       --hint: #64748b;
       --hint2: #94a3b8;
-      --border: rgba(0, 0, 0, 0.07);
-      --border2: rgba(0, 0, 0, 0.12);
+      --border: rgba(0, 0, 0, 0.06);
+      --border2: rgba(0, 0, 0, 0.11);
       --text: #0f172a;
       --text2: #1e293b;
-      --shadow: 0 4px 20px rgba(0, 0, 0, .08);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .06);
-      --nav-bg: rgba(255, 255, 255, .97);
+      --shadow: 0 4px 20px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .04);
+      --nav-bg: rgba(255, 255, 255, .95);
       --scheme: light;
     }
 
@@ -118,7 +118,9 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       background: var(--bg);
       color: var(--text);
       margin: 0;
@@ -169,22 +171,26 @@
 
     #toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: #22c55e;
-      color: #052e16;
-      padding: 11px 18px;
-      border-radius: 12px;
+      background: rgba(30, 168, 78, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #032b12;
+      padding: 10px 22px;
+      border-radius: 99px;
       opacity: 0;
-      transition: opacity .3s, bottom .3s;
+      transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), bottom .3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 9999;
       white-space: nowrap;
       font-weight: 600;
       font-size: 13px;
+      letter-spacing: 0.1px;
       pointer-events: none;
       max-width: 90vw;
       text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
 
     #toast.show {
@@ -193,37 +199,39 @@
     }
 
     #toast.error {
-      background: #ef4444;
+      background: rgba(239, 68, 68, 0.95);
       color: #fff;
     }
 
     #toast.warn {
-      background: #f59e0b;
-      color: #1c1917;
+      background: rgba(245, 158, 11, 0.95);
+      color: #1a1202;
     }
 
     .card {
       background: var(--card);
-      border-radius: 18px;
-      padding: 16px;
+      border-radius: var(--radius);
+      padding: 18px;
       margin-bottom: 14px;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      transition: background .3s, border .3s;
+      box-shadow: var(--shadow-sm);
+      transition: background .25s, border-color .25s, box-shadow .25s;
     }
 
     .card h3 {
       margin: 0 0 14px;
       font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
 
     .seccion {
       display: none;
-      animation: fadeIn .2s ease;
+      animation: fadeIn .22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .seccion.activa {
@@ -233,12 +241,12 @@
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(6px)
+        transform: translateY(6px);
       }
 
       to {
         opacity: 1;
-        transform: none
+        transform: none;
       }
     }
 
@@ -246,15 +254,15 @@
     select,
     textarea {
       width: 100%;
-      padding: 11px 13px;
+      padding: 11.5px 14px;
       margin-top: 9px;
-      border-radius: 10px;
+      border-radius: var(--radius-xs);
       border: 1px solid var(--border);
       background: var(--input);
       color: var(--text);
-      font-size: 14px;
+      font-size: 13.5px;
       outline: none;
-      transition: border-color .2s, background .3s;
+      transition: border-color .2s, box-shadow .2s, background .2s;
       font-family: inherit;
       resize: vertical;
     }
@@ -262,12 +270,14 @@
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: rgba(34, 197, 94, .5);
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3px var(--verde-xs);
+      background: var(--input2);
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: var(--hint2);
+      color: var(--hint);
     }
 
     select option {
@@ -305,17 +315,18 @@
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 12px 16px;
       margin-top: 10px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       border: none;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13.5px;
+      letter-spacing: 0.1px;
       cursor: pointer;
-      background: linear-gradient(135deg, #1ea84e, #178a40);
+      background: linear-gradient(135deg, var(--verde), var(--verde-d));
       color: white;
-      box-shadow: 0 2px 10px rgba(30, 168, 78, .15);
-      transition: all .2s;
+      box-shadow: 0 4px 14px var(--verde-xs);
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
       font-family: inherit;
     }
 
@@ -324,22 +335,27 @@
     }
 
     button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(30, 168, 78, .2);
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 18px var(--verde-sm);
     }
 
     .btn-gris {
-      background: linear-gradient(135deg, #334155, #1e293b);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+      background: linear-gradient(135deg, #242b35, #171d26);
+      border: 1px solid var(--border);
+      color: var(--text);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
     }
 
     .btn-gris:hover {
-      box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+      background: linear-gradient(135deg, #2d3643, #1f2733);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+      border-color: var(--border2);
     }
 
     body.light .btn-gris {
       background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
       color: #1e293b;
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .btn-peligro {
@@ -360,19 +376,20 @@
     }
 
     .gasto {
-      padding: 12px;
-      border-radius: 12px;
+      padding: 13px 14px;
+      border-radius: var(--radius-sm);
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       background: var(--card2);
       border: 1px solid var(--border);
-      margin-top: 6px;
-      transition: transform .2s, background .3s;
+      margin-top: 8px;
+      transition: transform .2s, border-color .2s, background .2s;
     }
 
     .gasto:hover {
-      transform: scale(1.01);
+      transform: translateY(-1px);
+      border-color: var(--border2);
     }
 
     .gasto-info {
@@ -776,44 +793,64 @@
       left: 0;
       width: 100%;
       background: var(--nav-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
       justify-content: space-around;
       padding: 8px 0 max(10px, env(safe-area-inset-bottom));
       border-top: 1px solid var(--border);
       z-index: 100;
-      transition: background .3s;
+      transition: background .3s, border-color .3s;
     }
 
     .nav-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
       cursor: pointer;
-      padding: 4px 6px;
-      border-radius: 10px;
-      transition: all .2s;
-      opacity: .4;
+      padding: 4px 8px;
+      border-radius: 12px;
+      transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: .45;
+    }
+
+    .nav-btn:hover:not(.activo) {
+      opacity: .85;
+    }
+
+    .nav-btn:active {
+      transform: scale(0.94);
     }
 
     .nav-btn.activo {
       opacity: 1;
+      transform: translateY(-1px);
     }
 
-    .nav-btn .nav-icon {
+    .nav-btn .nav-icon,
+    .nav-btn svg {
       font-size: 18px;
+      transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), color .2s;
+    }
+
+    .nav-btn.activo .nav-icon,
+    .nav-btn.activo svg {
+      color: var(--verde);
+      transform: scale(1.12);
     }
 
     .nav-btn .nav-label {
-      font-size: 9px;
+      font-size: 9.5px;
+      font-weight: 500;
       color: var(--muted);
       white-space: nowrap;
+      transition: color .2s, font-weight .2s;
     }
 
     .nav-btn.activo .nav-label {
       color: var(--verde);
+      font-weight: 700;
     }
 
     /* ══ SECCIÓN FINANZAS ══ */
@@ -1817,11 +1854,15 @@
 
     .mini-nav {
       display: flex;
-      gap: 4px;
-      margin: 8px 0 4px;
-      background: var(--card);
-      border-radius: var(--radius-sm);
-      padding: 3px;
+      gap: 5px;
+      margin: 12px 0 8px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 4px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .mini-tab {
@@ -1829,27 +1870,52 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      padding: 7px 4px;
-      border: none;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 4px;
+      border: 1px solid transparent;
       background: transparent;
-      color: var(--hint);
-      font-size: 10px;
-      font-weight: 500;
-      border-radius: 9px;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.1px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      outline: none;
     }
 
-    .mini-tab i {
-      width: 13px !important;
-      height: 13px !important;
+    .mini-tab i,
+    .mini-tab svg {
+      width: 14px !important;
+      height: 14px !important;
       flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+      color: var(--hint);
+    }
+
+    .mini-tab:hover:not(.activo) {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .mini-tab:active {
+      transform: scale(0.95);
     }
 
     .mini-tab.activo {
-      background: var(--input);
-      color: var(--text);
+      background: var(--verde-sm);
+      border-color: rgba(34, 197, 94, 0.28);
+      color: var(--verde);
+      font-weight: 700;
+      box-shadow: 0 3px 12px var(--verde-xs), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-tab.activo i,
+    .mini-tab.activo svg {
+      color: var(--verde);
+      transform: scale(1.15) translateY(-1px);
     }
 
     /* Tab panels */
@@ -1859,9 +1925,135 @@
 
     .tab-panel.activo {
       display: block;
+      animation: tabSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    @keyframes tabSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.995);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
+    /* ══ BOTÓN FLOTANTE IA (FAB) ══ */
+    .btn-ia-flotante {
+      position: fixed;
+      bottom: 84px;
+      right: 18px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1ea84e 0%, #10b981 50%, #059669 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(30, 168, 78, 0.38), 0 0 16px rgba(16, 185, 129, 0.25);
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-ia-flotante::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.4), transparent 70%);
+      opacity: 0.6;
+      animation: iaPulse 2.5s infinite ease-in-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .btn-ia-flotante i,
+    .btn-ia-flotante svg {
+      width: 24px !important;
+      height: 24px !important;
+      color: #ffffff !important;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .btn-ia-flotante:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 10px 28px rgba(30, 168, 78, 0.5), 0 0 22px rgba(52, 211, 153, 0.45);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .btn-ia-flotante:active {
+      transform: scale(0.92);
+    }
+
+    .btn-ia-flotante.abierto {
+      transform: scale(0.95);
+      background: linear-gradient(135deg, #141414, #222222);
+      border-color: var(--verde);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 12px var(--verde-xs);
+    }
+
+    .btn-ia-flotante.abierto i,
+    .btn-ia-flotante.abierto svg {
+      color: var(--verde) !important;
+      transform: rotate(90deg) scale(1.05);
+    }
+
+    .btn-ia-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 14px;
+      height: 14px;
+      background: #22c55e;
+      border: 2.5px solid var(--bg);
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+      animation: iaDotGlow 2s infinite alternate;
+    }
+
+    @keyframes iaPulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.25);
+        opacity: 0.75;
+      }
+      100% {
+        transform: scale(0.92);
+        opacity: 0.3;
+      }
+    }
+
+    @keyframes iaDotGlow {
+      0% { opacity: 0.7; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #22c55e; }
+    }
+
+    /* Modal IA flotante entrance */
+    #modalIAFlotante.activo {
+      animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
     /* ── Gasto item ── */
     .gasto-item {
@@ -3454,20 +3646,20 @@
       </div>
 
       <!-- Mini nav tabs -->
-      <div class="mini-nav">
-        <button class="mini-tab activo" id="tab-semana" onclick="cambiarTab('semana')">
+      <div class="mini-nav" role="tablist" aria-label="Navegación secundaria">
+        <button class="mini-tab activo" role="tab" aria-selected="true" id="tab-semana" onclick="cambiarTab('semana')">
           <i data-lucide="bar-chart-2" style="width:14px;height:14px;"></i>
           <span id="L-h-semana-tab">Semana</span>
         </button>
-        <button class="mini-tab" id="tab-limite" onclick="cambiarTab('limite')">
+        <button class="mini-tab" role="tab" aria-selected="false" id="tab-limite" onclick="cambiarTab('limite')">
           <i data-lucide="gauge" style="width:14px;height:14px;"></i>
           <span>Límite</span>
         </button>
-        <button class="mini-tab" id="tab-racha" onclick="cambiarTab('racha')">
+        <button class="mini-tab" role="tab" aria-selected="false" id="tab-racha" onclick="cambiarTab('racha')">
           <i data-lucide="flame" style="width:14px;height:14px;"></i>
           <span>Racha</span>
         </button>
-        <button class="mini-tab" id="tab-meta" onclick="cambiarTab('meta')">
+        <button class="mini-tab" role="tab" aria-selected="false" id="tab-meta" onclick="cambiarTab('meta')">
           <i data-lucide="target" style="width:14px;height:14px;"></i>
           <span>Meta</span>
         </button>
@@ -4165,9 +4357,9 @@
       }
     </script>
     <!-- BOTÓN FLOTANTE IA -->
-    <button id="btnIAFlotante" onclick="toggleIAModal()"
-      style="position:fixed;bottom:80px;right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1ea84e,#178a40);border:none;cursor:pointer;z-index:5000;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(30,168,78,.2);margin:0;padding:0;transition:transform .2s;">
-      <i data-lucide="bot" style="width:22px;height:22px;color:white;"></i>
+    <button id="btnIAFlotante" class="btn-ia-flotante" onclick="toggleIAModal()" aria-label="Asistente NOVI AI">
+      <i data-lucide="bot"></i>
+      <span class="btn-ia-badge"></span>
     </button>
 
     <!-- MODAL IA FLOTANTE -->
@@ -4394,8 +4586,19 @@
         iaModalAbierto = !iaModalAbierto;
         const modal = document.getElementById("modalIAFlotante");
         const btn = document.getElementById("btnIAFlotante");
-        modal.style.display = iaModalAbierto ? "block" : "none";
-        btn.style.transform = iaModalAbierto ? "scale(0.9)" : "scale(1)";
+
+        if (modal) {
+          modal.style.display = iaModalAbierto ? "block" : "none";
+          if (iaModalAbierto) {
+            modal.classList.add("activo");
+          } else {
+            modal.classList.remove("activo");
+          }
+        }
+
+        if (btn) {
+          btn.classList.toggle("abierto", iaModalAbierto);
+        }
 
         // Cargar historial cuando se abre el modal
         if (iaModalAbierto) {
@@ -5673,7 +5876,7 @@ Be specific with numbers and very concise.`;
       // ══════════════════════════════════════════
       function totalHoyGastos() {
         let s = new Date().toDateString();
-        return gastos.reduce((t, g) => new Date(g.fecha).toDateString() === s ? t + g.monto : t, 0);
+        return gastos.reduce((t, g) => parseFechaLocal(g.fecha).toDateString() === s ? t + g.monto : t, 0);
       }
       function guardarLimiteDiario() {
         let val = parseFloat(document.getElementById("inputLimiteDiario").value);
@@ -5714,7 +5917,7 @@ Be specific with numbers and very concise.`;
         for (let i = 6; i >= 0; i--) {
           let d = new Date(hoy); d.setDate(d.getDate() - i);
           let total = gastos.reduce((s, g) => {
-            let f = new Date(g.fecha); f.setHours(0, 0, 0, 0);
+            let f = parseFechaLocal(g.fecha); f.setHours(0, 0, 0, 0);
             return f.getTime() === d.getTime() ? s + g.monto : s;
           }, 0);
           dias.push({ d, total, esHoy: i === 0 });
@@ -6180,12 +6383,29 @@ Be specific with numbers and very concise.`;
 
       function cambiarTab(tab) {
         // Desactivar todos
-        document.querySelectorAll('.mini-tab').forEach(t => t.classList.remove('activo'));
+        document.querySelectorAll('.mini-tab').forEach(t => {
+          t.classList.remove('activo');
+          t.setAttribute('aria-selected', 'false');
+        });
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('activo'));
 
         // Activar el seleccionado
-        document.getElementById('tab-' + tab)?.classList.add('activo');
-        document.getElementById('panel-' + tab)?.classList.add('activo');
+        const selTab = document.getElementById('tab-' + tab);
+        const selPanel = document.getElementById('panel-' + tab);
+
+        if (selTab) {
+          selTab.classList.add('activo');
+          selTab.setAttribute('aria-selected', 'true');
+        }
+        if (selPanel) {
+          selPanel.classList.add('activo');
+        }
+
+        if (tab === "semana") renderSemana();
+        else if (tab === "limite") renderLimiteDiario();
+        else if (tab === "racha") renderRacha();
+        else if (tab === "meta") renderMeta(gastos.reduce((s, g) => { let f = parseFechaLocal(g.fecha); return f.getMonth() === mesHoy() && f.getFullYear() === anioHoy() ? s + g.monto : s; }, 0));
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       // ══════════════════════════════════════════
