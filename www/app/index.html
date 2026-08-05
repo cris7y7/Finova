@@ -8876,7 +8876,46 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       // ══════════════════════════════════════════
       // IA ANÁLISIS — PROXY SEGURO
       // ══════════════════════════════════════════
-      const IA_PROXY_URL = (window.location.protocol.startsWith("http") && !window.location.hostname.includes("localhost")) ? "/api/ia" : "https://novyranet.vercel.app/api/ia";
+      function obtenerIaProxyUrl() {
+        const h = window.location.hostname;
+        const p = window.location.protocol;
+        if (p.startsWith("http") && (h.endsWith("vercel.app") || h.endsWith("netlify.app"))) {
+          return "/api/ia";
+        }
+        return "https://novyranet.vercel.app/api/ia";
+      }
+
+      async function fetchIaProxy(payload) {
+        let url = obtenerIaProxyUrl();
+        try {
+          let res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok && url !== "https://novyranet.vercel.app/api/ia") {
+            // Fallback si la ruta relativa /api/ia no existe (ej. 404 en IP local)
+            url = "https://novyranet.vercel.app/api/ia";
+            res = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+          }
+          return res;
+        } catch (e) {
+          if (url !== "https://novyranet.vercel.app/api/ia") {
+            return await fetch("https://novyranet.vercel.app/api/ia", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+          }
+          throw e;
+        }
+      }
+
+      const IA_PROXY_URL = obtenerIaProxyUrl();
       let iaChatHistorial = [];
 
       // ── Contexto financiero ────────────────────
@@ -8957,11 +8996,7 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
         iaUltimaLlamada = ahora;
 
         try {
-          const res = await fetch(IA_PROXY_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: mensajes })
-          });
+          const res = await fetchIaProxy({ messages: mensajes });
 
           if (!res.ok) {
             const err = await res.json();
@@ -9564,7 +9599,8 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
       // ══════════════════════════════════════════
       // FOTO DEL RECIBO
       // ══════════════════════════════════════════
-      let fotoTempBase64 = null; // foto en memoria mientras se llena el formulario
+      let fotoTempBase64 = null; // foto comprimida para preview / guardado en storage
+      let fotoOriginalBase64 = null; // foto original para OCR de alta calidad
 
       function abrirCamara() {
         document.getElementById("inputCamara").click();
@@ -9578,17 +9614,17 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
         const file = event.target.files[0];
         if (!file) return;
 
-        if (file.size > 5 * 1024 * 1024) {
-          toast(idioma === "es" ? "Foto muy grande (máx 5MB) ❌" : "Image too large (max 5MB) ❌", "error");
+        if (file.size > 10 * 1024 * 1024) {
+          toast(idioma === "es" ? "Foto muy grande (máx 10MB) ❌" : "Image too large (max 10MB) ❌", "error");
           return;
         }
 
         const reader = new FileReader();
         reader.onload = e => {
-          comprimirImagen(e.target.result, 800, 0.7, base64 => {
+          fotoOriginalBase64 = e.target.result;
+          comprimirImagen(e.target.result, 800, 0.75, base64 => {
             fotoTempBase64 = base64;
             mostrarPreviewFoto(base64);
-            // Mostrar botón de analizar con IA
             mostrarBtnAnalizarFactura();
           });
         };
@@ -9611,16 +9647,17 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
       }
 
       async function analizarFacturaConIA() {
-        if (!fotoTempBase64) return;
+        const fotoParaAnalizar = fotoOriginalBase64 || fotoTempBase64;
+        if (!fotoParaAnalizar) return;
 
         const btn = document.getElementById("btnAnalizarFactura");
         btn.disabled = true;
-        btn.innerHTML = `<span class="spinner"></span>${idioma === "es" ? "Comprimiendo y analizando..." : "Compressing and analyzing..."}`;
+        btn.innerHTML = `<span class="spinner"></span>${idioma === "es" ? "Analizando nitidez..." : "Analyzing image..."}`;
 
         try {
-          // Comprimir imagen a máximo 1200px para carga ultrarrápida
+          // Comprimir la foto original a 1600px max width con 0.88 calidad (alta resolución para OCR legible)
           const imgBase64List = await new Promise((resolve) => {
-            comprimirImagen(fotoTempBase64, 1200, 0.85, (compressed) => resolve(compressed));
+            comprimirImagen(fotoParaAnalizar, 1600, 0.88, (compressed) => resolve(compressed));
           });
 
           const base64Data = imgBase64List.split(",")[1];
@@ -9638,7 +9675,7 @@ Responde ÚNICAMENTE con un objeto JSON válido sin bloques markdown ni texto ad
 
 REGLAS DE EXTRACCIÓN:
 1. "monto": Busca el "TOTAL", "TOTAL A PAGAR", "VALOR NETO" o "GRAN TOTAL" cobrado. Devuelve SOLO el número entero (sin puntos de miles, comas ni símbolos de moneda). Si ves 25.000 COP, devuelve 25000.
-2. "categoria": Clasifica estrictamente en UNA de estas opciones según los ítems y el lugar: "Comida" (supermercado, restaurantes, cafés, alimentos), "Transporte" (gasolina, uber, peaje, pasajes), "Ocio" (cine, entretenimiento, bares), "Servicios" (luz, agua, internet, suscripciones, servicios públicos), "Salud" (farmacia, medicina, consultas), "Educación", "Ropa", "Otros".
+2. "categoria": Clasifica strictly en UNA de estas opciones según los ítems y el lugar: "Comida" (supermercado, restaurantes, cafés, alimentos), "Transporte" (gasolina, uber, peaje, pasajes), "Ocio" (cine, entretenimiento, bares), "Servicios" (luz, agua, internet, suscripciones, servicios públicos), "Salud" (farmacia, medicina, consultas), "Educación", "Ropa", "Otros".
 3. "fecha": Fecha del tiquete en formato YYYY-MM-DD. Si no tiene año, asume el año actual (${new Date().getFullYear()}). Si no la lees, usa null.
 4. "nota": Formato "Establecimiento - Productos principales". Ejemplo: "Éxito - Leche, Pan y Café". Máximo 60 caracteres.
 Si no logras leer algún campo, asigna null.`
@@ -9658,29 +9695,25 @@ RULES:
 4. "nota": Format as "Merchant Name - Key items". Max 60 chars.
 Assign null if unreadable.`;
 
-          const res = await fetch(IA_PROXY_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              messages: [
-                {
-                  role: "user",
-                  content: [
-                    {
-                      type: "image_url",
-                      image_url: {
-                        url: `data:${mimeType};base64,${base64Data}`
-                      }
-                    },
-                    {
-                      type: "text",
-                      text: prompt
+          const res = await fetchIaProxy({
+            messages: [
+              {
+                role: "user",
+                content: [
+                  {
+                    type: "image_url",
+                    image_url: {
+                      url: `data:${mimeType};base64,${base64Data}`
                     }
-                  ]
-                }
-              ],
-              vision: true
-            })
+                  },
+                  {
+                    type: "text",
+                    text: prompt
+                  }
+                ]
+              }
+            ],
+            vision: true
           });
 
           if (!res.ok) {
@@ -9691,8 +9724,9 @@ Assign null if unreadable.`;
           const data = await res.json();
           const texto = data.choices?.[0]?.message?.content || "";
 
-          // Limpiar y parsear JSON
-          const jsonMatch = texto.match(/\{[\s\S]*\}/);
+          // Limpiar formato markdown y parsear JSON
+          const textoLimpio = texto.replace(/```json/gi, "").replace(/```/g, "").trim();
+          const jsonMatch = textoLimpio.match(/\{[\s\S]*\}/);
           if (!jsonMatch) {
             throw new Error(idioma === "es"
               ? "No se pudo extraer los datos de la factura automáticamente."
@@ -9787,6 +9821,7 @@ Assign null if unreadable.`;
 
       function eliminarFotoTemp() {
         fotoTempBase64 = null;
+        fotoOriginalBase64 = null;
         document.getElementById("fotoPreview").src = "";
         document.getElementById("fotoPreviewWrap").style.display = "none";
         const btn = document.getElementById("btnAnalizarFactura");
@@ -9810,6 +9845,7 @@ Assign null if unreadable.`;
       // Limpiar foto al limpiar el formulario
       function limpiarFormularioFoto() {
         fotoTempBase64 = null;
+        fotoOriginalBase64 = null;
         document.getElementById("fotoPreview").src = "";
         document.getElementById("fotoPreviewWrap").style.display = "none";
       }
