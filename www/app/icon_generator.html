@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVYRA — Generador de Iconos Nativo y Web</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0c0d12; color: #f1f5f9; padding: 24px; }
+    h1 { color: #22c55e; }
+    .card { background: #12141d; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    button { background: #1ea84e; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #178a40; }
+    .preview-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+    .preview-item { text-align: center; font-size: 12px; color: #cbd5e1; }
+    .preview-item canvas { border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+
+  <h1>🎨 Generador de Iconos Nativo para NOVYRA</h1>
+  <div class="card">
+    <p>Sube tu nuevo logo o imagen para generar automáticamente todos los tamaños requeridos para Android (mipmap) y Web (PWA):</p>
+    <input type="file" id="inputLogo" accept="image/*" style="margin-bottom: 14px;">
+    <br>
+    <button onclick="generarIconos()">⚡ Generar todos los tamaños</button>
+  </div>
+
+  <div id="resultado" class="card" style="display:none;">
+    <h3>Iconos listos para descargar:</h3>
+    <div class="preview-grid" id="gridCanvases"></div>
+  </div>
+
+  <script>
+    const tamañosAndroid = [
+      { name: "mipmap-mdpi/ic_launcher.png", size: 48 },
+      { name: "mipmap-hdpi/ic_launcher.png", size: 72 },
+      { name: "mipmap-xhdpi/ic_launcher.png", size: 96 },
+      { name: "mipmap-xxhdpi/ic_launcher.png", size: 144 },
+      { name: "mipmap-xxxhdpi/ic_launcher.png", size: 192 },
+      { name: "mipmap-xxxhdpi/ic_launcher_foreground.png", size: 432 },
+    ];
+
+    const tamañosWeb = [48, 72, 96, 128, 192, 256, 512];
+
+    function generarIconos() {
+      const file = document.getElementById('inputLogo').files[0];
+      if (!file) return alert('Selecciona una imagen primero');
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const grid = document.getElementById('gridCanvases');
+          grid.innerHTML = '';
+          document.getElementById('resultado').style.display = 'block';
+
+          // Generar Android
+          tamañosAndroid.forEach(item => {
+            const wrap = crearCanvasDownload(img, item.size, item.name);
+            grid.appendChild(wrap);
+          });
+
+          // Generar Web
+          tamañosWeb.forEach(sz => {
+            const wrap = crearCanvasDownload(img, sz, `icon-${sz}.png`);
+            grid.appendChild(wrap);
+          });
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function crearCanvasDownload(img, sz, filename) {
+      const div = document.createElement('div');
+      div.className = 'preview-item';
+      
+      const canvas = document.createElement('canvas');
+      canvas.width = sz; canvas.height = sz;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, sz, sz);
+
+      const label = document.createElement('div');
+      label.innerText = `${filename} (${sz}x${sz})`;
+
+      const btn = document.createElement('a');
+      btn.href = canvas.toDataURL('image/png');
+      btn.download = filename.split('/').pop();
+      btn.innerText = 'Descargar';
+      btn.style.cssText = 'display:inline-block;margin-top:6px;font-size:11px;color:#22c55e;text-decoration:underline;';
+
+      div.appendChild(canvas);
+      div.appendChild(label);
+      div.appendChild(btn);
+      return div;
+    }
+  </script>
+</body>
+</html>

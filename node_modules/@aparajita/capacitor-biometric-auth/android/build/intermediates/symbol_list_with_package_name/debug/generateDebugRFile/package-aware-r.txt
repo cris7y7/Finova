@@ -1,0 +1,6 @@
+com.aparajita.capacitor.biometricauth
+layout activity_auth_activity
+string title_activity_auth_activity
+style AppTheme_AppBarOverlay
+style AppTheme_PopupOverlay
+style AppTheme_Transparent

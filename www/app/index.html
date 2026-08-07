@@ -643,6 +643,107 @@
       margin-top: 4px;
     }
 
+    /* ══ NOVI AI NUDGE CARD & SIMULADOR ══ */
+    .novi-nudge-card {
+      background: linear-gradient(135deg, rgba(14, 158, 142, 0.12), rgba(30, 168, 78, 0.1));
+      border: 1px solid rgba(30, 168, 78, 0.3);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .novi-nudge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .novi-nudge-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--verde);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .novi-nudge-body {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .novi-nudge-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .novi-btn-action {
+      background: rgba(30, 168, 78, 0.15);
+      border: 1px solid rgba(30, 168, 78, 0.3);
+      color: var(--verde);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .novi-btn-action:hover {
+      background: rgba(30, 168, 78, 0.25);
+    }
+
+    /* SIMULADOR MODAL */
+    #modalSimuladorCompra {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .sim-modal-card {
+      background: var(--card2);
+      border: 1px solid var(--border-green);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .sim-veredicto-box {
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .sim-veredicto-box.segura {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+    .sim-veredicto-box.precaucion {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+    }
+    .sim-veredicto-box.riesgo {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
     /* META */
     .meta-ring-wrap {
       display: flex;
@@ -804,33 +905,222 @@
       background: #f59e0b;
     }
 
-    /* BOTTOM NAV */
+    /* ══ SIDE DRAWER / MENÚ LATERAL ══ */
+    .btn-drawer-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0;
+      margin: 0;
+    }
+
+    .btn-drawer-toggle:hover {
+      border-color: var(--verde);
+      transform: scale(1.04);
+    }
+
+    .btn-drawer-toggle:active {
+      transform: scale(0.94);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 9900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 300px;
+      max-width: 85vw;
+      background: rgba(12, 13, 18, 0.98);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-right: 1px solid var(--border2);
+      z-index: 9910;
+      transform: translateX(-100%);
+      transition: transform .32s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    body.light .side-drawer {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .side-drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 22px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, var(--verde-xs) 0%, transparent 100%);
+    }
+
+    .drawer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .drawer-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--input);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 0;
+      margin: 0;
+      transition: all .2s ease;
+    }
+
+    .drawer-close:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+    }
+
+    .drawer-section-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--hint);
+      margin: 16px 10px 8px;
+    }
+
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: var(--text2);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 3px;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .drawer-item:hover {
+      background: var(--input);
+      color: var(--text);
+    }
+
+    .drawer-item.activo {
+      background: var(--verde-xs);
+      color: var(--verde);
+      font-weight: 700;
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .drawer-item.activo i,
+    .drawer-item.activo svg {
+      color: var(--verde);
+    }
+
+    .drawer-item i,
+    .drawer-item svg {
+      width: 20px;
+      height: 20px;
+      color: var(--hint2);
+      transition: color .2s;
+    }
+
+    .drawer-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--hint);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ══ BOTTOM NAV REDISEÑADA ══ */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       background: var(--nav-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0 max(10px, env(safe-area-inset-bottom));
-      border-top: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 10px max(10px, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border2);
       z-index: 100;
       transition: background .3s, border-color .3s;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .nav-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 3px;
       cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 12px;
+      padding: 6px 2px;
+      border-radius: 14px;
       transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: .45;
+      opacity: .5;
+      border: 1px solid transparent;
     }
 
     .nav-btn:hover:not(.activo) {
@@ -838,28 +1128,29 @@
     }
 
     .nav-btn:active {
-      transform: scale(0.94);
+      transform: scale(0.92);
     }
 
     .nav-btn.activo {
       opacity: 1;
-      transform: translateY(-1px);
+      background: var(--verde-xs);
+      border-color: rgba(34, 197, 94, 0.15);
     }
 
     .nav-btn .nav-icon,
     .nav-btn svg {
-      font-size: 18px;
+      font-size: 19px;
       transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), color .2s;
     }
 
     .nav-btn.activo .nav-icon,
     .nav-btn.activo svg {
       color: var(--verde);
-      transform: scale(1.12);
+      transform: translateY(-1px) scale(1.08);
     }
 
     .nav-btn .nav-label {
-      font-size: 9.5px;
+      font-size: 10px;
       font-weight: 500;
       color: var(--muted);
       white-space: nowrap;
@@ -1259,8 +1550,9 @@
       background: #ef4444;
     }
 
-    .notif-dot.amarillo {
+    .notif-dot.amarillo, .drive-dot.amarillo {
       background: #f59e0b;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
     }
 
     /* TENDENCIAS */
@@ -3553,9 +3845,127 @@
       font-weight: 600;
     }
 
-    .pin-config-val {
+    /* ══ SIDE DRAWER SLIDE MENU ══ */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 9500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 290px;
+      max-width: 85vw;
+      background: #090a0f;
+      border-right: 1px solid rgba(30, 168, 78, 0.25);
+      z-index: 9600;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.8);
+      overflow-y: auto;
+    }
+    .drawer.active {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(30, 168, 78, 0.05);
+    }
+    .drawer-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
       color: var(--muted);
-      font-size: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+    .drawer-menu {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .drawer-item:hover, .drawer-item.activo {
+      background: rgba(30, 168, 78, 0.15);
+      color: var(--verde);
+    }
+    .drawer-item svg, .drawer-item i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ══ BARRA INFERIOR MODERNA ══ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: rgba(12, 13, 18, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 8000;
+      padding: 0 8px;
+    }
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      flex: 1;
+      padding: 8px 0;
+      transition: all 0.2s ease;
+    }
+    .nav-btn.activo, .nav-btn:hover {
+      color: var(--verde);
+    }
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
     }
   </style>
 </head>
@@ -3759,16 +4169,59 @@
     <div class="quick-card" id="quickContent"></div>
   </div>
 
+  <!-- MODAL SIMULADOR DE COMPRA (NOVI AI) -->
+  <div id="modalSimuladorCompra">
+    <div class="sim-modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">🛍️</span>
+          <div>
+            <div style="font-size:15px;font-weight:800;color:var(--text);">Simulador de Compra</div>
+            <div style="font-size:11px;color:var(--verde);font-weight:700;">Evaluación NOVI AI</div>
+          </div>
+        </div>
+        <button class="tut-close" onclick="cerrarSimuladorCompra()">✕</button>
+      </div>
+
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">
+        Ingresa el gasto que deseas realizar para que la IA evalúe si se ajusta a tu presupuesto y meta de ahorro:
+      </div>
+
+      <div class="form-sublabel">Monto proyectado</div>
+      <input type="number" id="simMonto" placeholder="Ej: 150000" min="0" style="margin-top:2px;">
+
+      <div class="form-sublabel" style="margin-top:10px;">Concepto o producto</div>
+      <input type="text" id="simConcepto" placeholder="Ej: Zapatillas deportivas, Reloj..." style="margin-top:2px;">
+
+      <button onclick="evaluarSimulacionCompra()" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <i data-lucide="sparkles" style="width:16px;height:16px;"></i>
+        <span>Evaluar con NOVI AI</span>
+      </button>
+
+      <div id="simResultadoWrap" style="display:none;"></div>
+    </div>
+  </div>
+
   <!-- APP -->
   <div class="container">
 
-    <div class="logo-container">
-      <div class="logo-wrap">
-        <h1 class="logo" onclick="toggleQuick()" style="cursor:pointer;">NOVYRA</h1>
-        <p class="sub" id="L-sub"></p>
+    <div class="logo-container" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 0 14px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div style="display:flex;align-items:center;gap:6px;justify-content:flex-start;">
+        <button class="btn-drawer-toggle" onclick="toggleDrawer()" title="Abrir Menú" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <i data-lucide="menu" style="width:20px;height:20px;color:var(--text);"></i>
+        </button>
+        <button id="btnModoIncognito" class="btn-drawer-toggle" onclick="toggleModoIncognito()" title="Modo Incógnito" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;">
+          👁️
+        </button>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div id="perfilActualBadge" class="version-badge" style="cursor:pointer;display:none;"
+
+      <div class="logo-wrap" style="text-align:center;padding:0 8px;">
+        <h1 class="logo" onclick="toggleQuick()" style="cursor:pointer;margin:0;font-size:26px;font-weight:900;letter-spacing:0.08em;background:linear-gradient(135deg,#22c55e 0%,#10b981 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 10px rgba(34,197,94,0.35));">NOVYRA</h1>
+        <p class="sub" id="L-sub" style="margin:2px 0 0;font-size:10px;color:var(--hint);letter-spacing:0.06em;font-weight:600;text-transform:uppercase;"></p>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:flex-end;">
+        <div id="perfilActualBadge" class="version-badge" style="cursor:pointer;display:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(34,197,94,0.12);color:var(--verde);border:1px solid rgba(34,197,94,0.3);"
           onclick="irA('perfiles')"></div>
       </div>
     </div>
@@ -3795,18 +4248,18 @@
         <!-- Row: Fecha y Categoría Dropdown -->
         <div class="input-row" style="margin-top:6px;">
           <div>
-            <div class="form-sublabel">Fecha</div>
+            <div class="form-sublabel" id="L-lblFecha">Fecha</div>
             <input type="date" id="fechaGasto" style="margin-top:2px;">
           </div>
           <div>
-            <div class="form-sublabel">Categoría</div>
+            <div class="form-sublabel" id="L-lblCategoria">Categoría</div>
             <select id="categoria" style="margin-top:2px;" onchange="seleccionarCatChip(this.value)"></select>
           </div>
         </div>
 
         <!-- Selector de Categorías (Chips con Emojis) -->
         <div style="margin-top:10px;">
-          <div class="form-sublabel">Categorías rápidas</div>
+          <div class="form-sublabel" id="L-lblCatRapidas">Categorías rápidas</div>
           <div id="catChipsContainer" class="cat-chips-wrap"></div>
         </div>
 
@@ -3855,6 +4308,9 @@
           <span id="L-btnGasto">Guardar gasto</span>
         </button>
       </div>
+
+      <!-- CARD NUDGE PROACTIVO NOVI AI -->
+      <div id="noviAiNudgeCard" class="novi-nudge-card"></div>
 
       <!-- Resumen stats — siempre visible -->
       <div class="card">
@@ -4119,7 +4575,28 @@
         </div>
         <input type="text" id="deudaDesc">
         <input type="date" id="deudaVence" style="margin-top:9px;">
-        <button onclick="agregarDeuda()" style="margin-top:10px;" id="L-addDeuda"></button>
+      </div>
+    </div>
+
+    <!-- PERFILES -->
+    <div class="seccion" id="sec-perfiles">
+      <div class="card">
+        <h3><i data-lucide="users" style="width:18px;height:18px;color:var(--verde);"></i> <span id="L-h-perfilesSec">Perfiles y Cuentas</span></h3>
+        <p style="font-size:13px;color:var(--hint);margin:0 0 14px;" id="L-perfilesDescSec"></p>
+        <div id="listaPerfilesSec"></div>
+        <div class="divider"></div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;" id="L-crearPerfilTitleSec">+ Crear nuevo perfil</div>
+        <input type="text" id="nuevoPerfilNombreSec" style="margin-top:0;">
+        <select id="nuevoPerfilEmojiSec" style="margin-top:9px;">
+          <option value="👤">👤 Personal</option>
+          <option value="💼">💼 Trabajo / Negocio</option>
+          <option value="🏠">🏠 Hogar / Familia</option>
+          <option value="✈️">✈️ Viajes</option>
+          <option value="🎓">🎓 Universidad</option>
+          <option value="👩">👩 Pareja</option>
+          <option value="👫">👫 Compartido</option>
+        </select>
+        <button onclick="crearPerfil()"><span id="L-crearPerfilBtnSec"></span></button>
       </div>
     </div>
 
@@ -4241,9 +4718,36 @@
           <span id="L-fn-btnAgregarIngreso"></span>
         </button>
       </div>
-
-
     </div>
+
+    <!-- ASISTENTE NOVI AI -->
+    <div class="seccion" id="sec-ia">
+      <div class="card" style="background:linear-gradient(135deg,#0a1a0f,#050d15);border:1px solid rgba(30,168,78,0.25);">
+        <h3><i data-lucide="bot" style="width:20px;height:20px;color:var(--verde);"></i> <span id="L-h-ia">Asistente NOVI AI</span></h3>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">
+          Tu asesor financiero personal con Inteligencia Artificial. Pregúntale sobre tus gastos, ahorros o evalúa tus compras futuras.
+        </p>
+
+        <!-- Accesos rápidos NOVI AI -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          <button class="btn-gris" onclick="abrirSimuladorCompra()" style="font-size:12px;padding:8px 14px;background:rgba(30,168,78,0.15);color:var(--verde);border-color:rgba(30,168,78,0.3);">🛍️ Simulador de Compra</button>
+          <button class="btn-gris" onclick="enviarPromptIA('reporte')" style="font-size:12px;padding:8px 14px;">🤖 Diagnóstico Financiero</button>
+        </div>
+
+        <div id="iaChatBox" style="background:rgba(8,8,8,0.7);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:220px;max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">
+          <div class="ai-msg bot">
+            <div class="ai-msg-header">🤖 NOVI AI</div>
+            ¡Hola! Soy NOVI AI, tu asesor financiero personal. Puedo ayudarte a simular compras, analizar tu capacidad de ahorro o responder dudas sobre tu presupuesto. ¿En qué te colaboro hoy?
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="iaPrompt" placeholder="Ej: Quiero comprar un celular de $1.999.999..." style="margin-top:0;flex:1;" onkeydown="if(event.key==='Enter')enviarPromptIA()">
+          <button onclick="enviarPromptIA()" style="width:auto;padding:0 18px;margin-top:0;">Enviar ➔</button>
+        </div>
+      </div>
+    </div>
+
     <!-- CONFIG -->
     <div class="seccion" id="sec-config">
       <div class="card">
@@ -4450,38 +4954,101 @@
       </div>
     </div>
 
+    <!-- MENÚ LATERAL / SIDE DRAWER -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="cerrarDrawer()"></div>
+    <div id="sideDrawer" class="side-drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <div style="width:34px;height:34px;border-radius:10px;background:var(--verde-xs);display:flex;align-items:center;justify-content:center;border:1px solid rgba(34,197,94,0.3);">
+            <i data-lucide="wallet" style="width:18px;height:18px;color:var(--verde);"></i>
+          </div>
+          <div>
+            <span class="drawer-logo">NOVYRA</span>
+            <div style="font-size:10px;color:var(--hint);margin-top:-2px;">Mejora tu vida</div>
+          </div>
+        </div>
+        <button class="drawer-close" onclick="cerrarDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="drawer-section-title" id="L-drawer-principal">Principal</div>
+        <div class="drawer-item activo" id="drawer-item-inicio" onclick="irA('inicio')">
+          <i data-lucide="home"></i>
+          <span id="DL-inicio">Inicio</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-historial" onclick="irA('historial')">
+          <i data-lucide="list"></i>
+          <span id="DL-historial">Historial</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-ia" onclick="irA('ia')" style="color:var(--verde);font-weight:700;">
+          <i data-lucide="bot"></i>
+          <span id="DL-ia">NOVI AI Asesor</span>
+        </div>
+
+        <div class="drawer-section-title" id="L-drawer-analisis">Análisis y Gestión</div>
+        <div class="drawer-item" id="drawer-item-pres" onclick="irA('pres')">
+          <i data-lucide="bar-chart-2"></i>
+          <span id="DL-pres">Presupuesto</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-trends" onclick="irA('trends')">
+          <i data-lucide="trending-up"></i>
+          <span id="DL-trends">Tendencias</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-cal" onclick="irA('cal')">
+          <i data-lucide="calendar"></i>
+          <span id="DL-cal">Calendario</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-finanzas" onclick="irA('finanzas')">
+          <i data-lucide="wallet"></i>
+          <span id="DL-finanzas">Finanzas</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-metas" onclick="irA('metas')">
+          <i data-lucide="target"></i>
+          <span id="DL-metas">Metas</span>
+        </div>
+
+        <div class="drawer-section-title" id="L-drawer-sistema">Sistema</div>
+        <div class="drawer-item" id="drawer-item-deudas" onclick="irA('deudas')">
+          <i data-lucide="hand-coins"></i>
+          <span id="DL-deudas">Deudas</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-perfiles" onclick="irA('perfiles')">
+          <i data-lucide="users"></i>
+          <span id="DL-perfiles">Perfiles</span>
+        </div>
+        <div class="drawer-item" id="drawer-item-config" onclick="irA('config')">
+          <i data-lucide="settings"></i>
+          <span id="DL-config">Configuración</span>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <span>© 2026 NOVYRA</span>
+        <span class="version-badge">v3.0</span>
+      </div>
+    </div>
+
+    <!-- BARRA INFERIOR MODERNA (5 ITEMS CON NOVI AI) -->
     <div class="bottom-nav">
       <div class="nav-btn activo" id="nav-inicio" onclick="irA('inicio')">
         <i data-lucide="home" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-inicio"></span>
+        <span class="nav-label" id="NL-inicio">Inicio</span>
       </div>
       <div class="nav-btn" id="nav-historial" onclick="irA('historial')">
         <i data-lucide="list" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-historial"></span>
+        <span class="nav-label" id="NL-historial">Historial</span>
       </div>
-      <div class="nav-btn" id="nav-pres" onclick="irA('pres')">
-        <i data-lucide="bar-chart-2" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-pres"></span>
-      </div>
-      <div class="nav-btn" id="nav-trends" onclick="irA('trends')">
-        <i data-lucide="trending-up" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-trends"></span>
-      </div>
-      <div class="nav-btn" id="nav-cal" onclick="irA('cal')">
-        <i data-lucide="calendar" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-cal"></span>
+      <div class="nav-btn" id="nav-ia" onclick="irA('ia')" style="color:var(--verde);">
+        <i data-lucide="bot" style="width:22px;height:22px;"></i>
+        <span class="nav-label" id="NL-ia" style="font-weight:800;color:var(--verde);">NOVI AI</span>
       </div>
       <div class="nav-btn" id="nav-finanzas" onclick="irA('finanzas')">
         <i data-lucide="wallet" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-finanzas"></span>
+        <span class="nav-label" id="NL-finanzas">Finanzas</span>
       </div>
-      <div class="nav-btn" id="nav-metas" onclick="irA('metas')">
-        <i data-lucide="target" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-metas"></span>
-      </div>
-      <div class="nav-btn" id="nav-config" onclick="irA('config')">
-        <i data-lucide="settings" style="width:20px;height:20px;"></i>
-        <span class="nav-label" id="NL-config"></span>
+      <div class="nav-btn" id="nav-menu" onclick="toggleDrawer()">
+        <i data-lucide="menu" style="width:20px;height:20px;"></i>
+        <span class="nav-label" id="NL-menu">Más</span>
       </div>
     </div>
 
@@ -4951,7 +5518,83 @@
 
     <script>
       // ══════════════════════════════════════════
-      // TRADUCCIONES (COMPLETAS - todos los bugs de TR corregidos)
+      // EMOJIS 3D FLUENT / GLASSMORPHIC HD
+      // ══════════════════════════════════════════
+      const EMOJI_3D_MAP = {
+        "💸": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20with%20Wings.png",
+        "📊": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bar%20Chart.png",
+        "🎯": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Direct%20Hit.png",
+        "📋": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Clipboard.png",
+        "📅": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Calendar.png",
+        "⚙️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png",
+        "📈": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Chart%20Increasing.png",
+        "📉": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Chart%20Decreasing.png",
+        "👥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Busts%20in%20Silhouette.png",
+        "🤖": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png",
+        "🛍️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Shopping%20Bags.png",
+        "🔒": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png",
+        "🔓": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Unlocked.png",
+        "🔑": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Key.png",
+        "👁️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Eye.png",
+        "🙈": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/See-No-Evil%20Monkey.png",
+        "☁️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Cloud.png",
+        "🔵": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Blue%20Circle.png",
+        "💰": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png",
+        "💳": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Credit%20Card.png",
+        "🤝": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Handshake.png",
+        "😬": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grimacing%20Face.png",
+        "🔥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png",
+        "🧮": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Abacus.png",
+        "🏷️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Label.png",
+        "📷": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera.png",
+        "🖼️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Framed%20Picture.png",
+        "📖": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Open%20Book.png",
+        "💚": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Green%20Heart.png",
+        "🏠": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/House.png",
+        "👤": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png",
+        "👩": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Woman.png",
+        "👨": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man.png",
+        "👫": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20and%20Woman%20Holding%20Hands.png",
+        "💼": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Briefcase.png",
+        "🎓": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Graduation%20Cap.png",
+        "✈️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png",
+        "🎉": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png",
+        "🔔": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bell.png",
+        "🏦": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Bank.png",
+        "💵": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Dollar%20Banknote.png",
+        "⚡": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/High%20Voltage.png",
+        "🌱": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Seedling.png",
+        "🚀": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
+        "👑": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Crown.png",
+        "💤": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Zzz.png",
+        "🍔": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food%20and%20drink/Hamburger.png",
+        "🚗": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Automobile.png",
+        "🎮": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Video%20Game.png",
+        "💡": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png",
+        "📦": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Package.png",
+        "🏥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Hospital.png",
+        "👕": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/T-Shirt.png"
+      };
+
+      function render3DEmoji(char, size = 20) {
+        const url = EMOJI_3D_MAP[char];
+        if (!url) return char;
+        return `<img src="${url}" alt="${char}" style="width:${size}px;height:${size}px;vertical-align:-3px;display:inline-block;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.35));margin:0 2px;" loading="lazy">`;
+      }
+
+      function reemplazarEmojisA3D(texto, size = 20) {
+        if (typeof texto !== "string" || !texto) return texto;
+        let res = texto;
+        Object.keys(EMOJI_3D_MAP).forEach(emoji => {
+          if (res.includes(emoji)) {
+            res = res.split(emoji).join(render3DEmoji(emoji, size));
+          }
+        });
+        return res;
+      }
+
+      // ══════════════════════════════════════════
+      // TRADUCCIONES (COMPLETAS - ES & EN)
       // ══════════════════════════════════════════
       const TR = {
         es: {
@@ -4962,237 +5605,198 @@
           hGrafica6: "📉 Tendencia 6 meses",
           hCal: "📅 Calendario", hConfig: "⚙️ Configuración",
           hTrends: "📈 Tendencias del mes", hCatTrend: "🏷️ Por categoría",
-          hPerfiles: "👥 Perfiles",
-          hDeudas: "💸 Deudas y préstamos",        // FIX: antes faltaba
-          hRacha: "🔥 Racha de registro",           // FIX: antes faltaba
-          hSemana: "📅 Esta semana",                // NUEVO
-          hLimiteDiario: "🎯 Límite de gasto diario", // NUEVO
-          hRecMes: "🔔 Recordatorios del mes",
+          hPerfiles: "👥 Perfiles", hDeudas: "💸 Deudas y préstamos", hIA: "🤖 NOVI AI Asesor",
+          hRacha: "🔥 Racha de registro", hSemana: "📅 Esta semana",
+          hLimiteDiario: "🎯 Límite de gasto diario", hRecMes: "🔔 Recordatorios del mes",
           addcat: "+ Añadir", btnGasto: "Guardar gasto", guardarCambios: "Guardar cambios ✏️",
-          guardmeta: "Guardar meta", guardlim: "Guardar límite",
-          guardLimDiario: "Guardar",               // NUEVO
+          guardmeta: "Guardar meta", guardlim: "Guardar límite", guardLimDiario: "Guardar",
           addrec: "+ Agregar recurrente", aplicarrec: "↩ Aplicar al mes actual",
-          exportar: "📦 Exportar JSON", exportarCSV: "📊 Exportar CSV / Excel",
-          importar: "📥 Importar respaldo", exportTitle: "💾 Datos",
+          exportar: "📦 Respaldar (JSON)", exportarCSV: "📊 Exportar CSV / Excel",
+          importar: "📥 Restaurar respaldo", exportTitle: "💾 Copia de Seguridad",
           hoy: "Hoy", mes: "Este mes", prom: "Promedio diario", mayor: "Día mayor gasto",
           disponible: "Disponible para ahorrar", metaDefine: "Define tu meta abajo",
-          recDesc: "Arriendos, suscripciones, servicios.",
+          recDesc: "Arriendos, suscripciones, servicios públicos.",
           temaTitle: "Apariencia", temaOscuro: "Tema oscuro", temaClaro: "Tema claro",
-          idiomaTitle: "Idioma / Language", monedaTitle: "Moneda",
-          cargando: "Cargando tasas...", tasasTitle: "Tasas en tiempo real (base COP)",
+          idiomaTitle: "Idioma / Language", monedaTitle: "Moneda principal",
+          cargando: "Cargando tasas de cambio...", tasasTitle: "Tasas en tiempo real (Base COP)",
           tasaFallback: "Tasas de respaldo — sin conexión", monedaActual: "Moneda activa",
           navInicio: "Inicio", navHistorial: "Historial", navPres: "Presupuesto",
-          navTrends: "Tendencias", navCal: "Calendario", navConfig: "Config",
+          navTrends: "Tendencias", navCal: "Calendario", navConfig: "Ajustes",
+          navMenu: "Más", navMetas: "Metas", navDeudas: "Deudas", navPerfiles: "Perfiles", navFinanzas: "Finanzas", navIA: "IA",
+          drawerPrincipal: "Principal", drawerAnalisis: "Análisis y Gestión", drawerSistema: "Sistema",
           todosMeses: "Todos los meses", todasCats: "Todas las categorías",
-          grafVacio: "Sin gastos en este período.", grafica6vacio: "Sin datos suficientes.",
-          sinGastos: "Sin gastos aún.", sinGastosDia: "Sin gastos este día",
-          sinLimites: "Sin límites configurados.", sinRec: "Sin recurrentes.",
+          grafVacio: "Sin gastos registrados en este período.", grafica6vacio: "Sin suficientes datos históricos.",
+          sinGastos: "Sin gastos aún.", sinGastosDia: "Sin gastos en este día",
+          sinLimites: "Sin límites de presupuesto configurados.", sinRec: "Sin elementos recurrentes.",
           totalDia: "Total del día", total: "Total", totalFijo: "Total fijo mensual",
           mensual: "mensual", gastoRec: "Gasto recurrente",
           pMonto: "Monto", pNuevaCat: "Nueva categoría...", pNota: "Nota (opcional)...",
           pIngreso: "Ingreso mensual", pMeta: "Meta de ahorro mensual",
           pLim: "Límite mensual para esta categoría", pLimiteDiario: "Límite de gasto por día",
           pRecNom: "Nombre (ej: Netflix, Arriendo)", pRecMonto: "Monto mensual",
-          pBuscar: "Buscar por nota, categoría o monto...", // FIX placeholder
+          pBuscar: "Buscar por nota, categoría o monto...",
           dias: ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
           diasCortos: ["L", "M", "M", "J", "V", "S", "D"],
           trendMesAct: "Este mes", trendMesAnt: "Mes anterior", trendProy: "Proyección fin de mes",
-          trendProyLabel: "Proyección", trendPresupLabel: "Meta gasto", trendSinDatos: "Registra gastos para ver tendencias.",
-          perfilesDesc: "Cambia entre perfiles para manejar finanzas separadas.",
+          trendProyLabel: "Proyección", trendPresupLabel: "Meta de gasto", trendSinDatos: "Registra gastos para visualizar tendencias.",
+          perfilesDesc: "Cambia entre perfiles para gestionar finanzas independientes.",
           crearPerfil: "+ Crear perfil", pNuevoNombrePH: "Nombre del perfil",
           perfilActivo: "Activo", perfilGastos: (n) => `${n} gasto${n !== 1 ? 's' : ''}`,
-          eliminarPerfil: "¿Eliminar este perfil? Se perderán todos sus datos.",
-          // DEUDAS
+          eliminarPerfil: "¿Eliminar este perfil? Todos sus datos serán eliminados.",
           deudaNombrePH: "Nombre (persona o entidad)", deudaMontoPH: "Monto", deudaDescPH: "Descripción (opcional)",
           opDebo: "😬 Yo debo", opMeDeben: "🤝 Me deben",
           nuevaDeudaTitle: "+ Nueva deuda / préstamo", addDeuda: "+ Agregar",
-          deudaPagada: "Pagada", deudaVence: "Vence:", sinDeudas: "Sin deudas registradas.",
+          deudaPagada: "Pagada", deudaVence: "Vence:", sinDeudas: "Sin deudas o préstamos registrados.",
           deudaVenceHoy: "🔔 Vence hoy", deudaVenceMañana: "⚠️ Vence mañana",
-          tDeudaOk: "Deuda agregada 💸", tDeudaElim: "Eliminada 🗑️", tDeudaVenceMal: "Completa nombre y monto",
-          // LÍMITE DIARIO
+          tDeudaOk: "Deuda registrada 💸", tDeudaElim: "Deuda eliminada 🗑️", tDeudaVenceMal: "Por favor completa nombre y monto",
           limiteDiarioBien: "✅ Dentro del límite diario",
           limiteDiarioAlerta: (p) => `⚠️ ${p}% del límite diario`,
           limiteDiarioSuperado: "🚨 Límite diario superado",
           limiteDiarioOk: (v) => `Límite diario: ${v} ✅`,
           limiteDiarioNoConf: "Sin límite diario configurado.",
-          // ORDEN HISTORIAL
           ordFecha: "Fecha", ordMonto: "Monto", ordCat: "Categoría",
-          // ETIQUETAS
-          etiquetaLabel: "Etiqueta (opcional)",                  // FIX: antes faltaba
-          // ONBOARDING
-          ob0Titulo: "Bienvenido a NOVYRA", ob0Desc: "Tu app de finanzas personales. Registra gastos, controla tu presupuesto y cumple tus metas.", ob0Btn: "Empezar",
-          ob1Titulo: "¿Cuál es tu ingreso mensual?", ob1Desc: "Te ayudamos a calcular cuánto puedes gastar y ahorrar. Puedes cambiarlo después.", ob1Btn: "Continuar", ob1Skip: "Saltar",
-          ob2Titulo: "Elige tu moneda", ob2Desc: "Todos tus gastos se mostrarán en esta moneda.", ob2Btn: "Continuar",
-          ob3Titulo: "Recordatorios de pagos 🔔", ob3Desc: "Toca cualquier día en el calendario para agregar recordatorios de pagos.", ob3Btn: "¡Genial!", ob3Skip: "Siguiente",
-          ob4Titulo: "¡Todo listo! 🎉", ob4Desc: "¿Quieres ver un tutorial de cómo funciona NOVYRA?", ob4Btn: "Ver tutorial 📖", ob4Skip: "Empezar →",
-          // TUTORIAL
+          etiquetaLabel: "Etiqueta (opcional)",
+          lblFecha: "Fecha", lblCategoria: "Categoría", lblCatRapidas: "Categorías rápidas",
+          tagNinguna: "— Ninguna", tagNecesario: "✅ Necesario", tagLujo: "💜 Lujo", tagUrgente: "🔴 Urgente", tagAhorro: "💙 Ahorro",
+          footerDescargar: "Descargar para Android", footerTerminos: "Términos y condiciones", footerPrivacidad: "Política de privacidad",
+          fotoLabel: "📷 Foto del recibo (opcional)", fotoCamara: "Cámara", fotoGaleria: "Galería",
+          ob0Titulo: "Bienvenido a NOVYRA", ob0Desc: "Tu asistente de finanzas personales. Controla tu presupuesto, programa recordatorios y cumple tus metas.", ob0Btn: "Empezar",
+          ob1Titulo: "¿Cuál es tu ingreso mensual?", ob1Desc: "Te ayudaremos a calcular cuánto puedes gastar y ahorrar cada mes. Puedes cambiarlo luego.", ob1Btn: "Continuar", ob1Skip: "Saltar",
+          ob2Titulo: "Elige tu moneda principal", ob2Desc: "Todos tus gastos y resúmenes se visualizarán en esta moneda.", ob2Btn: "Continuar",
+          ob3Titulo: "Recordatorios de pagos 🔔", ob3Desc: "Toca cualquier día en el calendario para programar alertas de pagos pendientes.", ob3Btn: "¡Entendido!", ob3Skip: "Siguiente",
+          ob4Titulo: "¡Todo listo! 🎉", ob4Desc: "¿Te gustaría ver un tutorial rápido sobre cómo funciona NOVYRA?", ob4Btn: "Ver tutorial 📖", ob4Skip: "Comenzar →",
           tutTitle: "📖 Tutorial", tutBtn: "📖 Ver tutorial", verTutorial: "Ver tutorial",
           tut: [
-            { icon: "🏠", titulo: "Pantalla principal", desc: "Registra gastos con monto, categoría y nota. Usa la calculadora integrada. Ve el resumen semanal y el límite diario." },
-            { icon: "📋", titulo: "Historial", desc: "Todos tus gastos ordenados por fecha. Busca por texto o monto, filtra por mes o categoría, y ordena como prefieras." },
-            { icon: "📊", titulo: "Presupuesto", desc: "Define límites mensuales por categoría. NOVYRA te alerta al 90% y al 100% del límite." },
-            { icon: "📈", titulo: "Tendencias", desc: "Compara gastos con el mes anterior, ve la proyección al fin de mes y analiza la tendencia de los últimos 6 meses." },
-            { icon: "📅", titulo: "Calendario con recordatorios", desc: "Toca cualquier día para ver gastos o agregar recordatorios. Un punto amarillo indica días con recordatorio." },
-            { icon: "🎯", titulo: "Meta y límite diario", desc: "Define tu ingreso, meta de ahorro y límite de gasto por día. El anillo y la barra muestran tu progreso en tiempo real." },
-            { icon: "⚙️", titulo: "Configuración", desc: "Cambia idioma, moneda, tema, activa notificaciones, importa extractos del banco en CSV, exporta datos y gestiona perfiles." },
+            { icon: "🏠", titulo: "Pantalla principal", desc: "Registra gastos con monto, categoría y notas. Usa la calculadora integrada y consulta tu límite diario." },
+            { icon: "📋", titulo: "Historial", desc: "Todos tus gastos ordenados por fecha. Filtra por mes o categoría y busca por texto o valor." },
+            { icon: "📊", titulo: "Presupuesto", desc: "Define límites mensuales por categoría. NOVYRA te alertará al aproximarte al límite." },
+            { icon: "📈", titulo: "Tendencias", desc: "Compara tus gastos con el mes anterior y analiza tus proyecciones y tendencias de 6 meses." },
+            { icon: "📅", titulo: "Calendario y recordatorios", desc: "Toca cualquier fecha para ver gastos o agregar alertas de pagos futuros." },
+            { icon: "🎯", titulo: "Metas y límite diario", desc: "Configura tu ingreso, meta de ahorro y tope diario. El gráfico de progreso te mantiene enfocado." },
+            { icon: "⚙️", titulo: "Ajustes", desc: "Personaliza idioma, moneda, tema visual, notificaciones, copias de seguridad y cuentas de usuario." }
           ],
-          // CSV
-          csvTitle: "🏦 Importar extracto del banco",
-          csvDesc: "Importa un CSV de tu banco. NOVYRA detecta fecha, monto y descripción automáticamente.",
-          csvImportar: "✅ Importar gastos detectados",
-          csvPreviewTit: "Vista previa:",
-          csvOk: (n) => `${n} gastos importados ✅`, csvVacio: "No se detectaron gastos válidos", csvError: "Error al leer el archivo",
-          // NOTIFICACIONES
-          notifTitle: "🔔 Notificaciones", btnActivarNotif: "🔔 Activar notificaciones", btnProbarNotif: "🧪 Probar",
-          notifActivas: "Notificaciones activas ✅", notifInactivas: "No activadas",
-          notifBloqueadas: "Bloqueadas — actívalas en Ajustes", notifNoSop: "No disponibles",
-          notifBienvenidaTitulo: "NOVYRA activado 🎉", notifBienvenidaCuerpo: "Recibirás alertas de presupuesto y ahorro.",
-          notifPruebaTitulo: "NOVYRA — Prueba 🧪", notifPruebaCuerpo: "Las notificaciones funcionan correctamente.",
+          csvTitle: "🏦 Importar extracto bancario",
+          csvDesc: "Sube un archivo CSV de tu banco. NOVYRA detectará automáticamente fechas, montos y descripciones.",
+          csvImportar: "✅ Importar gastos detectados", csvPreviewTit: "Vista previa:",
+          csvOk: (n) => `${n} gasto${n !== 1 ? 's' : ''} importado${n !== 1 ? 's' : ''} ✅`, csvVacio: "No se detectaron gastos válidos", csvError: "Error al leer el archivo CSV",
+          notifTitle: "🔔 Notificaciones", btnActivarNotif: "🔔 Activar notificaciones", btnProbarNotif: "🧪 Alerta de prueba",
+          notifActivas: "Notificaciones activadas ✅", notifInactivas: "No activadas",
+          notifBloqueadas: "Bloqueadas — actívalas en los Ajustes de tu dispositivo", notifNoSop: "No disponibles en este navegador",
+          notifBienvenidaTitulo: "NOVYRA Activado 🎉", notifBienvenidaCuerpo: "Recibirás alertas oportunas de presupuesto y ahorro.",
+          notifPruebaTitulo: "NOVYRA — Prueba 🧪", notifPruebaCuerpo: "Las notificaciones están funcionando correctamente.",
           recuerdoTitle: "⏰ Recordatorios", recuerdoHoraLabel: "Recordatorio diario a hora fija", recuerdoHoraBtn: "Guardar",
-          recuerdo24hLabel: "Alerta si no registras en 24h", recuerdo24hOn: "Activado", recuerdo24hOff: "Desactivado",
-          recuerdoHoraActivo: (h) => `Activo · todos los días a las ${h}`, recuerdoHoraInactivo: "No configurado",
-          recuerdo24hActivoEstado: "Activo · alerta si no registras en 24h", recuerdo24hInactivo: "Desactivado",
-          recuerdoTituloSinGastos: "📝 ¿Ya registraste tus gastos?", recuerdoCuerpoSinGastos: "No has registrado nada hoy. ¡Abre NOVYRA!",
-          recuerdoTituloConGastos: "📊 Resumen del día", recuerdoCuerpoConGastos: (t) => `Hoy gastaste ${t}. ¡Buen trabajo!`,
-          recuerdo24hTitulo: "⏰ Llevas 24h sin registrar", recuerdo24hCuerpo: "No has registrado ningún gasto en las últimas 24 horas.",
-          peligroTitle: "⚠️ Zona de peligro", resetBtn: "🗑️ Borrar todos los datos",
-          resetConfirm: "¿Seguro? Se borrarán TODOS los datos del perfil actual.",
-          calTip: "💡 Toca cualquier día para ver gastos o agregar un recordatorio de pago.",
-          sinRecMes: "Sin recordatorios este mes.",
+          recuerdo24hLabel: "Alerta tras 24h sin registros", recuerdo24hOn: "Activado", recuerdo24hOff: "Desactivado",
+          recuerdoHoraActivo: (h) => `Activo · Todos los días a las ${h}`, recuerdoHoraInactivo: "No configurado",
+          recuerdo24hActivoEstado: "Activo · Alerta tras 24h de inactividad", recuerdo24hInactivo: "Desactivado",
+          recuerdoTituloSinGastos: "📝 ¿Registraste tus gastos hoy?", recuerdoCuerpoSinGastos: "Aún no has ingresado gastos hoy. ¡Abre NOVYRA y mantén tus datos al día!",
+          recuerdoTituloConGastos: "📊 Resumen diario", recuerdoCuerpoConGastos: (t) => `Hoy gastaste ${t}. ¡Excelente control!`,
+          recuerdo24hTitulo: "⏰ 24h sin registros", recuerdo24hCuerpo: "No has registrado ningún gasto en las últimas 24 horas.",
+          peligroTitle: "⚠️ Zona de peligro", resetBtn: "🗑️ Eliminar todos los datos del perfil",
+          resetConfirm: "¿Estás seguro? Se borrarán PERMANENTEMENTE todos los datos del perfil activo.",
+          calTip: "💡 Toca cualquier fecha para revisar gastos o agregar recordatorios de pago.",
+          sinRecMes: "Sin recordatorios programados para este mes.",
           recNotifTitulo: "🔔 Recordatorio NOVYRA", recNotifCuerpo: (t) => `Hoy: ${t}`,
-          recGuardadoOk: "Recordatorio guardado 🔔", recGuardadoFail: "Escribe un título", recElimOk: "Recordatorio eliminado",
+          recGuardadoOk: "Recordatorio guardado 🔔", recGuardadoFail: "Por favor escribe un título", recElimOk: "Recordatorio eliminado",
           recFormLabel: "+ Nuevo recordatorio", recGuardarBtn: "🔔 Guardar recordatorio",
           recTipoPago: "💳 Pago", recTipoNota: "📝 Nota", recTipoMeta: "🎯 Meta",
-          recInfoBox: "📣 Te notificaremos a la hora indicada.",
-          calcUsar: "✅ Usar este valor",
-          // TOASTS
-          tCatVacia: "Escribe una categoría", tCatExiste: "Ya existe", tCatOk: "Categoría agregada ✅",
-          tMontoMal: "Ingresa un monto válido", tGastoOk: "Gasto agregado 💸",
+          recInfoBox: "📣 Te notificaremos a la hora seleccionada.",
+          calcUsar: "✅ Utilizar este valor",
+          tCatVacia: "Por favor escribe el nombre de la categoría", tCatExiste: "Esa categoría ya existe", tCatOk: "Categoría agregada ✅",
+          tMontoMal: "Ingresa un monto válido", tGastoOk: "Gasto registrado 💸",
           tGastoEditOk: "Gasto actualizado ✅", tGastoElim: "Gasto eliminado 🗑️", tEditando: "Editando gasto ✏️",
-          tLimMal: "Ingresa un límite válido", tLimOk: (c) => `Límite de ${c} guardado ✅`,
-          tMetaMal: "Completa ingreso y meta", tMetaOk: "Meta guardada 🎯",
-          tRecMal: "Completa nombre y monto", tRecOk: "Recurrente agregado 🔁", tRecElim: "Recurrente eliminado",
-          tRecVacio: "No tienes recurrentes", tRecYa: "Ya están aplicados este mes ✅", tRecN: (n) => `${n} recurrente(s) aplicado(s) ✅`,
-          tExportOk: "Respaldo exportado 📦", tExportCSVOk: "CSV exportado 📊",
-          tSinArchivo: "Selecciona un archivo primero", tImportOk: "Backup restaurado ✅", tImportMal: "Archivo inválido ❌", tImportErr: "Error al leer el archivo ❌",
-          tSupera: (c) => `⚠️ Superaste el límite de ${c}!`, tCerca: (c, p) => `⚡ Casi al límite en ${c} (${p}%)`,
-          tMonedaOk: (c) => `Moneda: ${c} 💱`, tIdiomaOk: "Idioma cambiado ✅", tTemaOk: "Tema cambiado ✅",
-          metaAlcanza: (m) => `✅ Meta de ${m} alcanzable`, metaSuperada: "❌ Gastos superan el ingreso", metaFaltan: (f) => `⚡ Te faltan ${f} para la meta`,
-          diaLabel: (d) => `Gastos del día ${d}`, limiteSup: "⚠️ Límite superado", limiteCerca: "⚡ Casi al límite",
-          leyendaSin: "Registra gastos para ver umbrales",
-          tNotifOk: "Notificaciones activadas 🔔", tNotifDenegada: "Permiso denegado ❌",
-          tNotifNoSop: "No disponible", tNotifError: "Error al activar",
-          tNotifPrimero: "Activa las notificaciones primero", tNotifPruebaOk: "Notificación enviada ✅",
-          recuerdoHoraOk: (h) => `Recordatorio a las ${h} ✅`, recuerdoHoraSinNotif: "Activa las notificaciones primero",
-          recuerdo24hOkOn: "Alerta 24h activada ✅", recuerdo24hOkOff: "Alerta 24h desactivada",
-          tPerfilCreadoOk: "Perfil creado ✅", tPerfilNomVacio: "Escribe un nombre",
-          tPerfilActivo: (n) => `Perfil: ${n}`, tPerfilElim: "Perfil eliminado", tResetOk: "Datos borrados 🗑️",
+          tLimMal: "Ingresa un límite válido", tLimOk: (c) => `Límite para ${c} guardado ✅`,
+          tMetaMal: "Por favor ingresa ingreso y meta de ahorro", tMetaOk: "Meta guardada 🎯",
+          tRecMal: "Completa nombre y monto", tRecOk: "Elemento recurrente agregado 🔁", tRecElim: "Elemento recurrente eliminado",
+          tRecVacio: "No tienes elementos recurrentes", tRecYa: "Ya fueron aplicados este mes ✅", tRecN: (n) => `${n} recurrente${n !== 1 ? 's' : ''} aplicado${n !== 1 ? 's' : ''} ✅`,
+          tExportOk: "Copia de seguridad exportada 📦", tExportCSVOk: "Archivo CSV exportado 📊",
+          tSinArchivo: "Por favor selecciona un archivo", tImportOk: "Copia de seguridad restaurada ✅", tImportMal: "Formato de archivo inválido ❌", tImportErr: "Error al leer el archivo ❌",
+          tPerfilCreadoOk: "Perfil creado ✅", tPerfilNomVacio: "Ingresa un nombre para el perfil",
+          tPerfilActivo: (n) => `Perfil activo: ${n}`, tPerfilElim: "Perfil eliminado", tResetOk: "Datos eliminados 🗑️",
+          hPerfilesSec: "Perfiles y Cuentas", perfilesDescSec: "Cambia entre perfiles para gestionar finanzas completamente separadas (ej: Personal, Trabajo, Hogar).",
+          crearPerfilTitleSec: "+ Crear nuevo perfil", crearPerfilBtnSec: "+ Crear perfil",
+          tSupera: (c) => `⚠️ ¡Superaste el límite para ${c}!`, tCerca: (c, p) => `⚡ Cerca del límite en ${c} (${p}%)`,
+          tMonedaOk: (c) => `Moneda cambiada a ${c} 💱`, tIdiomaOk: "Idioma actualizado ✅", tTemaOk: "Tema actualizado ✅",
+          metaAlcanza: (m) => `✅ Meta de ahorro de ${m} alcanzable`, metaSuperada: "❌ Tus gastos superan el ingreso total", metaFaltan: (f) => `⚡ Faltan ${f} para alcanzar la meta`,
+          diaLabel: (d) => `Gastos del ${d}`, limiteSup: "⚠️ Límite superado", limiteCerca: "⚡ Cerca del límite",
+          leyendaSin: "Registra gastos para visualizar umbrales",
+          tNotifOk: "Notificaciones activadas 🔔", tNotifDenegada: "Permiso de notificaciones denegado ❌",
+          tNotifNoSop: "Notificaciones no disponibles", tNotifError: "Error al activar notificaciones",
+          tNotifPrimero: "Por favor activa las notificaciones primero", tNotifPruebaOk: "Notificación de prueba enviada ✅",
+          recuerdoHoraOk: (h) => `Recordatorio diario a las ${h} ✅`, recuerdoHoraSinNotif: "Activa las notificaciones primero",
+          recuerdo24hOkOn: "Alerta de 24h activada ✅", recuerdo24hOkOff: "Alerta de 24h desactivada",
           cntGastos: (n) => `${n} gasto${n !== 1 ? 's' : ''}`, locale: "es-CO",
-          // Español
-          hIA: "Análisis IA",
-          navIA: "IA",
-          btnReporteIA: "🤖 Generar reporte del mes",
-          iaKeyDesc: "NOVYRA AI usa el servicio seguro configurado para la app.",
-
-          // Español
-          hMetas: "Metas de ahorro",
-          navMetas: "Metas",
-          nuevaMetaTitle: "+ Nueva meta",
-          metaEmojiLabel: "Elige un ícono",
-          btnAgregarMeta: "🎯 Crear meta",
-          btnAbonar: "💰 Abonar",
-          btnCancelar: "Cancelar",
-          // Español
-          resumenSemanalTitle: "📊 Resumen semanal",
-          resumenSemanalDesc: "Recibe cada domingo un resumen de tus gastos de la semana.",
-          resumenSemanalOn: "Activado",
-          resumenSemanalOff: "Desactivado",
-          resumenSemanalTitle: "📊 Resumen semanal",
-          resumenSemanalDesc: "Recibe cada domingo un resumen de tus gastos de la semana.",
-          resumenSemanalOn: "Activado",
-          resumenSemanalOff: "Desactivado",
-
-          driveTitle: "☁️ Backup en Google Drive",
-          navFinanzas: "Finanzas",
-          hFinanzas: "💰 Finanzas",
-          fnValorNeto: "Valor neto",
-          fnActivos: "🏦 Activos",
-          fnNuevoActivo: "+ Nuevo activo",
-          fnTipoBanco: "🏦 Banco",
-          fnTipoEfectivo: "💵 Efectivo",
-          fnTipoInversion: "📈 Inversión",
-          fnBtnAgregarActivo: "+ Agregar activo",
-          fnFlujoCaja: "📊 Flujo de caja",
-          fnIngresos: "💰 Ingresos fijos",
-          fnIngresosDesc: "Registra tus fuentes de ingreso para calcular tu flujo de caja.",
-          fnFrecMensual: "Mensual",
-          fnFrecQuincenal: "Quincenal",
-          fnFrecSemanal: "Semanal",
-          fnBtnAgregarIngreso: "+ Agregar ingreso",
-          ob_titulo_0: "Bienvenido a NOVYRA",
-          ob_desc_0: "Tu asistente financiero con IA.",
-          ob_feat1_title: "NOVI AI",
-          ob_feat1_desc: "Chatea con tu asistente financiero",
-          ob_feat2_title: "Seguridad total",
-          ob_feat2_desc: "Cifrado AES-256 + biometría",
-          ob_feat3_title: "OCR de facturas",
-          ob_feat3_desc: "Fotografía y registra al instante",
-          ob_btn_0: "Empezar →",
-          ob_titulo_1: "¿Cuál es tu moneda?",
-          ob_desc_1: "Puedes cambiarla después en configuración.",
-          ob_btn_1: "Ir a NOVYRA →",
-          ob_skip_1: "Saltar por ahora",
-
+          hIA: "Asistente Financiero IA", navIA: "IA", btnReporteIA: "🤖 Generar reporte mensual",
+          iaKeyDesc: "NOVYRA AI utiliza el servicio seguro configurado para la aplicación.",
+          hMetas: "Metas de ahorro", navMetas: "Metas", nuevaMetaTitle: "+ Nueva meta",
+          metaEmojiLabel: "Selecciona un ícono", btnAgregarMeta: "🎯 Crear meta", btnAbonar: "💰 Abonar fondos", btnCancelar: "Cancelar",
+          resumenSemanalTitle: "📊 Resumen semanal", resumenSemanalDesc: "Recibe cada domingo un resumen detallado de tus gastos semanales.",
+          resumenSemanalOn: "Activado", resumenSemanalOff: "Desactivado",
+          driveTitle: "☁️ Copia de seguridad en Google Drive",
+          navFinanzas: "Finanzas", hFinanzas: "💰 Resumen Financiero",
+          fnValorNeto: "Patrimonio neto", fnActivos: "🏦 Activos y Cuentas", fnNuevoActivo: "+ Nuevo activo",
+          fnTipoBanco: "🏦 Cuenta Bancaria", fnTipoEfectivo: "💵 Efectivo", fnTipoInversion: "📈 Inversiones",
+          fnBtnAgregarActivo: "+ Agregar activo", fnFlujoCaja: "📊 Flujo de Caja", fnIngresos: "💰 Fuentes de Ingreso Fijo",
+          fnIngresosDesc: "Registra tus ingresos fijos para calcular tu flujo de caja neto.",
+          fnFrecMensual: "Mensual", fnFrecQuincenal: "Quincenal", fnFrecSemanal: "Semanal", fnBtnAgregarIngreso: "+ Agregar ingreso",
+          ob_titulo_0: "Bienvenido a NOVYRA", ob_desc_0: "Tu asistente personal de finanzas con Inteligencia Artificial.",
+          ob_feat1_title: "Asistente NOVI AI", ob_feat1_desc: "Chatea y recibe asesoría financiera personalizada",
+          ob_feat2_title: "Privacidad y Seguridad Total", ob_feat2_desc: "Cifrado local AES-256 y autenticación biométrica",
+          ob_feat3_title: "Escáner OCR de Recibos", ob_feat3_desc: "Fotografía tus facturas y regístralas al instante",
+          ob_btn_0: "Empezar →", ob_titulo_1: "Elige tu moneda", ob_desc_1: "Puedes modificarla en cualquier momento desde ajustes.",
+          ob_btn_1: "Entrar a NOVYRA →", ob_skip_1: "Saltar por ahora"
         },
         en: {
           sub: "Improve your life",
-          hRegistro: "💸 Add expense", hResumen: "📊 Summary", hMeta: "🎯 Savings goal",
-          hHistorial: "📋 History", hPres: "📋 Budget by category",
-          hRec: "🔁 Recurring expenses", hGrafica: "📊 Monthly chart",
-          hGrafica6: "📉 6-month trend",
+          hRegistro: "💸 Log Expense", hResumen: "📊 Summary", hMeta: "🎯 Savings Goal",
+          hHistorial: "📋 History", hPres: "📋 Category Budget",
+          hRec: "🔁 Recurring Expenses", hGrafica: "📊 Monthly Chart",
+          hGrafica6: "📉 6-Month Trend",
           hCal: "📅 Calendar", hConfig: "⚙️ Settings",
-          hTrends: "📈 Monthly trends", hCatTrend: "🏷️ By category", hPerfiles: "👥 Profiles",
-          hDeudas: "💸 Debts & loans", hRacha: "🔥 Logging streak",
-          hSemana: "📅 This week", hLimiteDiario: "🎯 Daily spending limit", hRecMes: "🔔 Month reminders",
-          addcat: "+ Category", btnGasto: "Add expense", guardarCambios: "Save changes ✏️",
+          hTrends: "📈 Monthly Trends", hCatTrend: "🏷️ By Category",
+          hPerfiles: "👥 Profiles", hDeudas: "💸 Debts & Loans", hIA: "🤖 NOVI AI Advisor",
+          hRacha: "🔥 Logging Streak", hSemana: "📅 This Week",
+          hLimiteDiario: "🎯 Daily Spending Limit", hRecMes: "🔔 Monthly Reminders",
+          addcat: "+ Add Category", btnGasto: "Save Expense", guardarCambios: "Save changes ✏️",
           guardmeta: "Save goal", guardlim: "Save limit", guardLimDiario: "Save",
           addrec: "+ Add recurring", aplicarrec: "↩ Apply to current month",
-          exportar: "📦 Export JSON", exportarCSV: "📊 Export CSV / Excel",
-          importar: "📥 Import backup", exportTitle: "💾 Data",
-          hoy: "Today", mes: "This month", prom: "Daily avg.", mayor: "Highest day",
-          disponible: "Available to save", metaDefine: "Set your goal below",
-          recDesc: "Rent, subscriptions, services.",
-          temaTitle: "Appearance", temaOscuro: "Dark theme", temaClaro: "Light theme",
-          idiomaTitle: "Language / Idioma", monedaTitle: "Currency",
-          cargando: "Loading rates...", tasasTitle: "Live rates (base COP)",
-          tasaFallback: "Fallback rates — offline", monedaActual: "Active currency",
+          exportar: "📦 Backup (JSON)", exportarCSV: "📊 Export CSV / Excel",
+          importar: "📥 Restore Backup", exportTitle: "💾 Data Backup",
+          hoy: "Today", mes: "This month", prom: "Daily avg.", mayor: "Highest spending day",
+          disponible: "Available for savings", metaDefine: "Set your goal below",
+          recDesc: "Rent, subscriptions, public utilities.",
+          temaTitle: "Appearance", temaOscuro: "Dark mode", temaClaro: "Light mode",
+          idiomaTitle: "Language / Idioma", monedaTitle: "Primary currency",
+          cargando: "Loading exchange rates...", tasasTitle: "Live Exchange Rates (COP Base)",
+          tasaFallback: "Offline rates active", monedaActual: "Active Currency",
           navInicio: "Home", navHistorial: "History", navPres: "Budget",
           navTrends: "Trends", navCal: "Calendar", navConfig: "Settings",
+          navMenu: "More", navMetas: "Goals", navDeudas: "Debts", navPerfiles: "Profiles", navFinanzas: "Finance", navIA: "AI",
+          drawerPrincipal: "Main", drawerAnalisis: "Analysis & Tools", drawerSistema: "System",
           todosMeses: "All months", todasCats: "All categories",
-          grafVacio: "No expenses in this period.", grafica6vacio: "Not enough data.",
-          sinGastos: "No expenses yet.", sinGastosDia: "No expenses this day",
-          sinLimites: "No limits configured.", sinRec: "No recurring expenses.",
-          totalDia: "Day total", total: "Total", totalFijo: "Total fixed monthly",
+          grafVacio: "No expenses recorded in this period.", grafica6vacio: "Not enough historical data.",
+          sinGastos: "No expenses recorded yet.", sinGastosDia: "No expenses on this day",
+          sinLimites: "No category budget limits configured.", sinRec: "No recurring expenses configured.",
+          totalDia: "Day total", total: "Total", totalFijo: "Fixed monthly total",
           mensual: "monthly", gastoRec: "Recurring expense",
           pMonto: "Amount", pNuevaCat: "New category...", pNota: "Note (optional)...",
           pIngreso: "Monthly income", pMeta: "Monthly savings goal",
           pLim: "Monthly limit for this category", pLimiteDiario: "Daily spending limit",
           pRecNom: "Name (e.g. Netflix, Rent)", pRecMonto: "Monthly amount",
           pBuscar: "Search by note, category or amount...",
-          dias: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+          dias: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           diasCortos: ["M", "T", "W", "T", "F", "S", "S"],
           trendMesAct: "This month", trendMesAnt: "Last month", trendProy: "Month-end projection",
-          trendProyLabel: "Projection", trendPresupLabel: "Spending goal", trendSinDatos: "Log expenses to see trends.",
-          perfilesDesc: "Switch profiles to manage separate finances.",
+          trendProyLabel: "Projection", trendPresupLabel: "Spending goal", trendSinDatos: "Log expenses to view trends.",
+          perfilesDesc: "Switch profiles to manage separate accounts & finances.",
           crearPerfil: "+ Create profile", pNuevoNombrePH: "Profile name",
           perfilActivo: "Active", perfilGastos: (n) => `${n} expense${n !== 1 ? 's' : ''}`,
           eliminarPerfil: "Delete this profile? All its data will be lost.",
           deudaNombrePH: "Name (person or entity)", deudaMontoPH: "Amount", deudaDescPH: "Description (optional)",
           opDebo: "😬 I owe", opMeDeben: "🤝 Owed to me",
           nuevaDeudaTitle: "+ New debt / loan", addDeuda: "+ Add",
-          deudaPagada: "Paid", deudaVence: "Due:", sinDeudas: "No debts registered.",
+          deudaPagada: "Paid", deudaVence: "Due:", sinDeudas: "No debts or loans registered.",
           deudaVenceHoy: "🔔 Due today", deudaVenceMañana: "⚠️ Due tomorrow",
-          tDeudaOk: "Debt added 💸", tDeudaElim: "Deleted 🗑️", tDeudaVenceMal: "Fill name and amount",
+          tDeudaOk: "Debt logged 💸", tDeudaElim: "Debt deleted 🗑️", tDeudaVenceMal: "Please enter name and amount",
           limiteDiarioBien: "✅ Within daily limit",
           limiteDiarioAlerta: (p) => `⚠️ ${p}% of daily limit`,
           limiteDiarioSuperado: "🚨 Daily limit exceeded",
@@ -5200,122 +5804,94 @@
           limiteDiarioNoConf: "No daily limit configured.",
           ordFecha: "Date", ordMonto: "Amount", ordCat: "Category",
           etiquetaLabel: "Tag (optional)",
-          ob0Titulo: "Welcome to NOVYRA", ob0Desc: "Your personal finance app. Track expenses, control your budget and reach your savings goals.", ob0Btn: "Get started",
-          ob1Titulo: "What's your monthly income?", ob1Desc: "We'll help you track how much you can spend and save. You can change it later.", ob1Btn: "Continue", ob1Skip: "Skip",
-          ob2Titulo: "Choose your currency", ob2Desc: "All your expenses will be shown in this currency.", ob2Btn: "Continue",
-          ob3Titulo: "Payment reminders 🔔", ob3Desc: "Tap any day in the calendar to add payment reminders.", ob3Btn: "Got it!", ob3Skip: "Next",
-          ob4Titulo: "You're all set! 🎉", ob4Desc: "Would you like a quick tutorial on how NOVYRA works?", ob4Btn: "View tutorial 📖", ob4Skip: "Start →",
-          tutTitle: "📖 Tutorial", tutBtn: "📖 View tutorial", verTutorial: "View tutorial",
+          lblFecha: "Date", lblCategoria: "Category", lblCatRapidas: "Quick Categories",
+          tagNinguna: "— None", tagNecesario: "✅ Necessary", tagLujo: "💜 Luxury", tagUrgente: "🔴 Urgent", tagAhorro: "💙 Savings",
+          footerDescargar: "Download for Android", footerTerminos: "Terms & Conditions", footerPrivacidad: "Privacy Policy",
+          fotoLabel: "📷 Receipt photo (optional)", fotoCamara: "Camera", fotoGaleria: "Gallery",
+          ob0Titulo: "Welcome to NOVYRA", ob0Desc: "Your personal finance manager. Track expenses, control your budget, and achieve your savings goals.", ob0Btn: "Get Started",
+          ob1Titulo: "What is your monthly income?", ob1Desc: "We'll help you calculate how much you can spend and save. You can change this anytime.", ob1Btn: "Continue", ob1Skip: "Skip",
+          ob2Titulo: "Choose your primary currency", ob2Desc: "All your expenses and summaries will be displayed in this currency.", ob2Btn: "Continue",
+          ob3Titulo: "Payment Reminders 🔔", ob3Desc: "Tap any day on the calendar to set up payment reminders.", ob3Btn: "Got it!", ob3Skip: "Next",
+          ob4Titulo: "You're all set! 🎉", ob4Desc: "Would you like a quick walkthrough of NOVYRA's features?", ob4Btn: "View Tutorial 📖", ob4Skip: "Start →",
+          tutTitle: "📖 Tutorial", tutBtn: "📖 View Tutorial", verTutorial: "View Tutorial",
           tut: [
-            { icon: "🏠", titulo: "Home screen", desc: "Log expenses with amount, category and note. Use the built-in calculator. View the weekly summary and daily limit." },
-            { icon: "📋", titulo: "History", desc: "All expenses sorted by date. Search by text or amount, filter by month or category, sort as you prefer." },
-            { icon: "📊", titulo: "Budget", desc: "Set monthly limits by category. NOVYRA alerts you at 90% and 100% of the limit." },
-            { icon: "📈", titulo: "Trends", desc: "Compare spending with the previous month, see end-of-month projection and 6-month trend." },
-            { icon: "📅", titulo: "Calendar with reminders", desc: "Tap any day to view expenses or add reminders. A yellow dot marks days with reminders." },
-            { icon: "🎯", titulo: "Goal & daily limit", desc: "Set income, savings goal and daily spending limit. The ring and bar show your real-time progress." },
-            { icon: "⚙️", titulo: "Settings", desc: "Change language, currency, theme, enable notifications, import bank CSV, export data and manage profiles." },
+            { icon: "🏠", titulo: "Home Screen", desc: "Log expenses with amount, category, and notes. Use the built-in calculator and inspect your daily limit." },
+            { icon: "📋", titulo: "History", desc: "All expenses sorted chronologically. Search by text or amount, filter by month or category." },
+            { icon: "📊", titulo: "Budget", desc: "Set monthly category limits. NOVYRA alerts you when approaching your budget cap." },
+            { icon: "📈", titulo: "Trends", desc: "Compare spending with last month, see end-of-month projections, and analyze 6-month trends." },
+            { icon: "📅", titulo: "Calendar & Reminders", desc: "Tap any day to view expenses or set payment alerts. A yellow dot marks reminder dates." },
+            { icon: "🎯", titulo: "Goals & Daily Limit", desc: "Set income, savings goal, and daily limit. Real-time indicators keep you on budget." },
+            { icon: "⚙️", titulo: "Settings", desc: "Customize language, currency, visual theme, notifications, bank CSV imports, and accounts." }
           ],
-          csvTitle: "🏦 Import bank statement",
-          csvDesc: "Import a CSV from your bank. NOVYRA auto-detects date, amount and description.",
-          csvImportar: "✅ Import detected expenses", csvPreviewTit: "Preview:",
-          csvOk: (n) => `${n} expenses imported ✅`, csvVacio: "No valid expenses detected", csvError: "Error reading file",
-          notifTitle: "🔔 Notifications", btnActivarNotif: "🔔 Enable notifications", btnProbarNotif: "🧪 Test",
+          csvTitle: "🏦 Import Bank Statement",
+          csvDesc: "Upload a CSV file from your bank. NOVYRA automatically detects dates, amounts, and descriptions.",
+          csvImportar: "✅ Import Detected Expenses", csvPreviewTit: "Preview:",
+          csvOk: (n) => `${n} expense${n !== 1 ? 's' : ''} imported ✅`, csvVacio: "No valid expenses detected", csvError: "Error reading CSV file",
+          notifTitle: "🔔 Notifications", btnActivarNotif: "🔔 Enable Notifications", btnProbarNotif: "🧪 Test Alert",
           notifActivas: "Notifications enabled ✅", notifInactivas: "Not enabled",
-          notifBloqueadas: "Blocked — enable in Settings", notifNoSop: "Not available",
-          notifBienvenidaTitulo: "NOVYRA enabled 🎉", notifBienvenidaCuerpo: "You'll receive budget and savings alerts.",
-          notifPruebaTitulo: "NOVYRA — Test 🧪", notifPruebaCuerpo: "Notifications are working correctly.",
-          recuerdoTitle: "⏰ Reminders", recuerdoHoraLabel: "Daily reminder at fixed time", recuerdoHoraBtn: "Save",
-          recuerdo24hLabel: "Alert if no expenses in 24h", recuerdo24hOn: "Enabled", recuerdo24hOff: "Disabled",
-          recuerdoHoraActivo: (h) => `Active · every day at ${h}`, recuerdoHoraInactivo: "Not configured",
-          recuerdo24hActivoEstado: "Active · alert if no log in 24h", recuerdo24hInactivo: "Disabled",
-          recuerdoTituloSinGastos: "📝 Did you log your expenses?", recuerdoCuerpoSinGastos: "You haven't logged anything today. Open NOVYRA!",
-          recuerdoTituloConGastos: "📊 Daily summary", recuerdoCuerpoConGastos: (t) => `You spent ${t} today. Great job!`,
-          recuerdo24hTitulo: "⏰ 24h without logging", recuerdo24hCuerpo: "You haven't logged any expense in the last 24 hours.",
-          peligroTitle: "⚠️ Danger zone", resetBtn: "🗑️ Delete all data",
-          resetConfirm: "Are you sure? ALL data for the current profile will be deleted.",
-          calTip: "💡 Tap any day to view expenses or add a payment reminder.",
-          sinRecMes: "No reminders this month.",
+          notifBloqueadas: "Blocked — enable in System Settings", notifNoSop: "Not supported in this browser",
+          notifBienvenidaTitulo: "NOVYRA Enabled 🎉", notifBienvenidaCuerpo: "You will receive budget and savings alerts.",
+          notifPruebaTitulo: "NOVYRA — Test Alert 🧪", notifPruebaCuerpo: "Notifications are working correctly.",
+          recuerdoTitle: "⏰ Reminders", recuerdoHoraLabel: "Daily fixed-time reminder", recuerdoHoraBtn: "Save",
+          recuerdo24hLabel: "Alert if no expenses logged in 24h", recuerdo24hOn: "Enabled", recuerdo24hOff: "Disabled",
+          recuerdoHoraActivo: (h) => `Active · Every day at ${h}`, recuerdoHoraInactivo: "Not configured",
+          recuerdo24hActivoEstado: "Active · Alert after 24h of inactivity", recuerdo24hInactivo: "Disabled",
+          recuerdoTituloSinGastos: "📝 Have you logged your expenses today?", recuerdoCuerpoSinGastos: "No expenses recorded today. Open NOVYRA to log them!",
+          recuerdoTituloConGastos: "📊 Daily Summary", recuerdoCuerpoConGastos: (t) => `You spent ${t} today. Keep it up!`,
+          recuerdo24hTitulo: "⏰ 24h Inactivity Warning", recuerdo24hCuerpo: "You haven't logged any expense in the last 24 hours.",
+          peligroTitle: "⚠️ Danger Zone", resetBtn: "🗑️ Delete All Profile Data",
+          resetConfirm: "Are you sure? ALL data for the active profile will be permanently deleted.",
+          calTip: "💡 Tap any date to view expenses or add a payment reminder.",
+          sinRecMes: "No reminders scheduled for this month.",
           recNotifTitulo: "🔔 NOVYRA Reminder", recNotifCuerpo: (t) => `Today: ${t}`,
-          recGuardadoOk: "Reminder saved 🔔", recGuardadoFail: "Write a title", recElimOk: "Reminder deleted",
-          recFormLabel: "+ New reminder", recGuardarBtn: "🔔 Save reminder",
+          recGuardadoOk: "Reminder saved 🔔", recGuardadoFail: "Please enter a title", recElimOk: "Reminder deleted",
+          recFormLabel: "+ New Reminder", recGuardarBtn: "🔔 Save Reminder",
           recTipoPago: "💳 Payment", recTipoNota: "📝 Note", recTipoMeta: "🎯 Goal",
-          recInfoBox: "📣 We'll notify you at the indicated time.",
-          calcUsar: "✅ Use this value",
-          tCatVacia: "Type a category name", tCatExiste: "Already exists", tCatOk: "Category added ✅",
-          tMontoMal: "Enter a valid amount", tGastoOk: "Expense added 💸",
+          recInfoBox: "📣 We'll notify you at the selected time.",
+          calcUsar: "✅ Use Value",
+          tCatVacia: "Please enter a category name", tCatExiste: "Category already exists", tCatOk: "Category added ✅",
+          tMontoMal: "Please enter a valid amount", tGastoOk: "Expense logged 💸",
           tGastoEditOk: "Expense updated ✅", tGastoElim: "Expense deleted 🗑️", tEditando: "Editing expense ✏️",
-          tLimMal: "Enter a valid limit", tLimOk: (c) => `Limit for ${c} saved ✅`,
-          tMetaMal: "Fill in income and goal", tMetaOk: "Goal saved 🎯",
-          tRecMal: "Fill in name and amount", tRecOk: "Recurring added 🔁", tRecElim: "Recurring deleted",
-          tRecVacio: "No recurring expenses", tRecYa: "Already applied this month ✅", tRecN: (n) => `${n} recurring applied ✅`,
+          tLimMal: "Please enter a valid budget limit", tLimOk: (c) => `Limit for ${c} saved ✅`,
+          tMetaMal: "Please enter income and savings goal", tMetaOk: "Savings goal saved 🎯",
+          tRecMal: "Please fill in name and amount", tRecOk: "Recurring item added 🔁", tRecElim: "Recurring item deleted",
+          tRecVacio: "No recurring expenses configured", tRecYa: "Already applied for this month ✅", tRecN: (n) => `${n} recurring item${n !== 1 ? 's' : ''} applied ✅`,
           tExportOk: "Backup exported 📦", tExportCSVOk: "CSV exported 📊",
-          tSinArchivo: "Select a file first", tImportOk: "Backup restored ✅", tImportMal: "Invalid file ❌", tImportErr: "Error reading file ❌",
-          tSupera: (c) => `⚠️ You exceeded the limit for ${c}!`, tCerca: (c, p) => `⚡ Near limit for ${c} (${p}%)`,
-          tMonedaOk: (c) => `Currency: ${c} 💱`, tIdiomaOk: "Language changed ✅", tTemaOk: "Theme changed ✅",
-          metaAlcanza: (m) => `✅ Goal of ${m} reachable`, metaSuperada: "❌ Expenses exceed income", metaFaltan: (f) => `⚡ Need ${f} more for goal`,
-          diaLabel: (d) => `Expenses for day ${d}`, limiteSup: "⚠️ Limit exceeded", limiteCerca: "⚡ Near limit",
-          leyendaSin: "Add expenses to see thresholds",
-          tNotifOk: "Notifications enabled 🔔", tNotifDenegada: "Permission denied ❌",
-          tNotifNoSop: "Not available", tNotifError: "Error enabling",
-          tNotifPrimero: "Enable notifications first", tNotifPruebaOk: "Notification sent ✅",
-          recuerdoHoraOk: (h) => `Reminder set for ${h} ✅`, recuerdoHoraSinNotif: "Enable notifications first",
-          recuerdo24hOkOn: "24h alert enabled ✅", recuerdo24hOkOff: "24h alert disabled",
-          tPerfilCreadoOk: "Profile created ✅", tPerfilNomVacio: "Enter a profile name",
-          tPerfilActivo: (n) => `Profile: ${n}`, tPerfilElim: "Profile deleted", tResetOk: "Data deleted 🗑️",
+          tSinArchivo: "Please select a file first", tImportOk: "Backup restored ✅", tImportMal: "Invalid backup file ❌", tImportErr: "Error reading file ❌",
+          tPerfilCreadoOk: "Profile created ✅", tPerfilNomVacio: "Please enter a profile name",
+          tPerfilActivo: (n) => `Active Profile: ${n}`, tPerfilElim: "Profile deleted", tResetOk: "Profile data deleted 🗑️",
+          hPerfilesSec: "Profiles & Accounts", perfilesDescSec: "Switch between profiles to manage completely separate finances (e.g. Personal, Work, Family).",
+          crearPerfilTitleSec: "+ Create New Profile", crearPerfilBtnSec: "+ Create Profile",
+          tSupera: (c) => `⚠️ Exceeded budget limit for ${c}!`, tCerca: (c, p) => `⚡ Near budget limit for ${c} (${p}%)`,
+          tMonedaOk: (c) => `Currency changed to ${c} 💱`, tIdiomaOk: "Language updated ✅", tTemaOk: "Theme updated ✅",
+          metaAlcanza: (m) => `✅ Goal of ${m} is achievable`, metaSuperada: "❌ Expenses exceed total income", metaFaltan: (f) => `⚡ ${f} needed to reach savings goal`,
+          diaLabel: (d) => `Expenses for ${d}`, limiteSup: "⚠️ Limit Exceeded", limiteCerca: "⚡ Near Limit",
+          leyendaSin: "Log expenses to view thresholds",
+          tNotifOk: "Notifications enabled 🔔", tNotifDenegada: "Notification permission denied ❌",
+          tNotifNoSop: "Notifications not supported", tNotifError: "Error enabling notifications",
+          tNotifPrimero: "Please enable notifications first", tNotifPruebaOk: "Test notification sent ✅",
+          recuerdoHoraOk: (h) => `Daily reminder set for ${h} ✅`, recuerdoHoraSinNotif: "Please enable notifications first",
+          recuerdo24hOkOn: "24h inactivity alert enabled ✅", recuerdo24hOkOff: "24h inactivity alert disabled",
           cntGastos: (n) => `${n} expense${n !== 1 ? 's' : ''}`, locale: "en-US",
-          // Inglés
-          hIA: "AI Analysis",
-          navIA: "AI",
-          btnReporteIA: "🤖 Generate monthly report",
+          hIA: "AI Financial Assistant", navIA: "AI", btnReporteIA: "🤖 Generate Monthly Report",
           iaKeyDesc: "NOVYRA AI uses the secure service configured for the app.",
-          hMetas: "Savings goals",
-          navMetas: "Goals",
-          nuevaMetaTitle: "+ New goal",
-          metaEmojiLabel: "Choose an icon",
-          btnAgregarMeta: "🎯 Create goal",
-          btnAbonar: "💰 Add funds",
-          btnCancelar: "Cancel",
-          resumenSemanalTitle: "📊 Weekly summary",
-          resumenSemanalDesc: "Receive a summary of your weekly expenses every Sunday.",
-          resumenSemanalOn: "Enabled",
-          resumenSemanalOff: "Disabled",
-
-          resumenSemanalTitle: "📊 Weekly summary",
-          resumenSemanalDesc: "Receive a summary of your weekly expenses every Sunday.",
-          resumenSemanalOn: "Enabled",
-          resumenSemanalOff: "Disabled",
-
+          hMetas: "Savings Goals", navMetas: "Goals", nuevaMetaTitle: "+ New Goal",
+          metaEmojiLabel: "Choose an icon", btnAgregarMeta: "🎯 Create Goal", btnAbonar: "💰 Add Funds", btnCancelar: "Cancel",
+          resumenSemanalTitle: "📊 Weekly Summary", resumenSemanalDesc: "Receive a summary of your weekly expenses every Sunday.",
+          resumenSemanalOn: "Enabled", resumenSemanalOff: "Disabled",
           driveTitle: "☁️ Google Drive Backup",
-          navFinanzas: "Finance",
-          hFinanzas: "💰 Finance",
-          fnValorNeto: "Net worth",
-          fnActivos: "🏦 Assets",
-          fnNuevoActivo: "+ New asset",
-          fnTipoBanco: "🏦 Bank",
-          fnTipoEfectivo: "💵 Cash",
-          fnTipoInversion: "📈 Investment",
-          fnBtnAgregarActivo: "+ Add asset",
-          fnFlujoCaja: "📊 Cash flow",
-          fnIngresos: "💰 Fixed income",
-          fnIngresosDesc: "Register your income sources to calculate your cash flow.",
-          fnFrecMensual: "Monthly",
-          fnFrecQuincenal: "Biweekly",
-          fnFrecSemanal: "Weekly",
-          fnBtnAgregarIngreso: "+ Add income",
-          ob_titulo_0: "Welcome to NOVYRA",
-          ob_desc_0: "Your AI-powered financial assistant.",
-          ob_feat1_title: "NOVI AI",
-          ob_feat1_desc: "Chat with your financial assistant",
-          ob_feat2_title: "Full security",
-          ob_feat2_desc: "AES-256 encryption + biometrics",
-          ob_feat3_title: "Receipt OCR",
-          ob_feat3_desc: "Photo and register instantly",
-          ob_btn_0: "Get started →",
-          ob_titulo_1: "What's your currency?",
-          ob_desc_1: "You can change it later in settings.",
-          ob_btn_1: "Go to NOVYRA →",
-          ob_skip_1: "Skip for now",
-
+          navFinanzas: "Finance", hFinanzas: "💰 Finance Overview",
+          fnValorNeto: "Net Worth", fnActivos: "🏦 Assets & Accounts", fnNuevoActivo: "+ New Asset",
+          fnTipoBanco: "🏦 Bank Account", fnTipoEfectivo: "💵 Cash", fnTipoInversion: "📈 Investment",
+          fnBtnAgregarActivo: "+ Add Asset", fnFlujoCaja: "📊 Cash Flow", fnIngresos: "💰 Fixed Income Sources",
+          fnIngresosDesc: "Register fixed income sources to calculate your net cash flow.",
+          fnFrecMensual: "Monthly", fnFrecQuincenal: "Bi-weekly", fnFrecSemanal: "Weekly", fnBtnAgregarIngreso: "+ Add Income Source",
+          ob_titulo_0: "Welcome to NOVYRA", ob_desc_0: "Your AI-powered personal financial assistant.",
+          ob_feat1_title: "NOVI AI Assistant", ob_feat1_desc: "Chat and receive personalized financial advice",
+          ob_feat2_title: "Total Privacy & Security", ob_feat2_desc: "AES-256 local encryption & biometrics",
+          ob_feat3_title: "Receipt Scanner", ob_feat3_desc: "Photograph receipts & log expenses instantly",
+          ob_btn_0: "Get Started →", ob_titulo_1: "Choose Your Currency", ob_desc_1: "You can change this anytime in settings.",
+          ob_btn_1: "Enter NOVYRA →", ob_skip_1: "Skip for now"
         }
       };
 
@@ -5327,40 +5903,72 @@
           localStorage.setItem("perfiles", JSON.stringify([{ id: "default", nombre: "Personal", emoji: "👤", creado: Date.now() }]));
           localStorage.setItem("perfilActual", "default");
         }
+        // Migración de seguridad: si había datos en default__gastos pero no en gastos, recuperarlos
+        if (localStorage.getItem("default__gastos")) {
+          try {
+            let defG = JSON.parse(localStorage.getItem("default__gastos") || "[]");
+            let curG = JSON.parse(localStorage.getItem("gastos") || "[]");
+            if (defG.length > curG.length) {
+              localStorage.setItem("gastos", JSON.stringify(defG));
+            }
+          } catch(e) {}
+          localStorage.removeItem("default__gastos");
+        }
       }
       function getPerfiles() { return JSON.parse(localStorage.getItem("perfiles") || "[]"); }
       function getPerfilActual() { return localStorage.getItem("perfilActual") || "default"; }
-      function claveP(k) { return `${getPerfilActual()}__${k}`; }
+      function claveP(k) {
+        const p = getPerfilActual();
+        if (p === "default") return k;
+        return `${p}__${k}`;
+      }
 
       function cargarDatosPerfil() {
-        let gData = localStorage.getItem(claveP("gastos")) || localStorage.getItem("gastos");
-        gastos = gData ? JSON.parse(gData) : [];
-        let cData = localStorage.getItem(claveP("categorias")) || localStorage.getItem("categorias");
-        categorias = cData ? JSON.parse(cData) : ["Comida", "Transporte", "Ocio", "Servicios", "Otros"];
-        let pData = localStorage.getItem(claveP("presupuesto")) || localStorage.getItem("presupuesto");
-        presupuesto = pData ? JSON.parse(pData) : {};
-        let rData = localStorage.getItem(claveP("recurrentes")) || localStorage.getItem("recurrentes");
-        recurrentes = rData ? JSON.parse(rData) : [];
-        let mData = localStorage.getItem(claveP("meta")) || localStorage.getItem("meta");
-        meta = mData ? JSON.parse(mData) : { ahorro: 0, ingreso: 0 };
-        let rcData = localStorage.getItem(claveP("recordatoriosCal")) || localStorage.getItem("recordatoriosCal");
-        recordatoriosCal = rcData ? JSON.parse(rcData) : {};
+        try {
+          let gData = localStorage.getItem(claveP("gastos"));
+          gastos = gData ? JSON.parse(gData) : [];
+
+          let cData = localStorage.getItem(claveP("categorias"));
+          categorias = cData ? JSON.parse(cData) : ["Comida", "Transporte", "Ocio", "Servicios", "Otros"];
+
+          let pData = localStorage.getItem(claveP("presupuesto"));
+          presupuesto = pData ? JSON.parse(pData) : {};
+
+          let rData = localStorage.getItem(claveP("recurrentes"));
+          recurrentes = rData ? JSON.parse(rData) : [];
+
+          let mData = localStorage.getItem(claveP("meta"));
+          meta = mData ? JSON.parse(mData) : { ahorro: 0, ingreso: 0 };
+
+          let rcData = localStorage.getItem(claveP("recordatoriosCal"));
+          recordatoriosCal = rcData ? JSON.parse(rcData) : {};
+        } catch (e) {
+          console.error("Error cargando perfil:", e);
+        }
       }
       function guardarDatosPerfil() {
-        localStorage.setItem(claveP("gastos"), JSON.stringify(gastos));
-        localStorage.setItem(claveP("categorias"), JSON.stringify(categorias));
-        localStorage.setItem(claveP("presupuesto"), JSON.stringify(presupuesto));
-        localStorage.setItem(claveP("recurrentes"), JSON.stringify(recurrentes));
-        localStorage.setItem(claveP("meta"), JSON.stringify(meta));
-        localStorage.setItem(claveP("recordatoriosCal"), JSON.stringify(recordatoriosCal));
+        try {
+          localStorage.setItem(claveP("gastos"), JSON.stringify(gastos));
+          localStorage.setItem(claveP("categorias"), JSON.stringify(categorias));
+          localStorage.setItem(claveP("presupuesto"), JSON.stringify(presupuesto));
+          localStorage.setItem(claveP("recurrentes"), JSON.stringify(recurrentes));
+          localStorage.setItem(claveP("meta"), JSON.stringify(meta));
+          localStorage.setItem(claveP("recordatoriosCal"), JSON.stringify(recordatoriosCal));
+        } catch (e) {
+          console.error("Error guardando perfil:", e);
+        }
       }
 
       function renderPerfiles() {
-        let cont = document.getElementById("listaPerfiles"); if (!cont) return;
+        let cont1 = document.getElementById("listaPerfiles");
+        let cont2 = document.getElementById("listaPerfilesSec");
+        if (!cont1 && !cont2) return;
         let perfiles = getPerfiles(), actual = getPerfilActual();
         let html = "";
         perfiles.forEach(p => {
-          let gs = (JSON.parse(localStorage.getItem(`${p.id}__gastos`) || "[]")).length;
+          let keyG = p.id === "default" ? "gastos" : `${p.id}__gastos`;
+          let rawG = localStorage.getItem(keyG);
+          let gs = (JSON.parse(rawG || "[]")).length;
           let esA = p.id === actual;
           html += `<div class="perfil-item ${esA ? "activo-perfil" : ""}" onclick="activarPerfil('${p.id}')">
       <div class="perfil-avatar">${p.emoji}</div>
@@ -5371,26 +5979,45 @@
       ${perfiles.length > 1 && !esA ? `<div class="perfil-acciones"><span class="eliminar" onclick="event.stopPropagation();eliminarPerfil('${p.id}')">✕</span></div>` : ""}
     </div>`;
         });
-        cont.innerHTML = html;
+        if (cont1) cont1.innerHTML = html;
+        if (cont2) cont2.innerHTML = html;
         let pA = perfiles.find(p => p.id === actual);
         let badge = document.getElementById("perfilActualBadge");
         if (badge) { badge.innerText = pA ? `${pA.emoji} ${pA.nombre}` : ""; badge.style.display = perfiles.length > 1 ? "inline-block" : "none"; }
       }
       function crearPerfil() {
-        let nom = document.getElementById("nuevoPerfilNombre").value.trim();
-        let emoji = document.getElementById("nuevoPerfilEmoji").value;
+        let nomInput = document.getElementById("nuevoPerfilNombreSec") || document.getElementById("nuevoPerfilNombre");
+        let emojiInput = document.getElementById("nuevoPerfilEmojiSec") || document.getElementById("nuevoPerfilEmoji");
+        let nom = nomInput ? nomInput.value.trim() : "";
+        let emoji = emojiInput ? emojiInput.value : "👤";
         if (!nom) return toast(T("tPerfilNomVacio"), "warn");
+
+        guardarDatosPerfil();
+
         let id = "p_" + Date.now(), perfiles = getPerfiles();
         perfiles.push({ id, nombre: nom, emoji, creado: Date.now() });
         localStorage.setItem("perfiles", JSON.stringify(perfiles));
-        document.getElementById("nuevoPerfilNombre").value = "";
-        activarPerfil(id); toast(T("tPerfilCreadoOk"));
+
+        // Inicializar datos independientes para el perfil nuevo
+        localStorage.setItem(`${id}__gastos`, JSON.stringify([]));
+        localStorage.setItem(`${id}__categorias`, JSON.stringify(["Comida", "Transporte", "Ocio", "Servicios", "Otros"]));
+        localStorage.setItem(`${id}__presupuesto`, JSON.stringify({}));
+        localStorage.setItem(`${id}__recurrentes`, JSON.stringify([]));
+        localStorage.setItem(`${id}__meta`, JSON.stringify({ ahorro: 0, ingreso: 0 }));
+        localStorage.setItem(`${id}__recordatoriosCal`, JSON.stringify({}));
+
+        if (document.getElementById("nuevoPerfilNombre")) document.getElementById("nuevoPerfilNombre").value = "";
+        if (document.getElementById("nuevoPerfilNombreSec")) document.getElementById("nuevoPerfilNombreSec").value = "";
+
+        activarPerfil(id);
+        toast(T("tPerfilCreadoOk"));
       }
       function activarPerfil(id) {
+        if (!id) return;
         // Guardar datos del perfil actual ANTES de cambiar
         guardarDatosPerfil();
 
-        // Ahora sí cambiar al nuevo perfil
+        // Cambiar al perfil destino y cargar sus datos aislados
         localStorage.setItem("perfilActual", id);
         cargarDatosPerfil();
         cargarCategorias();
@@ -5409,7 +6036,8 @@
         if (!confirm(T("eliminarPerfil"))) return;
         let perfiles = getPerfiles().filter(p => p.id !== id);
         localStorage.setItem("perfiles", JSON.stringify(perfiles));
-        ["gastos", "categorias", "presupuesto", "recurrentes", "meta", "recordatoriosCal"].forEach(k => localStorage.removeItem(`${id}__${k}`));
+        let prefix = id === "default" ? "" : `${id}__`;
+        ["gastos", "categorias", "presupuesto", "recurrentes", "meta", "recordatoriosCal"].forEach(k => localStorage.removeItem(id === "default" ? k : `${id}__${k}`));
         if (getPerfilActual() === id) activarPerfil(perfiles[0]?.id || "default");
         renderPerfiles(); toast(T("tPerfilElim"));
       }
@@ -5605,23 +6233,42 @@ Be specific with numbers and very concise.`;
       const MINFO = { COP: { sym: "$", loc: "es-CO", dec: 0 }, USD: { sym: "US$", loc: "en-US", dec: 2 }, MXN: { sym: "MX$", loc: "es-MX", dec: 0 } };
       const COLORS = ["#22c55e", "#3b82f6", "#f59e0b", "#ef4444", "#a855f7", "#06b6d4", "#ec4899", "#84cc16", "#f97316", "#14b8a6"];
 
-      const guardar = () => {
-        if (_aesKey) {
-          guardarDatosEncriptados(_aesKey);
-        } else {
-          // Guardar TODOS los datos del perfil, no solo gastos
+      function guardarTodoElEstado() {
+        try {
           localStorage.setItem(claveP("gastos"), JSON.stringify(gastos));
           localStorage.setItem(claveP("categorias"), JSON.stringify(categorias));
           localStorage.setItem(claveP("presupuesto"), JSON.stringify(presupuesto));
           localStorage.setItem(claveP("recurrentes"), JSON.stringify(recurrentes));
           localStorage.setItem(claveP("meta"), JSON.stringify(meta));
           localStorage.setItem(claveP("recordatoriosCal"), JSON.stringify(recordatoriosCal));
+
+          if (typeof _aesKey !== "undefined" && _aesKey && typeof guardarDatosEncriptados === "function") {
+            guardarDatosEncriptados(_aesKey);
+          }
+        } catch (e) {
+          console.error("Error guardando datos:", e);
         }
-        // Backup automático en Drive
-        if (localStorage.getItem("driveConectado") === "true") {
-          subirBackupDrive();
-        }
-        sincronizarWidget();
+      }
+
+      let driveDebounceTimer = null;
+      function subirBackupDriveDebounced() {
+        if (localStorage.getItem("driveConectado") !== "true") return;
+        if (driveDebounceTimer) clearTimeout(driveDebounceTimer);
+        driveDebounceTimer = setTimeout(() => {
+          if (typeof subirBackupDrive === "function") {
+            subirBackupDrive().catch(e => console.warn("Drive debounced backup:", e));
+          }
+        }, 2000);
+      }
+
+      const guardar = () => {
+        guardarTodoElEstado();
+        try {
+          if (localStorage.getItem("driveConectado") === "true") {
+            subirBackupDriveDebounced();
+          }
+          if (typeof sincronizarWidget === "function") sincronizarWidget();
+        } catch (e) {}
       };
 
       const mesHoy = () => new Date().getMonth();
@@ -5633,7 +6280,22 @@ Be specific with numbers and very concise.`;
         el.innerText = msg; clearTimeout(el._t);
         el._t = setTimeout(() => el.classList.remove("show", "error", "warn"), 2800);
       }
-      function fmtMoneda(cop) {
+      let modoIncognito = localStorage.getItem("modoIncognito") === "true";
+
+      function toggleModoIncognito() {
+        modoIncognito = !modoIncognito;
+        localStorage.setItem("modoIncognito", String(modoIncognito));
+        let btn = document.getElementById("btnModoIncognito");
+        if (btn) btn.innerHTML = modoIncognito ? "🙈" : "👁️";
+        mostrar();
+        toast(modoIncognito ? (idioma === "es" ? "Modo Incógnito activado 🙈" : "Privacy mode on 🙈") : (idioma === "es" ? "Saldos visibles 👁️" : "Balances visible 👁️"));
+      }
+
+      function fmtMoneda(cop, forceShow = false) {
+        if (modoIncognito && !forceShow) {
+          const m = MINFO[moneda] || { sym: "$" };
+          return m.sym + " ••••••";
+        }
         let v;
         if (moneda === "COP") {
           v = cop;
@@ -5643,7 +6305,6 @@ Be specific with numbers and very concise.`;
           v = cop * tasa;
         }
         const m = MINFO[moneda];
-        // Redondear correctamente antes de formatear
         v = Math.round(v * Math.pow(10, m.dec)) / Math.pow(10, m.dec);
         return m.sym + " " + v.toLocaleString(m.loc, {
           minimumFractionDigits: m.dec,
@@ -5705,7 +6366,31 @@ Be specific with numbers and very concise.`;
     </div>
   `;
       }
+
       // ══════════════════════════════════════════
+      // ONBOARDING HANDLERS
+      // ══════════════════════════════════════════
+      function obGoTo(paso) {
+        if (paso >= 1) {
+          localStorage.setItem("onboardingDone", "true");
+          const ob = document.getElementById("onboarding");
+          if (ob) ob.style.display = "none";
+        } else {
+          document.querySelectorAll(".ob-step").forEach(s => s.classList.remove("activo"));
+          document.getElementById("ob-" + paso)?.classList.add("activo");
+        }
+      }
+
+      function obSelMoneda(m) {
+        moneda = m;
+        localStorage.setItem("moneda", m);
+        localStorage.setItem("onboardingDone", "true");
+        const ob = document.getElementById("onboarding");
+        if (ob) ob.style.display = "none";
+        aplicarIdioma();
+        mostrar();
+        toast(T("tMonedaOk", m));
+      }
       // TEMA
       // ══════════════════════════════════════════
       function aplicarTema() {
@@ -5760,6 +6445,8 @@ Be specific with numbers and very concise.`;
           "L-h-grafica6": "hGrafica6",
           "L-h-cal": "hCal", "L-h-config": "hConfig", "L-h-trends": "hTrends", "L-h-cattrend": "hCatTrend",
           "L-h-perfiles": "hPerfiles", "L-h-deudas": "hDeudas", "L-h-racha": "hRacha",  // FIX
+          "L-h-perfilesSec": "hPerfilesSec", "L-perfilesDescSec": "perfilesDescSec",
+          "L-crearPerfilTitleSec": "crearPerfilTitleSec", "L-crearPerfilBtnSec": "crearPerfilBtnSec",
           "L-h-semana": "hSemana", "L-h-limiteDiario": "hLimiteDiario", "L-h-recMes": "hRecMes",
           "L-addcat": "addcat", "L-btnGasto": "btnGasto", "L-guardmeta": "guardmeta", "L-guardlim": "guardlim",
           "L-guardLimDiario": "guardLimDiario",
@@ -5770,6 +6457,11 @@ Be specific with numbers and very concise.`;
           "L-idiomaTitle": "idiomaTitle", "L-monedaTitle": "monedaTitle", "L-cargando": "cargando",
           "NL-inicio": "navInicio", "NL-historial": "navHistorial", "NL-pres": "navPres",
           "NL-trends": "navTrends", "NL-cal": "navCal", "NL-config": "navConfig",
+          "NL-finanzas": "navFinanzas", "NL-menu": "navMenu",
+          "DL-inicio": "navInicio", "DL-historial": "navHistorial", "DL-pres": "navPres",
+          "DL-trends": "navTrends", "DL-cal": "navCal", "DL-finanzas": "navFinanzas",
+          "DL-metas": "navMetas", "DL-deudas": "navDeudas", "DL-perfiles": "navPerfiles", "DL-config": "navConfig", "DL-ia": "hIA",
+          "L-drawer-principal": "drawerPrincipal", "L-drawer-analisis": "drawerAnalisis", "L-drawer-sistema": "drawerSistema",
           "L-notifTitle": "notifTitle", "L-btnActivarNotif": "btnActivarNotif", "L-btnProbarNotif": "btnProbarNotif",
           "L-recuerdoTitle": "recuerdoTitle", "L-recuerdoHoraLabel": "recuerdoHoraLabel",
           "L-recuerdoHoraBtn": "recuerdoHoraBtn", "L-recuerdo24hLabel": "recuerdo24hLabel",
@@ -5809,10 +6501,27 @@ Be specific with numbers and very concise.`;
           "L-fn-frecQuincenal": "fnFrecQuincenal",
           "L-fn-frecSemanal": "fnFrecSemanal",
           "L-fn-btnAgregarIngreso": "fnBtnAgregarIngreso",
+          "L-lblFecha": "lblFecha",
+          "L-lblCategoria": "lblCategoria",
+          "L-lblCatRapidas": "lblCatRapidas",
+          "et-ninguna": "tagNinguna",
+          "et-necesario": "tagNecesario",
+          "et-lujo": "tagLujo",
+          "et-urgente": "tagUrgente",
+          "et-ahorro": "tagAhorro",
+          "L-footer-android": "footerDescargar",
+          "L-footer-terms": "footerTerminos",
+          "L-footer-privacy": "footerPrivacidad",
         };
         renderDriveEstado();
 
-        for (let id in M) { let el = document.getElementById(id); if (el) el.innerText = T(M[id]); }
+        for (let id in M) {
+          let el = document.getElementById(id);
+          if (el) {
+            const txt = T(M[id]);
+            el.innerHTML = reemplazarEmojisA3D(txt);
+          }
+        }
 
         const bioTitleEl = document.getElementById("bioTitle");
         if (bioTitleEl) bioTitleEl.innerText = idioma === "es"
@@ -5872,19 +6581,44 @@ Be specific with numbers and very concise.`;
       // ══════════════════════════════════════════
       // NAVEGACIÓN
       // ══════════════════════════════════════════
+      function toggleDrawer() {
+        const overlay = document.getElementById("drawerOverlay");
+        const drawer = document.getElementById("sideDrawer");
+        if (!overlay || !drawer) return;
+        const isOpening = !drawer.classList.contains("active");
+        overlay.classList.toggle("active", isOpening);
+        drawer.classList.toggle("active", isOpening);
+        if (isOpening && typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+      }
+
+      function cerrarDrawer() {
+        document.getElementById("drawerOverlay")?.classList.remove("active");
+        document.getElementById("sideDrawer")?.classList.remove("active");
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") cerrarDrawer();
+      });
+
       async function irA(sec) {
+        cerrarDrawer();
         document.querySelectorAll(".seccion").forEach(s => s.classList.remove("activa"));
         document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("activo"));
+        document.querySelectorAll(".drawer-item").forEach(b => b.classList.remove("activo"));
         document.getElementById("sec-" + sec)?.classList.add("activa");
         document.getElementById("nav-" + sec)?.classList.add("activo");
+        document.getElementById("drawer-item-" + sec)?.classList.add("activo");
         window.scrollTo({ top: 0, behavior: "smooth" });
+        if (typeof lucide !== "undefined") lucide.createIcons();
         if (sec === "trends") { renderTendencias(); rellenarGrafMes(); actualizarGrafica(); actualizarGrafica6(); }
         if (sec === "cal") { generarCalendario(); renderRecMes(); }
         if (sec === "historial") { rellenarFiltros(); mostrar(); }
         if (sec === "config") { renderTasas(false); actualizarEstadoNotif(); actualizarEstadoRecuerdos(); renderConfigPin(); renderDriveEstado(); await inicializarDrive(); renderConfigBio(); }
         if (sec === "perfiles") renderPerfiles();
         if (sec === "deudas") { renderDeudas(); verificarDeudas(); }
-        if (sec === "inicio") { renderRacha(); renderSemana(); renderLimiteDiario(); }
+        if (sec === "inicio") { renderRacha(); renderSemana(); renderLimiteDiario(); renderNoviAiNudge(); }
         if (sec === "metas") renderMetasAhorro();
         if (sec === "ia") {
           let keySection = document.getElementById("iaKeySection");
@@ -5947,6 +6681,33 @@ Be specific with numbers and very concise.`;
         return matchKey ? CAT_EMOJIS[matchKey] : "🏷️";
       }
 
+      function traducirCat(cat) {
+        if (idioma !== "en") return cat;
+        const M = {
+          "Comida": "Food",
+          "Alimentación": "Food",
+          "Restaurante": "Dining",
+          "Mercado": "Groceries",
+          "Supermercado": "Groceries",
+          "Transporte": "Transport",
+          "Gasolina": "Gasoline",
+          "Ocio": "Leisure",
+          "Entretenimiento": "Entertainment",
+          "Servicios": "Utilities",
+          "Hogar": "Home",
+          "Salud": "Health",
+          "Educación": "Education",
+          "Mascotas": "Pets",
+          "Viajes": "Travel",
+          "Ropa": "Clothing",
+          "Tecnología": "Tech",
+          "Ahorro": "Savings",
+          "Suscripciones": "Subscriptions",
+          "Otros": "Other"
+        };
+        return M[cat] || cat;
+      }
+
       function renderCatChips(catSel = null, esAuto = false) {
         const cont = document.getElementById("catChipsContainer");
         if (!cont) return;
@@ -5957,10 +6718,10 @@ Be specific with numbers and very concise.`;
           let emoji = getEmojiCat(c);
           let esActiva = c === ac;
           let autoClass = (esActiva && esAuto) ? " auto-suggested" : "";
-          return `<span class="cat-chip${esActiva ? " sel" : ""}${autoClass}" onclick="seleccionarCatChip('${c}')">${emoji} ${c}</span>`;
+          return `<span class="cat-chip${esActiva ? " sel" : ""}${autoClass}" onclick="seleccionarCatChip('${c}')">${emoji} ${traducirCat(c)}</span>`;
         }).join("");
 
-        html += `<span class="cat-chip" onclick="toggleNuevaCatRow()" style="border-style:dashed;color:var(--verde);">➕ Nueva</span>`;
+        html += `<span class="cat-chip" onclick="toggleNuevaCatRow()" style="border-style:dashed;color:var(--verde);">➕ ${T("addcat")}</span>`;
 
         cont.innerHTML = html;
       }
@@ -5982,12 +6743,25 @@ Be specific with numbers and very concise.`;
         renderCatChips(cat, esAuto);
       }
 
+      function detectarAutoEtiqueta(norm) {
+        if (!norm) return;
+        if (["mercado", "arriendo", "luz", "agua", "gas", "salud", "medicina", "bus", "metro", "colegio", "gasolina", "almuerzo"].some(k => norm.includes(k))) {
+          selEtiqueta('necesario');
+        } else if (["cine", "juego", "ropa", "fiesta", "bar", "cerveza", "restaurante", "viaje", "hotel", "hamburguesa", "pizza", "starbucks"].some(k => norm.includes(k))) {
+          selEtiqueta('lujo');
+        } else if (["urgente", "medico", "urgencia", "taller", "multa", "reparacion"].some(k => norm.includes(k))) {
+          selEtiqueta('urgente');
+        } else if (["inversion", "ahorro", "banco", "deposito"].some(k => norm.includes(k))) {
+          selEtiqueta('ahorro');
+        }
+      }
+
       function detectarAutoCategoria(texto) {
         if (!texto || texto.trim().length < 2) return;
         const norm = normalizarTexto(texto);
+        detectarAutoEtiqueta(norm);
         for (const [catName, keywords] of Object.entries(KEYWORDS_CAT)) {
           if (keywords.some(kw => norm.includes(normalizarTexto(kw)))) {
-            // Buscar si la categoría existe en categorias del usuario (ignorando mayúsculas/acentos)
             let catMatch = categorias.find(c => normalizarTexto(c) === normalizarTexto(catName));
             if (!catMatch) {
               catMatch = categorias.find(c => normalizarTexto(c).includes(normalizarTexto(catName).slice(0, 4)));
@@ -6006,7 +6780,7 @@ Be specific with numbers and very concise.`;
       function cargarCategorias() {
         ["categoria", "presCat", "recCat"].forEach(id => {
           let s = document.getElementById(id);
-          if (s) s.innerHTML = categorias.map(c => `<option>${c}</option>`).join("");
+          if (s) s.innerHTML = categorias.map(c => `<option value="${c}">${traducirCat(c)}</option>`).join("");
         });
         renderCatChips();
       }
@@ -6019,6 +6793,234 @@ Be specific with numbers and very concise.`;
         localStorage.setItem(claveP("categorias"), JSON.stringify(categorias));
         document.getElementById("nuevaCat").value = "";
         cargarCategorias(); rellenarFiltros(); toast(T("tCatOk"));
+      }
+
+      // ══════════════════════════════════════════
+      // SUITE NOVI AI (FASES 1-6)
+      // ══════════════════════════════════════════
+
+      // Fase 1: Coach Nudge en Inicio
+      function renderNoviAiNudge() {
+        const card = document.getElementById("noviAiNudgeCard");
+        if (!card) return;
+
+        const mHoy = totalHoyGastos();
+        const lim = parseFloat(localStorage.getItem("limiteDiario") || "0");
+        const ingr = parseFloat(localStorage.getItem("ingresoMensual") || "0");
+        const tMes = gastos.reduce((s, g) => {
+          const f = parseFechaLocal(g.fecha);
+          return (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) ? s + g.monto : s;
+        }, 0);
+
+        let badge = "🤖 Consejos de NOVI AI";
+        let mensaje = "";
+
+        if (lim > 0 && mHoy > lim) {
+          badge = "🚨 Alerta de Gasto Diario";
+          mensaje = `Superaste tu límite diario por <strong>${fmtMoneda(mHoy - lim)}</strong>. Te sugerimos frenar consumos discrecionales por las próximas 24h.`;
+        } else if (lim > 0 && mHoy > lim * 0.8) {
+          badge = "⚠️ Precaución de Tope";
+          mensaje = `Estás al <strong>${Math.round((mHoy/lim)*100)}%</strong> de tu límite diario (${fmtMoneda(mHoy)} de ${fmtMoneda(lim)}). ¡Mantén el control en la noche!`;
+        } else if (ingr > 0 && tMes > ingr) {
+          badge = "🚨 Alerta de Presupuesto Mensual";
+          mensaje = `Tus gastos del mes (${fmtMoneda(tMes)}) superan tus ingresos (${fmtMoneda(ingr)}). Evita compras innecesarias.`;
+        } else if (gastos.length > 0) {
+          const catMap = {};
+          gastos.forEach(g => {
+            const f = parseFechaLocal(g.fecha);
+            if (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) {
+              catMap[g.categoria] = (catMap[g.categoria] || 0) + g.monto;
+            }
+          });
+          let topCat = Object.keys(catMap).sort((a,b) => catMap[b] - catMap[a])[0];
+          if (topCat && catMap[topCat] > 0) {
+            mensaje = `Tu mayor consumo este mes es en <strong>${traducirCat(topCat)}</strong> (${fmtMoneda(catMap[topCat])}). ¿Quieres simular si te conviene una nueva compra?`;
+          } else {
+            mensaje = `¡Excelente ritmo financiero! Llevas <strong>${calcularRacha()} días</strong> consecutivos registrando tus gastos.`;
+          }
+        } else {
+          mensaje = `Bienvenido a NOVYRA. Registra tus gastos diarios y configura tu meta para recibir diagnósticos en tiempo real.`;
+        }
+
+        card.innerHTML = `
+          <div class="novi-nudge-header">
+            <div class="novi-nudge-badge">✨ ${badge}</div>
+            <button class="tut-close" onclick="cerrarNudgeCard()" style="font-size:11px;opacity:0.6;">✕</button>
+          </div>
+          <div class="novi-nudge-body">${mensaje}</div>
+          <div class="novi-nudge-actions">
+            <button class="novi-btn-action" onclick="abrirSimuladorCompra()">🛍️ Simulador de Compra</button>
+            <button class="novi-btn-action" onclick="irA('ia')" style="background:rgba(255,255,255,0.05);color:var(--text2);">💬 Asesor NOVI AI</button>
+          </div>
+        `;
+      }
+
+      function cerrarNudgeCard() {
+        const el = document.getElementById("noviAiNudgeCard");
+        if (el) el.style.display = "none";
+      }
+
+      // Fase 2: Simulador de Compra
+      function abrirSimuladorCompra() {
+        const modal = document.getElementById("modalSimuladorCompra");
+        if (!modal) return;
+        modal.style.display = "flex";
+        document.getElementById("simResultadoWrap").style.display = "none";
+        document.getElementById("simMonto").value = "";
+        document.getElementById("simConcepto").value = "";
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function cerrarSimuladorCompra() {
+        const modal = document.getElementById("modalSimuladorCompra");
+        if (modal) modal.style.display = "none";
+      }
+
+      function evaluarSimulacionCompra() {
+        const val = parseFloat(document.getElementById("simMonto")?.value);
+        const conc = document.getElementById("simConcepto")?.value.trim() || "Compra proyectada";
+        const resWrap = document.getElementById("simResultadoWrap");
+        if (!resWrap) return;
+
+        if (isNaN(val) || val <= 0) {
+          return toast(T("tMontoMal"), "warn");
+        }
+
+        const mHoy = totalHoyGastos();
+        const lim = parseFloat(localStorage.getItem("limiteDiario") || "0");
+        const ingr = parseFloat(localStorage.getItem("ingresoMensual") || "0");
+        const tMes = gastos.reduce((s, g) => {
+          const f = parseFechaLocal(g.fecha);
+          return (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) ? s + g.monto : s;
+        }, 0);
+
+        let estadoClass = "segura";
+        let titulo = "🟢 COMPRA COMPATIBLE";
+        let recomendacion = "";
+
+        const dispMensual = ingr > 0 ? (ingr - tMes) : null;
+
+        if (dispMensual !== null && val > dispMensual) {
+          estadoClass = "riesgo";
+          titulo = "🔴 RIESGO FINANCIERO ALTO";
+          recomendacion = `Esta compra de <strong>${fmtMoneda(val)}</strong> supera tu dinero disponible mensual restante (${fmtMoneda(dispMensual)}). Te recomendamos postergarla.`;
+        } else if (lim > 0 && (mHoy + val) > lim) {
+          estadoClass = "precaucion";
+          titulo = "🟡 PRECAUCIÓN DE TOPE DIARIO";
+          recomendacion = `La compra se ajusta a tu ingreso mensual, pero hará que superes tu límite diario por <strong>${fmtMoneda((mHoy + val) - lim)}</strong>.`;
+        } else {
+          estadoClass = "segura";
+          titulo = "🟢 COMPRA COMPATIBLE";
+          recomendacion = `¡Adelante! La compra de <strong>${fmtMoneda(val)}</strong> en "${conc}" mantiene tu presupuesto en verde. Conservarás <strong>${fmtMoneda(dispMensual !== null ? dispMensual - val : 0)}</strong> disponibles este mes.`;
+        }
+
+        resWrap.style.display = "block";
+        resWrap.innerHTML = `
+          <div class="sim-veredicto-box ${estadoClass}">
+            <div style="font-weight:800;font-size:14px;margin-bottom:6px;">${titulo}</div>
+            <div>${recomendacion}</div>
+          </div>
+        `;
+      }
+
+      function enviarPromptIA(modo = null) {
+        const input = document.getElementById("iaPrompt");
+        const chat = document.getElementById("iaChatBox");
+        if (!chat) return;
+
+        let text = modo === "reporte" ? "Dame un diagnóstico de mis finanzas de este mes" : (input?.value || "").trim();
+        if (!text) return;
+
+        chat.innerHTML += `
+          <div class="ai-msg user">
+            ${text}
+          </div>
+        `;
+        if (input) input.value = "";
+        chat.scrollTop = chat.scrollHeight;
+
+        const loaderId = "loader-" + Date.now();
+        chat.innerHTML += `
+          <div class="ai-msg bot" id="${loaderId}">
+            <div class="ai-msg-header">🤖 NOVI AI</div>
+            <em>Procesando diagnóstico...</em>
+          </div>
+        `;
+        chat.scrollTop = chat.scrollHeight;
+
+        setTimeout(() => {
+          const loaderEl = document.getElementById(loaderId);
+          if (!loaderEl) return;
+
+          const tMes = gastos.reduce((s, g) => {
+            const f = parseFechaLocal(g.fecha);
+            return (f.getMonth() === mesHoy() && f.getFullYear() === anioHoy()) ? s + g.monto : s;
+          }, 0);
+
+          const ingr = parseFloat(localStorage.getItem("ingresoMensual") || "0");
+          const racha = calcularRacha();
+          const textNorm = normalizarTexto(text);
+          const matchMonto = text.match(/(?:monto|precio|costo|comprar|celular|auto|tenis|viaje)?\s*\$?([0-9\.\,]{4,})/i);
+
+          let respuesta = "";
+
+          if (textNorm.includes("comprar") || textNorm.includes("celular") || matchMonto) {
+            let valCompra = matchMonto ? parseFloat(matchMonto[1].replace(/\./g, '').replace(/,/g, '')) : 1999999;
+            let cuotaSugerida = Math.round(valCompra / 6);
+
+            respuesta = `
+              ¡Hola! Vamos a diseñar un plan concreto para que puedas realizar tu compra de <strong>${fmtMoneda(valCompra)}</strong> sin comprometer tu estabilidad financiera:
+              <br><br>
+              <strong>1️⃣ Situación Actual:</strong><br>
+              • Gastos acumulados del mes: <strong>${fmtMoneda(tMes)}</strong><br>
+              • Ingreso mensual registrado: <strong>${ingr > 0 ? fmtMoneda(ingr) : "No definido (configúralo en Ajustes)"}</strong><br><br>
+              <strong>2️⃣ Plan de Ahorro Sugerido (6 meses):</strong><br>
+              • Ahorro mensual necesario: <strong>${fmtMoneda(cuotaSugerida)} / mes</strong><br>
+              • Si prefieres 3 meses: <strong>${fmtMoneda(Math.round(valCompra/3))} / mes</strong><br><br>
+              <strong>💡 Consejo de NOVI AI:</strong> Usa nuestro <strong>Simulador de Compra</strong> o establece una <strong>Meta de Ahorro</strong> para automatizar el seguimiento. 💚
+            `;
+          } else {
+            respuesta = `
+              Analizando tu perfil activo: Has acumulado <strong>${fmtMoneda(tMes)}</strong> en gastos este mes con una racha de <strong>${racha} días</strong>. 
+              Te recomiendo mantener tus gastos discrecionales bajo control y utilizar nuestro <strong>Simulador de Compra</strong> para evaluar compras importantes. 🎯
+            `;
+          }
+
+          loaderEl.innerHTML = `
+            <div class="ai-msg-header">🤖 NOVI AI</div>
+            ${respuesta}
+          `;
+          chat.scrollTop = chat.scrollHeight;
+        }, 800);
+      }
+
+      // Fase 4: Búsqueda Natural
+      function interpretarBusquedaNatural(q) {
+        if (!q) return null;
+        const qNorm = normalizarTexto(q);
+
+        let montoMayor = null;
+        const matchMayor = qNorm.match(/(?:mayor|mas|superiore?s?|>)\s*(?:a|de)?\s*\$?([0-9kK\.\,]+)/);
+        if (matchMayor) {
+          let raw = matchMayor[1].toLowerCase().replace(/,/g, '');
+          if (raw.endsWith('k')) raw = parseFloat(raw.replace('k', '')) * 1000;
+          else raw = parseFloat(raw);
+          if (!isNaN(raw)) montoMayor = raw;
+        }
+
+        let montoMenor = null;
+        const matchMenor = qNorm.match(/(?:menor|menos|inferiore?s?|<)\s*(?:a|de)?\s*\$?([0-9kK\.\,]+)/);
+        if (matchMenor) {
+          let raw = matchMenor[1].toLowerCase().replace(/,/g, '');
+          if (raw.endsWith('k')) raw = parseFloat(raw.replace('k', '')) * 1000;
+          else raw = parseFloat(raw);
+          if (!isNaN(raw)) montoMenor = raw;
+        }
+
+        if (montoMayor !== null || montoMenor !== null) {
+          return { montoMayor, montoMenor };
+        }
+        return null;
       }
 
 
@@ -6352,10 +7354,16 @@ Be specific with numbers and very concise.`;
           if (fm && mk !== fm) return false;
           if (fc && g.categoria !== fc) return false;
           if (busq) {
-            let enNota = (g.nota || "").toLowerCase().includes(busq);
-            let enCat = g.categoria.toLowerCase().includes(busq);
-            let enMonto = fmtMoneda(g.monto).toLowerCase().includes(busq) || String(g.monto).includes(busq);
-            if (!enNota && !enCat && !enMonto) return false;
+            const interp = interpretarBusquedaNatural(busq);
+            if (interp) {
+              if (interp.montoMayor !== null && g.monto < interp.montoMayor) return false;
+              if (interp.montoMenor !== null && g.monto > interp.montoMenor) return false;
+            } else {
+              let enNota = (g.nota || "").toLowerCase().includes(busq);
+              let enCat = g.categoria.toLowerCase().includes(busq);
+              let enMonto = fmtMoneda(g.monto).toLowerCase().includes(busq) || String(g.monto).includes(busq);
+              if (!enNota && !enCat && !enMonto) return false;
+            }
           }
           return true;
         });
@@ -6384,7 +7392,7 @@ Be specific with numbers and very concise.`;
         }
         lista.innerHTML = html;
 
-        analizar(); renderPresupuesto(); renderMeta(tM); renderRacha(); renderSemana(); renderLimiteDiario();
+        analizar(); renderPresupuesto(); renderMeta(tM); renderRacha(); renderSemana(); renderLimiteDiario(); renderNoviAiNudge();
         if (document.getElementById("sec-cal").classList.contains("activa")) generarCalendario();
         if (document.getElementById("sec-trends").classList.contains("activa")) renderTendencias();
         if (typeof lucide !== "undefined") lucide.createIcons();
@@ -8074,8 +9082,8 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         let msg = r === 0 ? msgs[0] : r < 3 ? msgs[1] : r < 7 ? msgs[2] : r < 14 ? msgs[3] : msgs[4];
         let label = idioma === "es" ? `día${r !== 1 ? "s" : ""} consecutivo${r !== 1 ? "s" : ""}` : `consecutive day${r !== 1 ? "s" : ""}`;
         cont.innerHTML = `<div class="racha-box">
-    <div class="racha-fuego">${emoji}</div>
-    <div class="racha-info"><div class="racha-num">${r}</div><div class="racha-label">${label}</div><div class="racha-msg">${msg}</div></div>
+    <div class="racha-fuego">${render3DEmoji(emoji, 34)}</div>
+    <div class="racha-info"><div class="racha-num">${r}</div><div class="racha-label">${label}</div><div class="racha-msg">${reemplazarEmojisA3D(msg)}</div></div>
   </div>`;
       }
 
@@ -8391,9 +9399,6 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         try {
           const cifrado = await cifrar(json, clave);
           localStorage.setItem(claveP("datos_enc"), cifrado);
-          // Limpiar versión en plano si existía
-          ["gastos", "categorias", "presupuesto", "recurrentes", "meta", "recordatoriosCal"]
-            .forEach(k => localStorage.removeItem(claveP(k)));
         } catch (e) { console.error("Error cifrando:", e); }
       }
 
@@ -8413,22 +9418,6 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         } catch (e) {
           console.error("Error descifrando:", e);
           return false;
-        }
-      }
-
-      // Sobreescribir guardar() para que use AES si hay clave activa
-
-
-      function guardarDatosPerfil() {
-        if (_aesKey) {
-          guardarDatosEncriptados(_aesKey);
-        } else {
-          localStorage.setItem(claveP("gastos"), JSON.stringify(gastos));
-          localStorage.setItem(claveP("categorias"), JSON.stringify(categorias));
-          localStorage.setItem(claveP("presupuesto"), JSON.stringify(presupuesto));
-          localStorage.setItem(claveP("recurrentes"), JSON.stringify(recurrentes));
-          localStorage.setItem(claveP("meta"), JSON.stringify(meta));
-          localStorage.setItem(claveP("recordatoriosCal"), JSON.stringify(recordatoriosCal));
         }
       }
 
@@ -8478,7 +9467,17 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         reiniciarAutoLock();
       }
 
+      function ejecutarVibracionHaptica() {
+        try {
+          if (window.navigator?.vibrate) window.navigator.vibrate(15);
+          if (window.Capacitor?.Plugins?.Haptics) {
+            window.Capacitor.Plugins.Haptics.impact({ style: "LIGHT" });
+          }
+        } catch (e) { }
+      }
+
       function pinInput(d) {
+        ejecutarVibracionHaptica();
         if (verificarBloqueoTemporal()) return;
         if (pinBuffer.length >= 4) return;
         pinBuffer += d;
@@ -8487,6 +9486,7 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       }
 
       function pinDel() {
+        ejecutarVibracionHaptica();
         if (!pinBuffer.length) return;
         pinBuffer = pinBuffer.slice(0, -1);
         actualizarPinDots();
@@ -8775,11 +9775,25 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         renderConfigPin();
       }
 
+      function cambiarPinTimeout(min) {
+        localStorage.setItem("pinTimeoutMin", String(min));
+        toast(idioma === "es" ? `Auto-bloqueo: ${min === "0" ? "Inmediato" : min + " min"}` : `Auto-lock: ${min === "0" ? "Immediate" : min + " min"}`);
+        renderConfigPin();
+        reiniciarAutoLock();
+      }
+
+      function getPinTimeoutMs() {
+        const val = localStorage.getItem("pinTimeoutMin") || "5";
+        if (val === "0") return 0;
+        return parseInt(val) * 60 * 1000;
+      }
+
       // ── Config UI ──────────────────────────────
       function renderConfigPin() {
         const cont = document.getElementById("configPinContenido");
         if (!cont) return;
         const es = idioma === "es";
+        const timeoutSel = localStorage.getItem("pinTimeoutMin") || "5";
         if (pinActivo()) {
           cont.innerHTML = `
       <div class="pin-config-card">
@@ -8787,13 +9801,24 @@ Sé específico con los números. Máximo 300 palabras en total.`;
           <span class="pin-config-label">🔒 ${es ? "PIN + Cifrado AES" : "PIN + AES Encryption"}</span>
           <span style="color:var(--verde);font-size:12px;font-weight:700;">${es ? "Activo" : "Active"}</span>
         </div>
-        <div class="pin-config-row">
-          <span class="pin-config-label">${es ? "Bloqueo automático" : "Auto-lock"}</span>
-          <span class="pin-config-val">5 min</span>
+        <div class="pin-config-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span class="pin-config-label">⏱️ ${es ? "Tiempo de Auto-Bloqueo" : "Auto-Lock Timeout"}</span>
+          <select onchange="cambiarPinTimeout(this.value)" style="margin-top:2px;font-size:12px;padding:6px 10px;width:100%;">
+            <option value="0" ${timeoutSel === "0" ? "selected" : ""}>⚡ ${es ? "Inmediato al salir" : "Immediate on exit"}</option>
+            <option value="1" ${timeoutSel === "1" ? "selected" : ""}>⏱️ 1 ${es ? "minuto" : "minute"}</option>
+            <option value="5" ${timeoutSel === "5" ? "selected" : ""}>⏱️ 5 ${es ? "minutos (por defecto)" : "minutes (default)"}</option>
+            <option value="15" ${timeoutSel === "15" ? "selected" : ""}>⏱️ 15 ${es ? "minutos" : "minutes"}</option>
+          </select>
         </div>
         <div class="pin-config-row">
           <span class="pin-config-label">${es ? "Cifrado de datos" : "Data encryption"}</span>
           <span class="pin-config-val">AES-256-GCM</span>
+        </div>
+        <div class="pin-config-row">
+          <span class="pin-config-label">🙈 ${es ? "Modo Incógnito" : "Privacy Mode"}</span>
+          <button class="btn-sm btn-gris" onclick="toggleModoIncognito()" style="font-size:12px;padding:4px 10px;margin:0;">
+            ${modoIncognito ? (es ? "Oculto 🙈" : "Masked 🙈") : (es ? "Visible 👁️" : "Visible 👁️")}
+          </button>
         </div>
       </div>
       <button onclick="iniciarCambioPin()" class="btn-gris" style="margin-top:10px;font-size:13px;">🔄 ${es ? "Cambiar PIN" : "Change PIN"}</button>
@@ -8808,8 +9833,6 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       <button onclick="mostrarPinLock('set')" style="font-size:13px;">🔒 ${es ? "Activar PIN + Cifrado" : "Enable PIN + Encryption"}</button>`;
         }
       }
-
-
 
       function mostrarPinLock(modo = "unlock") {
         pinModo = modo; pinBuffer = "";
@@ -8833,8 +9856,15 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         document.getElementById("pinTitulo").innerText = txt.t;
         document.getElementById("pinSub").innerText = txt.s;
 
-        // ← AGREGAR ESTO:
-        if (modo === "unlock") actualizarBotónBio();
+        if (modo === "unlock") {
+          actualizarBotónBio();
+          // Auto-disparo de biometría si está activa
+          if (localStorage.getItem("bioActiva") === "true" && typeof autenticarBiometria === "function") {
+            setTimeout(() => {
+              autenticarBiometria().catch(() => {});
+            }, 250);
+          }
+        }
       }
 
       // ── Auto-lock ──────────────────────────────
@@ -8848,11 +9878,13 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         return false;
       }
 
-
       function reiniciarAutoLock() {
         clearTimeout(pinAutoLockTimer);
         if (!pinActivo()) return;
-        pinAutoLockTimer = setTimeout(() => { _aesKey = null; mostrarPinLock("unlock"); }, PIN_TIMEOUT);
+        const ms = getPinTimeoutMs();
+        if (ms > 0) {
+          pinAutoLockTimer = setTimeout(() => { _aesKey = null; mostrarPinLock("unlock"); }, ms);
+        }
       }
 
       ["touchstart", "click", "keydown"].forEach(ev => {
@@ -8862,13 +9894,25 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       });
 
       document.addEventListener("visibilitychange", () => {
+        if (!pinActivo()) return;
+        const timeoutMin = localStorage.getItem("pinTimeoutMin") || "5";
         if (document.hidden) {
-          clearTimeout(pinAutoLockTimer);
-          localStorage.setItem("pinLastHide", String(Date.now()));
-        } else if (pinActivo()) {
+          if (timeoutMin === "0") {
+            _aesKey = null;
+            mostrarPinLock("unlock");
+          } else {
+            clearTimeout(pinAutoLockTimer);
+            localStorage.setItem("pinLastHide", String(Date.now()));
+          }
+        } else {
           const lastHide = parseInt(localStorage.getItem("pinLastHide") || "0");
-          if (Date.now() - lastHide > PIN_TIMEOUT) { _aesKey = null; mostrarPinLock("unlock"); }
-          else reiniciarAutoLock();
+          const ms = getPinTimeoutMs();
+          if (ms > 0 && Date.now() - lastHide > ms) {
+            _aesKey = null;
+            mostrarPinLock("unlock");
+          } else {
+            reiniciarAutoLock();
+          }
         }
       });
 
@@ -10047,9 +11091,26 @@ Assign null if unreadable.`;
         }
 
         driveSubiendoAhora = true;
+        renderDriveEstado(true); // Mostrar estado 'Sincronizando...'
+
         try {
-          const datos = { gastos, categorias, presupuesto, recurrentes, meta, recordatoriosCal };
-          const json = JSON.stringify(datos);
+          // Extraer la totalidad de perfiles almacenados en localStorage
+          const todosLosDatos = {};
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && (k.includes("gastos") || k.includes("categorias") || k.includes("presupuesto") || k.includes("recurrentes") || k.includes("meta") || k.includes("recordatoriosCal") || k.startsWith("p_"))) {
+              todosLosDatos[k] = localStorage.getItem(k);
+            }
+          }
+
+          const datosConsolidados = {
+            gastos, categorias, presupuesto, recurrentes, meta, recordatoriosCal,
+            perfilesFull: todosLosDatos,
+            version: "3.0",
+            exportFecha: new Date().toISOString()
+          };
+
+          const json = JSON.stringify(datosConsolidados);
           const blob = new Blob([json], { type: "application/json" });
 
           let url, method;
@@ -10075,13 +11136,11 @@ Assign null if unreadable.`;
               }
             );
 
-            // Token expirado — renovar y reintentar
             if (res.status === 401) {
               driveSubiendoAhora = false;
               await manejarTokenExpirado();
               return;
             }
-
 
             const data = await res.json();
             driveFileId = data.id;
@@ -10101,10 +11160,9 @@ Assign null if unreadable.`;
             body: blob
           });
 
-          // Token expirado — renovar y reintentar
           if (res.status === 401) {
             driveSubiendoAhora = false;
-            await renovarTokenDrive();
+            await manejarTokenExpirado();
             return;
           }
 
@@ -10115,6 +11173,7 @@ Assign null if unreadable.`;
         } catch (e) {
           console.error("Error subiendo backup Drive:", e);
           driveBackupPendiente = true;
+          renderDriveEstado();
         } finally {
           driveSubiendoAhora = false;
         }
@@ -10125,10 +11184,7 @@ Assign null if unreadable.`;
         if (!driveTokenClient) return;
         driveBackupPendiente = true;
         try {
-          // Solicitar nuevo token silenciosamente
           driveTokenClient.requestAccessToken({ prompt: "" });
-          // El callback de initTokenClient ya llama subirBackupDrive()
-          // si driveBackupPendiente es true
         } catch (e) {
           console.warn("No se pudo renovar token Drive:", e);
         }
@@ -10155,7 +11211,13 @@ Assign null if unreadable.`;
           );
           const datos = await res.json();
 
-          // Validar y aplicar
+          // Restaurar perfiles adicionales si existen
+          if (datos.perfilesFull && typeof datos.perfilesFull === "object") {
+            Object.keys(datos.perfilesFull).forEach(k => {
+              localStorage.setItem(k, datos.perfilesFull[k]);
+            });
+          }
+
           const { ok, errores } = validarBackup(datos);
           if (!ok) { mostrarErroresImport(errores); return; }
           const d = sanitizarDatos(datos);
@@ -10181,7 +11243,7 @@ Assign null if unreadable.`;
       }
 
       // ── Render estado Drive ────────────────────
-      function renderDriveEstado() {
+      function renderDriveEstado(subiendo = false) {
         const cont = document.getElementById("driveEstadoContenido");
         const botones = document.getElementById("driveBotonesContenido");
         if (!cont || !botones) return;
@@ -10196,52 +11258,57 @@ Assign null if unreadable.`;
           : null;
 
         if (conectado) {
+          let estadoTexto = subiendo
+            ? (idioma === "es" ? "🔄 Sincronizando datos con Drive..." : "🔄 Syncing data with Drive...")
+            : ultimo
+              ? (idioma === "es" ? `Último backup: ${ultimo} (Auto-sync activo)` : `Last backup: ${ultimo} (Auto-sync active)`)
+              : (idioma === "es" ? "Conectado — primer backup en curso" : "Connected — first backup in progress");
+
+          let dotClass = subiendo ? "amarillo" : "verde";
+
           cont.innerHTML = `
-      <div class="drive-estado">
-        <div class="drive-avatar">🔵</div>
-        <div class="drive-info">
-          <div class="drive-nombre">Google Drive</div>
-          <div class="drive-sub">${ultimo
-              ? (idioma === "es" ? `Último backup: ${ultimo}` : `Last backup: ${ultimo}`)
-              : (idioma === "es" ? "Conectado — sin backup aún" : "Connected — no backup yet")
-            }</div>
-        </div>
-        <div class="drive-dot verde"></div>
-      </div>`;
+            <div class="drive-estado">
+              <div class="drive-avatar">🔵</div>
+              <div class="drive-info">
+                <div class="drive-nombre">Google Drive Cloud Backup</div>
+                <div class="drive-sub">${estadoTexto}</div>
+              </div>
+              <div class="drive-dot ${dotClass}"></div>
+            </div>`;
 
           botones.innerHTML = `
-      <button onclick="subirBackupDrive()" class="btn-azul" style="font-size:13px;margin-bottom:8px;">
-        ☁️ ${idioma === "es" ? "Subir backup ahora" : "Upload backup now"}
-      </button>
-      <button onclick="restaurarDesdeDrive()" class="btn-gris" style="font-size:13px;margin-bottom:8px;">
-        📥 ${idioma === "es" ? "Restaurar desde Drive" : "Restore from Drive"}
-      </button>
-      <button onclick="desconectarDrive()" class="btn-peligro" style="font-size:13px;">
-        🔌 ${idioma === "es" ? "Desconectar Drive" : "Disconnect Drive"}
-      </button>`;
+            <button onclick="subirBackupDrive()" class="btn-azul" style="font-size:13px;margin-bottom:8px;" ${subiendo ? "disabled" : ""}>
+              ${subiendo ? "⏳ " + (idioma === "es" ? "Guardando..." : "Saving...") : "☁️ " + (idioma === "es" ? "Subir backup ahora" : "Upload backup now")}
+            </button>
+            <button onclick="restaurarDesdeDrive()" class="btn-gris" style="font-size:13px;margin-bottom:8px;">
+              📥 ${idioma === "es" ? "Restaurar desde Drive" : "Restore from Drive"}
+            </button>
+            <button onclick="desconectarDrive()" class="btn-peligro" style="font-size:13px;">
+              🔌 ${idioma === "es" ? "Desconectar Drive" : "Disconnect Drive"}
+            </button>`;
         } else {
           cont.innerHTML = `
-      <div class="drive-estado">
-        <div class="drive-avatar">☁️</div>
-        <div class="drive-info">
-          <div class="drive-nombre">Google Drive</div>
-          <div class="drive-sub">${idioma === "es"
-              ? "Backup automático en tu cuenta Google"
-              : "Automatic backup to your Google account"}</div>
-        </div>
-        <div class="drive-dot gris"></div>
-      </div>
-      <div class="info-box" style="margin-bottom:10px;">
-        ${idioma === "es"
-              ? "Tus datos se guardan automáticamente en Drive cada vez que registras un gasto. Solo tú tienes acceso."
-              : "Your data is automatically saved to Drive every time you log an expense. Only you have access."}
-      </div>`;
+            <div class="drive-estado">
+              <div class="drive-avatar">☁️</div>
+              <div class="drive-info">
+                <div class="drive-nombre">Google Drive Cloud Backup</div>
+                <div class="drive-sub">${idioma === "es"
+                    ? "Respaldo automático en tu cuenta Google"
+                    : "Automatic backup to your Google account"}</div>
+              </div>
+              <div class="drive-dot gris"></div>
+            </div>
+            <div class="info-box" style="margin-bottom:10px;">
+              ${idioma === "es"
+                    ? "Tus datos se guardan de forma segura con un buffer de 2s cada vez que haces cambios. Solo tú tienes acceso."
+                    : "Your data is securely saved to Drive with a 2s buffer whenever you make changes."}
+            </div>`;
 
           botones.innerHTML = `
-      <button onclick="conectarDrive()" class="btn-google" style="font-size:13px;">
-        <img src="https://www.google.com/favicon.ico" width="16" height="16">
-        ${idioma === "es" ? "Conectar con Google" : "Connect with Google"}
-      </button>`;
+            <button onclick="conectarDrive()" class="btn-google" style="font-size:13px;">
+              <img src="https://www.google.com/favicon.ico" width="16" height="16">
+              ${idioma === "es" ? "Conectar con Google" : "Connect with Google"}
+            </button>`;
         }
       }
 

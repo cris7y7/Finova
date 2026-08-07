@@ -1,0 +1,5 @@
+int layout activity_auth_activity 0x0
+int string title_activity_auth_activity 0x0
+int style AppTheme_AppBarOverlay 0x0
+int style AppTheme_PopupOverlay 0x0
+int style AppTheme_Transparent 0x0

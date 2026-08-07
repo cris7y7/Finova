@@ -1,994 +1,1440 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVYRA — Toma el control de tu dinero</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
-  --verde:#22c55e;
-  --verde2:#16a34a;
-  --teal:#0e9e8e;
-  --bg:#000000;
-  --card:#0c0d12;
-  --card2:#12141d;
-  --border:rgba(255,255,255,0.08);
-  --text:#f1f5f9;
-  --text2:#cbd5e1;
-  --text3:#4e5d78;
-  --syne:'Syne',sans-serif;
-  --inter:'Inter',sans-serif;
-}
-
-html{scroll-behavior:smooth;}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--inter);
-  overflow-x:hidden;
-}
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;
-  z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 40px;
-  background:rgba(8,8,8,0.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  transition:all .3s;
-}
-
-.nav-logo{
-  font-family:var(--syne);
-  font-size:22px;font-weight:800;
-  letter-spacing:3px;
-  background:linear-gradient(90deg,#1ea84e,#2db85a);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-.nav-links{
-  display:flex;align-items:center;gap:32px;
-  list-style:none;
-}
-
-.nav-links a{
-  color:var(--text2);
-  text-decoration:none;
-  font-size:14px;
-  font-weight:500;
-  transition:color .2s;
-}
-
-.nav-links a:hover{color:var(--text);}
-
-.nav-cta{
-  background:linear-gradient(135deg,#1ea84e,#178a40);
-  color:white;
-  padding:10px 24px;
-  border-radius:10px;
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-  transition:all .2s;
-  box-shadow:0 2px 12px rgba(30,168,78,.2);
-}
-
-.nav-cta:hover{
-  transform:translateY(-1px);
-  box-shadow:0 4px 20px rgba(30,168,78,.3);
-}
-
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:120px 24px 80px;
-  position:relative;
-  overflow:hidden;
-}
-
-.hero::before{
-  content:'';
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(30,168,78,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(14,158,142,0.04) 0%, transparent 50%);
-  pointer-events:none;
-}
-
-/* Grid de puntos */
-.hero::after{
-  content:'';
-  position:absolute;inset:0;
-  background-image:radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size:32px 32px;
-  pointer-events:none;
-}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(30,168,78,0.08);
-  border:1px solid rgba(30,168,78,0.2);
-  color:#2db85a;
-  padding:6px 16px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:28px;
-  position:relative;z-index:1;
-  animation:fadeUp .6s ease both;
-}
-
-.hero-badge::before{
-  content:'';
-  width:6px;height:6px;
-  border-radius:50%;
-  background:#1ea84e;
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
-
-.hero-title{
-  font-family:var(--syne);
-  font-size:clamp(48px,8vw,88px);
-  font-weight:800;
-  line-height:1.0;
-  letter-spacing:-2px;
-  margin-bottom:24px;
-  position:relative;z-index:1;
-  animation:fadeUp .6s ease .1s both;
-}
-
-.hero-title .green{
-  background:linear-gradient(135deg,#1ea84e,#2db85a,#0e9e8e);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-.hero-sub{
-  font-size:18px;
-  color:var(--text2);
-  line-height:1.7;
-  max-width:520px;
-  margin:0 auto 40px;
-  font-weight:400;
-  position:relative;z-index:1;
-  animation:fadeUp .6s ease .2s both;
-}
-
-.hero-btns{
-  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-  position:relative;z-index:1;
-  animation:fadeUp .6s ease .3s both;
-}
-
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#1ea84e,#178a40);
-  color:white;
-  padding:14px 32px;
-  border-radius:12px;
-  font-size:15px;
-  font-weight:600;
-  text-decoration:none;
-  transition:all .2s;
-  box-shadow:0 4px 20px rgba(30,168,78,.25);
-}
-
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(30,168,78,.35);}
-
-.btn-secondary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:14px 32px;
-  border-radius:12px;
-  font-size:15px;
-  font-weight:600;
-  text-decoration:none;
-  transition:all .2s;
-}
-
-.btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);}
-
-.hero-stats{
-  display:flex;gap:48px;flex-wrap:wrap;justify-content:center;
-  margin-top:64px;
-  position:relative;z-index:1;
-  animation:fadeUp .6s ease .4s both;
-}
-
-.hero-stat{text-align:center;}
-.hero-stat-num{
-  font-family:var(--syne);
-  font-size:32px;font-weight:800;
-  color:var(--verde2);
-}
-.hero-stat-label{
-  font-size:13px;color:var(--text3);
-  margin-top:4px;font-weight:500;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(24px);}
-  to{opacity:1;transform:none;}
-}
-
-/* ── SCREENSHOTS ── */
-.screenshots{
-  padding:80px 24px;
-  position:relative;
-  overflow:hidden;
-}
-
-.screenshots-title{
-  text-align:center;
-  font-family:var(--syne);
-  font-size:clamp(28px,4vw,42px);
-  font-weight:800;
-  margin-bottom:16px;
-}
-
-.screenshots-sub{
-  text-align:center;
-  color:var(--text2);
-  font-size:16px;
-  margin-bottom:60px;
-}
-
-.screenshots-scroll{
-  display:grid;
-  grid-template-columns:repeat(5,160px);
-  gap:16px;
-  justify-content:center;
-  padding:20px 0 40px;
-  overflow-x:auto;
-}
-
-.screenshot-card{
-  width:160px;
-  height:320px;
-  border-radius:24px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-  transition:transform .3s ease;
-  position:relative;
-  background:var(--card);
-}
-
-.screenshot-card:hover{transform:translateY(-8px) scale(1.02);}
-
-.screenshot-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:top;
-  display:block;
-}
-
-.screenshot-label{
-  position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(0deg,rgba(8,8,8,0.9),transparent);
-  padding:20px 12px 12px;
-  font-size:11px;
-  font-weight:600;
-  color:var(--verde2);
-  text-align:center;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-@media(max-width:900px){
-  .screenshots-scroll{
-    grid-template-columns:repeat(3,160px);
-  }
-}
-
-@media(max-width:560px){
-  .screenshots-scroll{
-    grid-template-columns:repeat(2,160px);
-  }
-}
-
-/* ── FEATURES ── */
-.features{
-  padding:100px 24px;
-  max-width:1100px;
-  margin:0 auto;
-}
-
-.section-label{
-  font-size:11px;
-  font-weight:700;
-  color:var(--verde);
-  text-transform:uppercase;
-  letter-spacing:2px;
-  margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
-}
-
-.section-label::before{
-  content:'';
-  width:24px;height:1px;
-  background:var(--verde);
-}
-
-.section-title{
-  font-family:var(--syne);
-  font-size:clamp(28px,4vw,48px);
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:16px;
-}
-
-.section-sub{
-  color:var(--text2);
-  font-size:16px;
-  line-height:1.7;
-  max-width:500px;
-  margin-bottom:60px;
-}
-
-.features-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:16px;
-}
-
-.feature-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px;
-  transition:all .3s;
-  position:relative;
-  overflow:hidden;
-}
-
-.feature-card::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(30,168,78,0.3),transparent);
-  opacity:0;
-  transition:opacity .3s;
-}
-
-.feature-card:hover{
-  border-color:rgba(30,168,78,0.15);
-  transform:translateY(-4px);
-}
-
-.feature-card:hover::before{opacity:1;}
-
-.feature-icon{
-  width:44px;height:44px;
-  border-radius:12px;
-  background:rgba(30,168,78,0.08);
-  border:1px solid rgba(30,168,78,0.15);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:16px;
-  font-size:20px;
-}
-
-.feature-title{
-  font-family:var(--syne);
-  font-size:17px;
-  font-weight:700;
-  margin-bottom:8px;
-  color:var(--text);
-}
-
-.feature-desc{
-  font-size:14px;
-  color:var(--text2);
-  line-height:1.6;
-}
-
-/* ── HIGHLIGHT ── */
-.highlight{
-  padding:100px 24px;
-  position:relative;
-  overflow:hidden;
-}
-
-.highlight-inner{
-  max-width:1100px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:80px;
-  align-items:center;
-}
-
-@media(max-width:768px){
-  .highlight-inner{grid-template-columns:1fr;gap:40px;}
-  .highlight-img{order:-1;}
-}
-
-.highlight-content .section-label{margin-bottom:16px;}
-
-.highlight-list{
-  list-style:none;
-  margin-top:32px;
-  display:flex;flex-direction:column;gap:16px;
-}
-
-.highlight-list li{
-  display:flex;align-items:flex-start;gap:12px;
-  font-size:14px;color:var(--text2);line-height:1.6;
-}
-
-.highlight-list li::before{
-  content:'';
-  width:18px;height:18px;
-  border-radius:50%;
-  background:rgba(30,168,78,0.1);
-  border:1px solid rgba(30,168,78,0.3);
-  flex-shrink:0;
-  margin-top:2px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%231ea84e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:10px;
-}
-
-.highlight-img{
-  position:relative;
-  display:flex;
-  justify-content:center;
-}
-
-.highlight-img img{
-  width:240px;
-  border-radius:32px;
-  border:1px solid var(--border);
-  box-shadow:0 32px 80px rgba(0,0,0,.6);
-}
-
-.highlight-img::before{
-  content:'';
-  position:absolute;
-  inset:-40px;
-  background:radial-gradient(ellipse at center, rgba(30,168,78,0.06), transparent 70%);
-  pointer-events:none;
-}
-
-/* ── AI SECTION ── */
-.ai-section{
-  padding:100px 24px;
-  max-width:1100px;
-  margin:0 auto;
-}
-
-.ai-card{
-  background:linear-gradient(135deg,#0a1a0f,#050d15);
-  border:1px solid rgba(30,168,78,0.12);
-  border-radius:28px;
-  padding:60px 48px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-}
-
-@media(max-width:768px){
-  .ai-card{grid-template-columns:1fr;gap:40px;padding:40px 28px;}
-}
-
-.ai-card::before{
-  content:'';
-  position:absolute;top:-60px;right:-60px;
-  width:240px;height:240px;
-  background:radial-gradient(circle,rgba(30,168,78,0.08),transparent 70%);
-  pointer-events:none;
-}
-
-.ai-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(30,168,78,0.1);
-  border:1px solid rgba(30,168,78,0.2);
-  color:#2db85a;
-  padding:5px 12px;
-  border-radius:20px;
-  font-size:11px;font-weight:700;
-  text-transform:uppercase;letter-spacing:1px;
-  margin-bottom:20px;
-}
-
-.ai-title{
-  font-family:var(--syne);
-  font-size:clamp(24px,3vw,38px);
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:16px;
-}
-
-.ai-desc{
-  font-size:15px;
-  color:var(--text2);
-  line-height:1.7;
-  margin-bottom:32px;
-}
-
-.ai-chat-preview{
-  background:rgba(8,8,8,0.6);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:20px;
-  padding:20px;
-  display:flex;flex-direction:column;gap:12px;
-}
-
-.ai-msg{
-  padding:10px 14px;
-  border-radius:12px;
-  font-size:13px;
-  line-height:1.6;
-  max-width:85%;
-}
-
-.ai-msg.user{
-  background:rgba(30,168,78,0.1);
-  border:1px solid rgba(30,168,78,0.2);
-  color:var(--text);
-  align-self:flex-end;margin-left:auto;
-}
-
-.ai-msg.bot{
-  background:#161616;
-  border:1px solid rgba(255,255,255,0.07);
-  color:var(--text2);
-  align-self:flex-start;
-}
-
-.ai-msg-header{
-  font-size:11px;color:var(--verde);
-  font-weight:700;margin-bottom:4px;
-}
-
-/* ── PRICING ── */
-.pricing{
-  padding:100px 24px;
-  text-align:center;
-}
-
-.pricing-card{
-  display:inline-block;
-  background:var(--card);
-  border:1px solid rgba(30,168,78,0.2);
-  border-radius:28px;
-  padding:48px;
-  max-width:400px;
-  width:100%;
-  position:relative;
-  overflow:hidden;
-}
-
-.pricing-card::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;
-  height:2px;
-  background:linear-gradient(90deg,#1ea84e,#0e9e8e);
-}
-
-.pricing-badge{
-  display:inline-block;
-  background:rgba(30,168,78,0.1);
-  border:1px solid rgba(30,168,78,0.2);
-  color:#2db85a;
-  padding:4px 12px;
-  border-radius:20px;
-  font-size:12px;font-weight:700;
-  margin-bottom:20px;
-}
-
-.pricing-price{
-  font-family:var(--syne);
-  font-size:56px;font-weight:800;
-  color:var(--verde2);
-  line-height:1;
-  margin-bottom:8px;
-}
-
-.pricing-period{
-  font-size:14px;color:var(--text3);
-  margin-bottom:32px;
-}
-
-.pricing-features{
-  list-style:none;
-  text-align:left;
-  display:flex;flex-direction:column;gap:12px;
-  margin-bottom:36px;
-}
-
-.pricing-features li{
-  display:flex;align-items:center;gap:10px;
-  font-size:14px;color:var(--text2);
-}
-
-.pricing-features li::before{
-  content:'✓';
-  width:20px;height:20px;
-  border-radius:50%;
-  background:rgba(30,168,78,0.1);
-  border:1px solid rgba(30,168,78,0.3);
-  color:#1ea84e;
-  font-size:11px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-
-/* ── CTA ── */
-.cta{
-  padding:100px 24px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.cta::before{
-  content:'';
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 60% at 50% 50%, rgba(30,168,78,0.05), transparent 70%);
-  pointer-events:none;
-}
-
-.cta-title{
-  font-family:var(--syne);
-  font-size:clamp(32px,5vw,60px);
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:20px;
-  position:relative;z-index:1;
-}
-
-.cta-sub{
-  font-size:17px;
-  color:var(--text2);
-  margin-bottom:40px;
-  position:relative;z-index:1;
-}
-
-.cta-btns{
-  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-  position:relative;z-index:1;
-}
-
-/* ── FOOTER ── */
-footer{
-  border-top:1px solid var(--border);
-  padding:40px 24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:16px;
-  max-width:1100px;
-  margin:0 auto;
-}
-
-.footer-logo{
-  font-family:var(--syne);
-  font-size:18px;font-weight:800;
-  letter-spacing:2px;
-  background:linear-gradient(90deg,#1ea84e,#2db85a);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-.footer-links{
-  display:flex;gap:24px;flex-wrap:wrap;
-}
-
-.footer-links a{
-  font-size:13px;color:var(--text3);
-  text-decoration:none;transition:color .2s;
-}
-
-.footer-links a:hover{color:var(--text2);}
-
-.footer-copy{
-  font-size:13px;color:var(--text3);
-}
-
-/* ── SCROLL ANIMATIONS ── */
-.reveal{
-  opacity:0;transform:translateY(32px);
-  transition:opacity .7s ease, transform .7s ease;
-}
-.reveal.visible{opacity:1;transform:none;}
-
-/* ── MOBILE NAV ── */
-@media(max-width:640px){
-  nav{padding:14px 20px;}
-  .nav-links{display:none;}
-  .hero-stats{gap:24px;}
-  .features-grid{grid-template-columns:1fr;}
-  footer{flex-direction:column;text-align:center;}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVYRA — Toma el control de tu dinero</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --verde: #22c55e;
+      --verde2: #16a34a;
+      --verde-glow: rgba(34, 197, 94, 0.25);
+      --teal: #0e9e8e;
+      --bg: #000000;
+      --card: #0c0d12;
+      --card2: #12141d;
+      --card-glass: rgba(12, 13, 18, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-green: rgba(30, 168, 78, 0.2);
+      --text: #f1f5f9;
+      --text2: #cbd5e1;
+      --text3: #4e5d78;
+      --syne: 'Syne', sans-serif;
+      --inter: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--inter);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(8, 8, 8, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s;
+    }
+
+    .nav-logo {
+      font-family: var(--syne);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, #1ea84e, #2db85a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--verde);
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #1ea84e, #178a40);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      box-shadow: 0 2px 12px rgba(30, 168, 78, .2);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(30, 168, 78, .35);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 65% 45% at 50% -10%, rgba(30, 168, 78, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 35% at 80% 80%, rgba(14, 158, 142, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 168, 78, 0.08);
+      border: 1px solid rgba(30, 168, 78, 0.25);
+      color: #2db85a;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1ea84e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .5;
+        transform: scale(1.4)
+      }
+    }
+
+    .hero-title {
+      font-family: var(--syne);
+      font-size: clamp(48px, 7.5vw, 88px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .6s ease .1s both;
+    }
+
+    .hero-title .green {
+      background: linear-gradient(135deg, #1ea84e, #2db85a, #0e9e8e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text2);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .6s ease .2s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .6s ease .3s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #1ea84e, #178a40);
+      color: white;
+      padding: 15px 34px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .25s ease;
+      box-shadow: 0 4px 24px rgba(30, 168, 78, .3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(30, 168, 78, .45);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 15px 34px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 64px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .6s ease .4s both;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-family: var(--syne);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--verde);
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text3);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── HERO MOCKUP PREVIEW ── */
+    .hero-mockup-container {
+      margin-top: 60px;
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      width: 100%;
+      animation: fadeUp .8s ease .4s both;
+    }
+
+    .hero-mockup-card {
+      background: var(--card);
+      border: 1px solid var(--border-green);
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 40px rgba(30, 168, 78, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .hero-mockup-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .hero-mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-mockup-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+      .hero-mockup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mockup-preview-box {
+      background: #11131b;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    /* ── SCREENSHOTS & SHOWCASE ── */
+    .screenshots {
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screenshots-title {
+      text-align: center;
+      font-family: var(--syne);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .screenshots-sub {
+      text-align: center;
+      color: var(--text2);
+      font-size: 16px;
+      margin-bottom: 60px;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .showcase-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-card:hover {
+      border-color: var(--border-green);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(30, 168, 78, 0.1);
+    }
+
+    .showcase-img-wrap {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #080808;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .showcase-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform .4s ease;
+    }
+
+    .showcase-card:hover .showcase-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .showcase-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--verde);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .showcase-title {
+      font-family: var(--syne);
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .showcase-desc {
+      font-size: 13.5px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 100px 24px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--verde);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--verde);
+    }
+
+    .section-title {
+      font-family: var(--syne);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--text2);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 60px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 30px;
+      transition: all .3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(30, 168, 78, 0.4), transparent);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(30, 168, 78, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(30, 168, 78, 0.09);
+      border: 1px solid rgba(30, 168, 78, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .feature-title {
+      font-family: var(--syne);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ── HIGHLIGHT (SEGURIDAD) ── */
+    .highlight {
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    @media(max-width:768px) {
+      .highlight-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .highlight-img {
+        order: -1;
+      }
+    }
+
+    .highlight-list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .highlight-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .highlight-list li::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(30, 168, 78, 0.12);
+      border: 1px solid rgba(30, 168, 78, 0.35);
+      flex-shrink: 0;
+      margin-top: 2px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%231ea84e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 10px;
+    }
+
+    .highlight-img {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .highlight-img img {
+      width: 260px;
+      border-radius: 32px;
+      border: 1px solid var(--border-green);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .8), 0 0 30px rgba(30, 168, 78, 0.15);
+    }
+
+    /* ── AI SECTION ── */
+    .ai-section {
+      padding: 100px 24px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .ai-card {
+      background: linear-gradient(135deg, #0a1a0f, #050d15);
+      border: 1px solid rgba(30, 168, 78, 0.2);
+      border-radius: 32px;
+      padding: 60px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    @media(max-width:768px) {
+      .ai-card {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 28px;
+      }
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 168, 78, 0.1);
+      border: 1px solid rgba(30, 168, 78, 0.25);
+      color: #2db85a;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .ai-title {
+      font-family: var(--syne);
+      font-size: clamp(26px, 3.5vw, 42px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .ai-desc {
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .ai-chat-preview {
+      background: rgba(8, 8, 8, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .ai-msg {
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .ai-msg.user {
+      background: rgba(30, 168, 78, 0.12);
+      border: 1px solid rgba(30, 168, 78, 0.25);
+      color: var(--text);
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .ai-msg.bot {
+      background: #161616;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text2);
+      align-self: flex-start;
+    }
+
+    .ai-msg-header {
+      font-size: 11px;
+      color: var(--verde);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 100px 24px;
+      text-align: center;
+    }
+
+    .pricing-card {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid rgba(30, 168, 78, 0.25);
+      border-radius: 32px;
+      padding: 52px;
+      max-width: 440px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1ea84e, #0e9e8e);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      background: rgba(30, 168, 78, 0.1);
+      border: 1px solid rgba(30, 168, 78, 0.25);
+      color: #2db85a;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .pricing-price {
+      font-family: var(--syne);
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--verde);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .pricing-period {
+      font-size: 14px;
+      color: var(--text3);
+      margin-bottom: 36px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14.5px;
+      color: var(--text2);
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(30, 168, 78, 0.12);
+      border: 1px solid rgba(30, 168, 78, 0.35);
+      color: #1ea84e;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(30, 168, 78, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: var(--syne);
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-sub {
+      font-size: 17px;
+      color: var(--text2);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 44px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--syne);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #1ea84e, #2db85a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13.5px;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--verde);
+    }
+
+    .footer-copy {
+      font-size: 13.5px;
+      color: var(--text3);
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media(max-width:640px) {
+      nav {
+        padding: 14px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">NOVYRA</div>
-  <ul class="nav-links">
-    <li><a href="#features">Funciones</a></li>
-    <li><a href="#ai">IA</a></li>
-    <li><a href="#pricing">Precio</a></li>
-  </ul>
-  <a href="./app/index.html" class="nav-cta">Abrir app →</a>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">NOVYRA</div>
+    <ul class="nav-links">
+      <li><a href="#modulo-showcase">Capturas & Módulos</a></li>
+      <li><a href="#features">Funciones</a></li>
+      <li><a href="#ai">NOVI AI</a></li>
+      <li><a href="#pricing">Precio</a></li>
+    </ul>
+    <a href="./app/index.html" class="nav-cta">Abrir App →</a>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">✦ 100% Gratis — Sin suscripciones</div>
-  <h1 class="hero-title">
-    Toma el control<br>de tu <span class="green">dinero</span>
-  </h1>
-  <p class="hero-sub">
-    NOVYRA es la app de finanzas personales que siempre quisiste. Gratis, segura y con inteligencia artificial integrada.
-  </p>
-  <div class="hero-btns">
-    <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary">
-      ↓ Descargar para Android
-    </a>
-    <a href="./app/index.html" class="btn-secondary">
-      Usar en web →
-    </a>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num">100%</div>
-      <div class="hero-stat-label">Gratis para siempre</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">AES-256</div>
-      <div class="hero-stat-label">Cifrado de datos</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">Web + Android</div>
-      <div class="hero-stat-label">Multiplataforma</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">IA</div>
-      <div class="hero-stat-label">Análisis inteligente</div>
-    </div>
-  </div>
-</section>
-
-<!-- SCREENSHOTS -->
-<section class="screenshots reveal">
-  <div class="section-label" style="justify-content:center;">Capturas reales</div>
-  <h2 class="screenshots-title">Diseñada para tu día a día</h2>
-  <p class="screenshots-sub">Limpia, rápida y fácil de usar desde el primer momento</p>
-  <div class="screenshots-scroll">
-    <div class="screenshot-card">
-      <img src="./screenshots/inicio.png" alt="Inicio" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Inicio</div>
-    </div>
-    <div class="screenshot-card">
-      <img src="./screenshots/historial.png" alt="Historial" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Historial</div>
-    </div>
-    <div class="screenshot-card">
-      <img src="./screenshots/tendencias.png" alt="Tendencias" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Tendencias</div>
-    </div>
-    <div class="screenshot-card">
-      <img src="./screenshots/calendario.png" alt="Calendario" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Calendario</div>
-    </div>
-    <div class="screenshot-card">
-      <img src="./screenshots/finanzas.png" alt="Finanzas" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Finanzas</div>
-    </div>
-    <div class="screenshot-card">
-      <img src="./screenshots/metas.png" alt="Metas" onerror="this.parentElement.style.display='none'">
-      <div class="screenshot-label">Metas</div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="reveal">
-    <div class="section-label">Funcionalidades</div>
-    <h2 class="section-title">Todo lo que necesitas,<br>sin pagar un peso</h2>
-    <p class="section-sub">Mientras otras apps te cobran por funciones básicas, NOVYRA te las da todas gratis.</p>
-  </div>
-  <div class="features-grid reveal">
-    <div class="feature-card">
-      <div class="feature-icon">💰</div>
-      <div class="feature-title">Registro de gastos</div>
-      <div class="feature-desc">Registra tus gastos en segundos con categorías, etiquetas, notas y fotos del recibo.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <div class="feature-title">Presupuestos por categoría</div>
-      <div class="feature-desc">Define límites de gasto por categoría y recibe alertas cuando te acerques al límite.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📈</div>
-      <div class="feature-title">Tendencias y gráficas</div>
-      <div class="feature-desc">Visualiza tus gastos con gráficas de dona y tendencia de 6 meses en tiempo real.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <div class="feature-title">Metas de ahorro</div>
-      <div class="feature-desc">Crea metas personalizadas, abona dinero y rastrea tu progreso hasta alcanzarlas.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📅</div>
-      <div class="feature-title">Calendario de gastos</div>
-      <div class="feature-desc">Ve tus gastos en un calendario visual y programa recordatorios de pagos importantes.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <div class="feature-title">PIN + Biometría</div>
-      <div class="feature-desc">Protege tus datos con PIN de 4 dígitos, cifrado AES-256 y desbloqueo por huella o Face ID.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">☁️</div>
-      <div class="feature-title">Respaldo en Google Drive</div>
-      <div class="feature-desc">Sincroniza tus datos automáticamente en Google Drive para nunca perder tu historial.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💱</div>
-      <div class="feature-title">Multidivisa</div>
-      <div class="feature-desc">Soporte para COP, USD y MXN con tasas de cambio actualizadas en tiempo real.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧾</div>
-      <div class="feature-title">Finanzas personales</div>
-      <div class="feature-desc">Rastrea activos, pasivos, flujo de caja e ingresos fijos en una sola pantalla.</div>
-    </div>
-  </div>
-</section>
-
-<!-- HIGHLIGHT -->
-<section class="highlight reveal">
-  <div class="highlight-inner">
-    <div class="highlight-content">
-      <div class="section-label">Seguridad</div>
-      <h2 class="section-title">Tus datos son tuyos,<br>solo tuyos</h2>
-      <p style="color:var(--text2);font-size:15px;line-height:1.7;">NOVYRA no tiene servidores propios. Todo se guarda en tu dispositivo, cifrado con AES-256. Nadie más puede ver tus finanzas.</p>
-      <ul class="highlight-list">
-        <li>Cifrado AES-256 en tu dispositivo local</li>
-        <li>PIN de 4 dígitos para acceder</li>
-        <li>Desbloqueo biométrico — huella o Face ID</li>
-        <li>Respaldo opcional en tu Google Drive personal</li>
-        <li>Sin servidores propios — cero riesgo de filtraciones</li>
-      </ul>
-    </div>
-    <div class="highlight-img">
-      <img src="./screenshots/inicio.png" alt="Seguridad NOVYRA" onerror="this.style.display='none'">
-    </div>
-  </div>
-</section>
-
-<!-- AI SECTION -->
-<section class="ai-section reveal" id="ai">
-  <div class="ai-card">
-    <div>
-      <div class="ai-badge">✦ Nuevo — NOVI AI</div>
-      <h2 class="ai-title">Tu asesor financiero<br>personal con IA</h2>
-      <p class="ai-desc">NOVI AI analiza tus gastos reales y te da consejos personalizados. Pregúntale lo que quieras sobre tus finanzas.</p>
-      <a href="./app/index.html" class="btn-primary" style="display:inline-flex;">
-        Probar NOVI AI →
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">✦ NOVYRA v0.1 — Asistente Financiero Inteligente</div>
+    <h1 class="hero-title">
+      Toma el control<br>absoluto de tu <span class="green">dinero</span>
+    </h1>
+    <p class="hero-sub">
+      La app de finanzas personales que evoluciona contigo. Manejo multi-perfil, asistente con IA, límites de presupuesto diarios y privacidad AES-256 local. 100% Gratis para siempre.
+    </p>
+    <div class="hero-btns">
+      <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary">
+        <i data-lucide="download" style="width:18px;height:18px;"></i> Descargar para Android
+      </a>
+      <a href="./app/index.html" class="btn-secondary">
+        Usar en Web →
       </a>
     </div>
-    <div class="ai-chat-preview">
-      <div class="ai-msg bot">
-        <div class="ai-msg-header">🤖 NOVI AI</div>
-        ¡Hola! Soy tu asesor financiero. ¿En qué te puedo ayudar?
+
+    <!-- HERO STATS -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">Gratis sin suscripciones</div>
       </div>
-      <div class="ai-msg user">
-        Dame un resumen de mis gastos de este mes
+      <div class="hero-stat">
+        <div class="hero-stat-num">AES-256</div>
+        <div class="hero-stat-label">Cifrado de datos local</div>
       </div>
-      <div class="ai-msg bot">
-        <div class="ai-msg-header">🤖 NOVI AI</div>
-        Este mes has gastado <strong>$414.033</strong>. Tu categoría más alta es <strong>Servicios</strong> con $400.000. Te recomiendo revisar si puedes reducir gastos recurrentes. ¡Vas bien! 💚
+      <div class="hero-stat">
+        <div class="hero-stat-num">Multi-Perfil</div>
+        <div class="hero-stat-label">Finanzas independientes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">NOVI AI</div>
+        <div class="hero-stat-label">Asesor financiero IA</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- PRICING -->
-<section class="pricing reveal" id="pricing">
-  <div class="section-label" style="justify-content:center;">Precio</div>
-  <h2 class="section-title" style="margin-bottom:12px;">Simple y honesto</h2>
-  <p style="color:var(--text2);font-size:16px;margin-bottom:48px;">Sin trucos, sin letra pequeña</p>
-  <div class="pricing-card">
-    <div class="pricing-badge">✦ Para siempre gratis</div>
-    <div class="pricing-price">$0</div>
-    <div class="pricing-period">Por mes, para siempre</div>
-    <ul class="pricing-features">
-      <li>Gastos y categorías ilimitados</li>
-      <li>Presupuestos y metas de ahorro</li>
-      <li>Gráficas y tendencias</li>
-      <li>Calendario con recordatorios</li>
-      <li>Finanzas personales completas</li>
-      <li>NOVI AI — análisis con IA</li>
-      <li>PIN + cifrado AES-256</li>
-      <li>Biometría — huella / Face ID</li>
-      <li>Respaldo en Google Drive</li>
-      <li>Web + Android</li>
-    </ul>
-    <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary" style="display:flex;justify-content:center;text-decoration:none;">
-      ↓ Descargar gratis
-    </a>
-  </div>
-</section>
+    <!-- MOCKUP PREVIEW -->
+    <div class="hero-mockup-container">
+      <div class="hero-mockup-card">
+        <div class="hero-mockup-header">
+          <div class="hero-mockup-dots">
+            <div class="hero-mockup-dot"></div>
+            <div class="hero-mockup-dot"></div>
+            <div class="hero-mockup-dot"></div>
+          </div>
+          <div style="font-size:12px;color:var(--text3);font-weight:600;letter-spacing:1px;">NOVYRA DASHBOARD</div>
+          <div></div>
+        </div>
+        <div class="hero-mockup-grid">
+          <!-- Side Drawer Preview -->
+          <div class="mockup-preview-box" style="background:#0b0d13;border-color:var(--border-green);">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <div style="width:36px;height:36px;border-radius:10px;background:rgba(30,168,78,0.15);display:flex;align-items:center;justify-content:center;color:var(--verde);font-weight:700;">👤</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;">Perfil Personal</div>
+                <div style="font-size:11px;color:var(--verde);">Activo · 12 gastos</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text2);">
+              <div style="padding:8px 12px;background:rgba(30,168,78,0.1);border-radius:8px;color:var(--verde);font-weight:600;">🏠 Inicio</div>
+              <div style="padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">📋 Historial de gastos</div>
+              <div style="padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">📊 Presupuesto por categoría</div>
+              <div style="padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">👥 Perfiles y Cuentas</div>
+            </div>
+          </div>
 
-<!-- CTA -->
-<section class="cta reveal">
-  <h2 class="cta-title">Empieza a controlar<br>tu dinero hoy</h2>
-  <p class="cta-sub">Gratis. Sin registro. Sin tarjeta de crédito.</p>
-  <div class="cta-btns">
-    <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary">
-      ↓ Descargar para Android
-    </a>
-    <a href="./app/index.html" class="btn-secondary">
-      Usar en web →
-    </a>
-  </div>
-</section>
+          <!-- Main Screen Preview -->
+          <div class="mockup-preview-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+              <div>
+                <span style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;">Resumen del día</span>
+                <div style="font-size:22px;font-weight:800;color:var(--text);">$ 45.000 COP</div>
+              </div>
+              <div style="padding:6px 12px;background:rgba(30,168,78,0.12);border:1px solid rgba(30,168,78,0.3);border-radius:20px;font-size:11px;color:var(--verde);font-weight:700;">
+                ✅ Dentro del límite
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:14px;">
+              <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:10px;">
+                <div style="font-size:11px;color:var(--text3);">🍔 Comida</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-top:2px;">$ 28.000</div>
+              </div>
+              <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:10px;">
+                <div style="font-size:11px;color:var(--text3);">🚗 Transporte</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-top:2px;">$ 17.000</div>
+              </div>
+            </div>
+            <div style="background:rgba(30,168,78,0.08);border:1px solid rgba(30,168,78,0.2);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+              <span style="font-size:18px;">🤖</span>
+              <div style="font-size:12px;color:var(--text2);"><strong>NOVI AI:</strong> ¡Excelente control hoy! Llevas 5 días consecutivos cumpliendo tu meta.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">NOVYRA</div>
-  <div class="footer-links">
-    <a href="./app/index.html">App</a>
-    <a href="#">Términos</a>
-    <a href="#">Privacidad</a>
-    <a href="mailto:gilcristian685@gmail.com">Contacto</a>
-  </div>
-  <div class="footer-copy">© 2026 NOVYRA · Cristian Gil</div>
-</footer>
+  <!-- CAPTURAS REALES & SHOWCASE MÓDULOS -->
+  <section class="screenshots reveal" id="modulo-showcase">
+    <div class="section-label" style="justify-content:center;">Conoce la Interfaz v0.1</div>
+    <h2 class="screenshots-title">Diseño moderno, fluido e intuitivo</h2>
+    <p class="screenshots-sub">Cada pantalla pensada para darte control absoluto en segundos</p>
 
-<script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
+    <div class="showcase-grid">
+      <!-- Módulo 1: Inicio -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#090b10;height:100%;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border-green);border-radius:12px;text-align:left;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:26px;height:26px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;">☰</div>
+                <span style="font-family:var(--syne);font-weight:800;font-size:14px;color:var(--verde);letter-spacing:1px;">NOVYRA</span>
+              </div>
+              <span style="font-size:10px;padding:3px 8px;background:rgba(30,168,78,0.12);color:var(--verde);border-radius:10px;font-weight:700;">Personal</span>
+            </div>
+            <div style="background:#11131c;border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;">
+              <span style="font-size:11px;color:var(--text3);font-weight:700;">💸 Registrar Gasto</span>
+              <div style="font-size:24px;font-weight:800;color:var(--text);margin:4px 0;">$ 35.000</div>
+              <div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">
+                <span style="font-size:10px;padding:4px 8px;background:rgba(30,168,78,0.15);color:var(--verde);border-radius:8px;font-weight:600;">🍔 Comida</span>
+                <span style="font-size:10px;padding:4px 8px;background:rgba(255,255,255,0.04);color:var(--text2);border-radius:8px;">✅ Necesario</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text3);border-top:1px solid var(--border);padding-top:8px;">
+              <span>Límite diario</span>
+              <strong style="color:var(--verde);">70% Disponible</strong>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-badge">🏠 Inicio & Registro</div>
+        <h3 class="showcase-title">Registro inteligente</h3>
+        <p class="showcase-desc">Agrega montos, categorías rápidas con emojis, fotos de recibos, etiquetas y observa tu límite diario en tiempo real.</p>
+      </div>
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      <!-- Módulo 2: Perfiles -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#0b0d13;height:100%;display:flex;flex-direction:column;justify-content:center;gap:10px;border:1px solid var(--border-green);border-radius:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(30,168,78,0.12);border:1px solid rgba(30,168,78,0.3);border-radius:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">👤</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;">Personal</div>
+                  <div style="font-size:10px;color:var(--verde);">Activo · 18 gastos</div>
+                </div>
+              </div>
+              <span style="font-size:11px;color:var(--verde);font-weight:700;">✓</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">💼</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;">Trabajo & Negocios</div>
+                  <div style="font-size:10px;color:var(--text3);">8 gastos</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">🏡</span>
+                <div>
+                  <div style="font-size:12px;font-weight:700;">Hogar</div>
+                  <div style="font-size:10px;color:var(--text3);">5 gastos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-badge">👥 Perfiles & Cuentas</div>
+        <h3 class="showcase-title">Manejo Multi-Perfil</h3>
+        <p class="showcase-desc">Separa por completo tus finanzas personales, laborales o de hogar. Cambia de perfil al instante con aislamiento total de datos.</p>
+      </div>
 
-// Nav scroll effect
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  if (window.scrollY > 50) {
-    nav.style.borderBottomColor = 'rgba(255,255,255,0.1)';
-  } else {
-    nav.style.borderBottomColor = 'var(--border)';
-  }
-});
-</script>
+      <!-- Módulo 3: NOVI AI -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#050d15;height:100%;display:flex;flex-direction:column;justify-content:center;gap:10px;border:1px solid rgba(30,168,78,0.3);border-radius:12px;">
+            <div style="background:rgba(30,168,78,0.15);border:1px solid rgba(30,168,78,0.3);padding:8px 12px;border-radius:10px;font-size:11px;align-self:flex-end;color:var(--text);">
+              ¿Cómo va mi capacidad de ahorro?
+            </div>
+            <div style="background:#161616;border:1px solid rgba(255,255,255,0.08);padding:10px 12px;border-radius:10px;font-size:11px;color:var(--text2);line-height:1.5;">
+              <strong style="color:var(--verde);">🤖 NOVI AI:</strong> Basado en tus ingresos de <strong>$2.500.000</strong> y gastos actuales, tu ahorro estimado es de <strong>$1.400.000</strong>. 🎯
+            </div>
+          </div>
+        </div>
+        <div class="showcase-badge">🤖 Asistente Inteligente</div>
+        <h3 class="showcase-title">NOVI AI Asistente</h3>
+        <p class="showcase-desc">Genera reportes financieros automáticos, análisis predictivo a 6 meses y responde dudas sobre tus finanzas en tiempo real.</p>
+      </div>
+
+      <!-- Módulo 4: Presupuestos & Tendencias -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#0c0e16;height:100%;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border);border-radius:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;font-weight:700;color:var(--text2);">📊 Presupuestos del mes</span>
+              <span style="font-size:10px;color:var(--verde);background:rgba(30,168,78,0.1);padding:3px 8px;border-radius:8px;font-weight:700;">Bajo Control</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">
+                  <span>🍔 Comida</span>
+                  <strong>$260K / $400K</strong>
+                </div>
+                <div style="width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
+                  <div style="width:65%;height:100%;background:var(--verde);border-radius:4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">
+                  <span>🚗 Transporte</span>
+                  <strong>$120K / $300K</strong>
+                </div>
+                <div style="width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;">
+                  <div style="width:40%;height:100%;background:var(--teal);border-radius:4px;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);text-align:center;">📉 Proyección mensual: -12% vs mes anterior</div>
+          </div>
+        </div>
+        <div class="showcase-badge">📊 Análisis & Presupuestos</div>
+        <h3 class="showcase-title">Análisis visual profundo</h3>
+        <p class="showcase-desc">Gráficas interactivas por categoría, presupuestos con alertas al 90% y 100%, y comparativa respecto al mes anterior.</p>
+      </div>
+
+      <!-- Módulo 5: Finanzas & Activos -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#0a120c;height:100%;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border-green);border-radius:12px;">
+            <div style="text-align:center;">
+              <span style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;">Patrimonio Neto</span>
+              <div style="font-size:22px;font-weight:800;color:var(--verde);margin-top:2px;">$ 14.500.000</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:8px;">
+                <span>🏦 Cuentas Bancarias</span>
+                <strong>$ 8.200.000</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:8px;">
+                <span>💵 Efectivo Disponible</span>
+                <strong>$ 1.300.000</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:8px;">
+                <span>📈 Inversiones</span>
+                <strong>$ 5.000.000</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-badge">💰 Finanzas & Flujo de Caja</div>
+        <h3 class="showcase-title">Patrimonio y Activos</h3>
+        <p class="showcase-desc">Controla tus cuentas bancarias, efectivo disponible, inversiones y calcula tu flujo de caja neto en un solo panel.</p>
+      </div>
+
+      <!-- Módulo 6: Calendario -->
+      <div class="showcase-card">
+        <div class="showcase-img-wrap">
+          <div style="padding:16px;background:#0d0e14;height:100%;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border);border-radius:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700;">
+              <span>📅 Agosto 2026</span>
+              <span style="color:var(--verde);font-size:10px;">5 Recordatorios</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:10px;color:var(--text2);">
+              <span style="color:var(--text3);">L</span><span style="color:var(--text3);">M</span><span style="color:var(--text3);">M</span><span style="color:var(--text3);">J</span><span style="color:var(--text3);">V</span><span style="color:var(--text3);">S</span><span style="color:var(--text3);">D</span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span style="background:rgba(30,168,78,0.2);color:var(--verde);border-radius:4px;font-weight:700;">5</span><span>6</span><span>7</span>
+              <span>8</span><span>9</span><span>10</span><span>11</span><span style="background:rgba(245,158,11,0.2);color:#f59e0b;border-radius:4px;font-weight:700;">12</span><span>13</span><span>14</span>
+              <span style="background:rgba(30,168,78,0.2);color:var(--verde);border-radius:4px;">15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+            </div>
+            <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);padding:6px 10px;border-radius:8px;font-size:10px;color:#f59e0b;display:flex;align-items:center;gap:6px;">
+              <span>🔔</span> <span><strong>12 Ago:</strong> Pago de Servicios Públicos</span>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-badge">📅 Calendario & Recordatorios</div>
+        <h3 class="showcase-title">Calendario financiero</h3>
+        <p class="showcase-desc">Visualiza en qué días gastaste más y programa recordatorios de facturas o fechas de cobro directamente en el calendario.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section class="features" id="features">
+    <div class="reveal">
+      <div class="section-label">Funcionalidades Principales</div>
+      <h2 class="section-title">Todo lo que necesitas,<br>sin pagar un peso</h2>
+      <p class="section-sub">Mientras otras aplicaciones requieren suscripciones mensuales, NOVYRA te ofrece la suite financiera más completa sin costo.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">💸</div>
+        <div class="feature-title">Registro ultra-rápido</div>
+        <div class="feature-desc">Ingresa gastos en segundos con calculadora integrada, auto-categorización por IA, fotos del recibo y etiquetas.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Cuentas multi-perfil</div>
+        <div class="feature-desc">Crea y alterna entre perfiles independientes (Personal, Trabajo, Hogar) con datos y metas de ahorro aisladas.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">NOVI AI Assistant</div>
+        <div class="feature-desc">Recibe reportes financieros automáticos, consejos personalizados y proyecciones de gasto impulsadas por IA.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Presupuestos dinámicos</div>
+        <div class="feature-desc">Establece techos de gasto por categoría e ingreso. NOVYRA te enviará notificaciones al 90% y 100%.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <div class="feature-title">Límite diario & Racha</div>
+        <div class="feature-desc">Calcula tu tope de gasto por día y mantén rachas activas de registro para fomentar la disciplina financiera.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Seguridad biométrica + AES</div>
+        <div class="feature-desc">Protege tus finanzas con PIN de 4 dígitos, cifrado local AES-256 y autenticación por huella digital o Face ID.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☁️</div>
+        <div class="feature-title">Respaldo Google Drive</div>
+        <div class="feature-desc">Realiza copias de seguridad automáticas en tu propio Google Drive para nunca perder tu historial financiero.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💱</div>
+        <div class="feature-title">Multi-moneda en vivo</div>
+        <div class="feature-desc">Soporte nativo para COP, USD y MXN con conversión automática y tasas de cambio en tiempo real.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Patrimonio & Activos</div>
+        <div class="feature-desc">Monitorea tus cuentas bancarias, efectivo, inversiones y flujo de caja neto en un panel unificado.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT: PRIVACIDAD -->
+  <section class="highlight reveal">
+    <div class="highlight-inner">
+      <div class="highlight-content">
+        <div class="section-label">Privacidad Garantizada</div>
+        <h2 class="section-title">Tus datos financieros<br>son 100% tuyos</h2>
+        <p style="color:var(--text2);font-size:15px;line-height:1.7;">NOVYRA opera bajo el principio de almacenamiento local prioritario. Toda tu información se guarda en tu dispositivo bajo cifrado AES-256. Sin intermediarios ni ventas de datos.</p>
+        <ul class="highlight-list">
+          <li>Cifrado militar AES-256 directamente en tu almacenamiento local</li>
+          <li>Acceso mediante PIN de 4 dígitos y huella digital / Face ID</li>
+          <li>Respaldos opcionales en tu Google Drive personal sin servidores externos</li>
+          <li>Exportación completa de datos en formato JSON y CSV/Excel</li>
+          <li>Funcionamiento offline 100% garantizado sin conexión a internet</li>
+        </ul>
+      </div>
+      <div class="highlight-img">
+        <div style="background:var(--card);border:1px solid var(--border-green);border-radius:32px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,0.8), 0 0 30px rgba(30,168,78,0.15);width:270px;text-align:center;">
+          <div style="width:60px;height:60px;border-radius:18px;background:rgba(30,168,78,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--verde);">
+            <i data-lucide="shield-check" style="width:32px;height:32px;"></i>
+          </div>
+          <div style="font-family:var(--syne);font-size:18px;font-weight:700;margin-bottom:6px;">Cifrado AES-256</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:16px;">Tus transacciones permanecen resguardadas de manera local en tu equipo.</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(30,168,78,0.1);padding:6px 14px;border-radius:20px;font-size:11px;color:var(--verde);font-weight:700;">
+            🔒 100% Privado
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI SECTION -->
+  <section class="ai-section reveal" id="ai">
+    <div class="ai-card">
+      <div>
+        <div class="ai-badge">✦ Inteligencia Artificial Novedosa</div>
+        <h2 class="ai-title">Tu asesor financiero<br>personal con NOVI AI</h2>
+        <p class="ai-desc">NOVI AI examina tus hábitos de gasto, predice tendencias futuras y te brinda recomendaciones personalizadas para optimizar tu presupuesto.</p>
+        <a href="./app/index.html" class="btn-primary" style="display:inline-flex;">
+          Probar NOVI AI Ahora →
+        </a>
+      </div>
+      <div class="ai-chat-preview">
+        <div class="ai-msg bot">
+          <div class="ai-msg-header">🤖 NOVI AI</div>
+          ¡Hola! He analizado tus gastos del perfil Personal de este mes. ¿En qué te puedo asesorar?
+        </div>
+        <div class="ai-msg user">
+          ¿Cómo va mi proyección de gastos para el cierre de mes?
+        </div>
+        <div class="ai-msg bot">
+          <div class="ai-msg-header">🤖 NOVI AI</div>
+          Al ritmo actual, tu proyección de cierre es de <strong>$414.000 COP</strong>, manteniéndote un <strong>12% por debajo</strong> de tu límite mensual. Te sugiero destinar el excedente a tu meta de ahorro. 💚
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing reveal" id="pricing">
+    <div class="section-label" style="justify-content:center;">Modelo Transparente</div>
+    <h2 class="section-title" style="margin-bottom:12px;">Transparencia absoluta</h2>
+    <p style="color:var(--text2);font-size:16px;margin-bottom:48px;">Sin suscripciones ocultas ni compras in-app</p>
+    <div class="pricing-card">
+      <div class="pricing-badge">✦ Para siempre gratis</div>
+      <div class="pricing-price">$0</div>
+      <div class="pricing-period">Acceso completo sin costo mensual</div>
+      <ul class="pricing-features">
+        <li>Cuentas y perfiles ilimitados</li>
+        <li>Gastos, etiquetas y fotos de recibo</li>
+        <li>Presupuestos y metas de ahorro</li>
+        <li>NOVI AI — asesoría con IA</li>
+        <li>Calendario e historial exportable en CSV</li>
+        <li>Seguridad biométrica y cifrado AES-256</li>
+        <li>Respaldo automático en Google Drive</li>
+        <li>Multiplataforma Web y Android</li>
+      </ul>
+      <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary" style="display:flex;justify-content:center;text-decoration:none;">
+        <i data-lucide="download" style="width:18px;height:18px;"></i> Descargar gratis para Android
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta reveal">
+    <h2 class="cta-title">Empieza a controlar<br>tu dinero hoy mismo</h2>
+    <p class="cta-sub">Gratis. Sin registros forzosos. Sin tarjeta de crédito.</p>
+    <div class="cta-btns">
+      <a href="/downloads/NOVYRA-v3.0.apk" class="btn-primary">
+        <i data-lucide="download" style="width:18px;height:18px;"></i> Descargar APK Android
+      </a>
+      <a href="./app/index.html" class="btn-secondary">
+        Usar Versión Web →
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NOVYRA</div>
+    <div class="footer-links">
+      <a href="./app/index.html">Abrir App</a>
+      <a href="#features">Funciones</a>
+      <a href="#ai">NOVI AI</a>
+      <a href="mailto:gilcristian685@gmail.com">Contacto</a>
+    </div>
+    <div class="footer-copy">© 2026 NOVYRA · Cristian Gil. Todos los derechos reservados.</div>
+  </footer>
+
+  <script>
+    // Inicializar íconos de Lucide
+    lucide.createIcons();
+
+    // Scroll reveal animaciones
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.12)';
+        nav.style.background = 'rgba(6,6,6,0.92)';
+      } else {
+        nav.style.borderBottomColor = 'var(--border)';
+        nav.style.background = 'rgba(8,8,8,0.85)';
+      }
+    });
+  </script>
 
 </body>
+
 </html>

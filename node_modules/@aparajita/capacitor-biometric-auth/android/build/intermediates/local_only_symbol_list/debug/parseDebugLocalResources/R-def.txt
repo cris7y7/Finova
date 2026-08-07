@@ -1,0 +1,7 @@
+R_DEF: Internal format may change without notice
+local
+layout activity_auth_activity
+string title_activity_auth_activity
+style AppTheme.AppBarOverlay
+style AppTheme.PopupOverlay
+style AppTheme.Transparent
