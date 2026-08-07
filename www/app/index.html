@@ -4210,8 +4210,8 @@
         <button class="btn-drawer-toggle" onclick="toggleDrawer()" title="Abrir Menú" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
           <i data-lucide="menu" style="width:20px;height:20px;color:var(--text);"></i>
         </button>
-        <button id="btnModoIncognito" class="btn-drawer-toggle" onclick="toggleModoIncognito()" title="Modo Incógnito" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;">
-          👁️
+        <button id="btnModoIncognito" class="btn-drawer-toggle" onclick="toggleModoIncognito()" title="Modo Incógnito" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="var(--verde)" style="width:20px;height:20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
         </button>
       </div>
 
@@ -5480,7 +5480,6 @@
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
       background-clip:text;
     ">NOVYRA</div>
-        <!-- Tagline -->
         <div style="font-size:13px;color:#3d4d5c;font-weight:500;letter-spacing:1px;">
           Mejora tu vida
         </div>
@@ -5518,74 +5517,133 @@
 
     <script>
       // ══════════════════════════════════════════
-      // EMOJIS 3D FLUENT / GLASSMORPHIC HD
+      // ÍCONOS ARTESANALES HUMANOS (HEROICONS Por Steve Schoger)
       // ══════════════════════════════════════════
-      const EMOJI_3D_MAP = {
-        "💸": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20with%20Wings.png",
-        "📊": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bar%20Chart.png",
-        "🎯": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Direct%20Hit.png",
-        "📋": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Clipboard.png",
-        "📅": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Calendar.png",
-        "⚙️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png",
-        "📈": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Chart%20Increasing.png",
-        "📉": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Chart%20Decreasing.png",
-        "👥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Busts%20in%20Silhouette.png",
-        "🤖": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png",
-        "🛍️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Shopping%20Bags.png",
-        "🔒": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Locked.png",
-        "🔓": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Unlocked.png",
-        "🔑": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Key.png",
-        "👁️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Eye.png",
-        "🙈": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/See-No-Evil%20Monkey.png",
-        "☁️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Cloud.png",
-        "🔵": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Blue%20Circle.png",
-        "💰": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Money%20Bag.png",
-        "💳": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Credit%20Card.png",
-        "🤝": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Handshake.png",
-        "😬": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grimacing%20Face.png",
-        "🔥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png",
-        "🧮": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Abacus.png",
-        "🏷️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Label.png",
-        "📷": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera.png",
-        "🖼️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Framed%20Picture.png",
-        "📖": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Open%20Book.png",
-        "💚": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Green%20Heart.png",
-        "🏠": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/House.png",
-        "👤": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png",
-        "👩": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Woman.png",
-        "👨": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man.png",
-        "👫": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20and%20Woman%20Holding%20Hands.png",
-        "💼": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Briefcase.png",
-        "🎓": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Graduation%20Cap.png",
-        "✈️": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png",
-        "🎉": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png",
-        "🔔": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bell.png",
-        "🏦": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Bank.png",
-        "💵": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Dollar%20Banknote.png",
-        "⚡": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/High%20Voltage.png",
-        "🌱": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Seedling.png",
-        "🚀": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
-        "👑": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Crown.png",
-        "💤": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Zzz.png",
-        "🍔": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food%20and%20drink/Hamburger.png",
-        "🚗": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Automobile.png",
-        "🎮": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Video%20Game.png",
-        "💡": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png",
-        "📦": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Package.png",
-        "🏥": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Hospital.png",
-        "👕": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/T-Shirt.png"
+      const HEROICONS_PATHS = {
+        "banknote": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />`,
+        "bar-chart-2": `<path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />`,
+        "target": `<path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 15a3 3 0 100-6 3 3 0 000 6z" />`,
+        "clipboard-list": `<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-.446-.26-.846-.667-1.024l-3.375-1.5a1.125 1.125 0 00-1.058.076l-1.058.706M10.5 3.75a1.5 1.5 0 00-3 0v.75h3v-.75zm0 0a1.5 1.5 0 013 0v.75h-3v-.75z" />`,
+        "calendar": `<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />`,
+        "settings": `<path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28zM12 15a3 3 0 100-6 3 3 0 000 6z" />`,
+        "trending-up": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 005.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />`,
+        "trending-down": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.511l-5.511-3.181" />`,
+        "users": `<path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />`,
+        "bot": `<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M15.75 3v1.5M3 9.75A2.25 2.25 0 015.25 7.5h13.5A2.25 2.25 0 0121 9.75v7.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25v-7.5zM9 12h.008v.008H9V12zm6 0h.008v.008H15V12z" />`,
+        "shopping-bag": `<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />`,
+        "lock": `<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />`,
+        "unlock-keyhole": `<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />`,
+        "key": `<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />`,
+        "eye": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />`,
+        "eye-off": `<path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />`,
+        "cloud": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5h11.25a4.5 4.5 0 003.09-7.772 4.5 4.5 0 00-7.393-4.206 4.5 4.5 0 00-6.19 2.508C4.55 10.603 2.25 12.533 2.25 15z" />`,
+        "flame": `<path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />`,
+        "tag": `<path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />`,
+        "sparkles": `<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />`,
+        "calculator": `<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm-3-3h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm-3-3h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm-3-3h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zm0 1.5h.007v.008h-.007v-.008zM6.75 6.75h10.5a.75.75 0 01.75.75v2.25a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V7.5a.75.75 0 01.75-.75zM4.5 3h15A2.25 2.25 0 0121 5.25v13.5A2.25 2.25 0 0118.75 21h-13.5A2.25 2.25 0 013 18.75V5.25A2.25 2.25 0 014.5 3z" />`,
+        "plus": `<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />`,
+        "trash": `<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />`,
+        "pencil": `<path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />`,
+        "check": `<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />`,
+        "warning": `<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />`,
+        "bell": `<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />`,
+        "download": `<path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />`,
+        "plug": `<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />`
       };
 
-      function render3DEmoji(char, size = 20) {
-        const url = EMOJI_3D_MAP[char];
-        if (!url) return char;
-        return `<img src="${url}" alt="${char}" style="width:${size}px;height:${size}px;vertical-align:-3px;display:inline-block;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.35));margin:0 2px;" loading="lazy">`;
+      const EMOJI_ICON_MAP = {
+        "💸": { icon: "banknote", color: "var(--verde)" },
+        "📊": { icon: "bar-chart-2", color: "#3b82f6" },
+        "🎯": { icon: "target", color: "#f59e0b" },
+        "📋": { icon: "clipboard-list", color: "var(--verde)" },
+        "📅": { icon: "calendar", color: "#a855f7" },
+        "⚙️": { icon: "settings", color: "var(--hint)" },
+        "📈": { icon: "trending-up", color: "var(--verde)" },
+        "📉": { icon: "trending-down", color: "#ef4444" },
+        "👥": { icon: "users", color: "#06b6d4" },
+        "🤖": { icon: "bot", color: "var(--verde)" },
+        "🛍️": { icon: "shopping-bag", color: "#ec4899" },
+        "🔒": { icon: "lock", color: "#f59e0b" },
+        "🔓": { icon: "unlock-keyhole", color: "var(--verde)" },
+        "🔑": { icon: "key", color: "#f59e0b" },
+        "👁️": { icon: "eye", color: "var(--verde)" },
+        "🙈": { icon: "eye-off", color: "#ef4444" },
+        "☁️": { icon: "cloud", color: "#3b82f6" },
+        "🔵": { icon: "cloud", color: "#3b82f6" },
+        "💰": { icon: "banknote", color: "#f59e0b" },
+        "💳": { icon: "banknote", color: "#a855f7" },
+        "🤝": { icon: "users", color: "var(--verde)" },
+        "😬": { icon: "target", color: "#ef4444" },
+        "🔥": { icon: "flame", color: "#f97316" },
+        "🧮": { icon: "calculator", color: "var(--verde)" },
+        "🏷️": { icon: "tag", color: "#06b6d4" },
+        "📷": { icon: "target", color: "var(--verde)" },
+        "🖼️": { icon: "target", color: "var(--text2)" },
+        "📖": { icon: "clipboard-list", color: "var(--verde)" },
+        "💚": { icon: "target", color: "var(--verde)" },
+        "🏠": { icon: "banknote", color: "var(--verde)" },
+        "👤": { icon: "users", color: "var(--text2)" },
+        "👩": { icon: "users", color: "#ec4899" },
+        "👨": { icon: "users", color: "#3b82f6" },
+        "👫": { icon: "users", color: "#a855f7" },
+        "💼": { icon: "banknote", color: "#f59e0b" },
+        "🎓": { icon: "target", color: "#3b82f6" },
+        "✈️": { icon: "trending-up", color: "#06b6d4" },
+        "🎉": { icon: "sparkles", color: "#f59e0b" },
+        "🔔": { icon: "bell", color: "#f59e0b" },
+        "🏦": { icon: "banknote", color: "#3b82f6" },
+        "💵": { icon: "banknote", color: "var(--verde)" },
+        "⚡": { icon: "sparkles", color: "#f59e0b" },
+        "🌱": { icon: "trending-up", color: "var(--verde)" },
+        "🚀": { icon: "trending-up", color: "#a855f7" },
+        "👑": { icon: "sparkles", color: "#f59e0b" },
+        "💤": { icon: "calendar", color: "var(--hint)" },
+        "🍔": { icon: "banknote", color: "#f97316" },
+        "🚗": { icon: "trending-up", color: "#3b82f6" },
+        "🎮": { icon: "sparkles", color: "#a855f7" },
+        "💡": { icon: "sparkles", color: "#f59e0b" },
+        "📦": { icon: "tag", color: "var(--hint)" },
+        "🏥": { icon: "target", color: "#ef4444" },
+        "👕": { icon: "tag", color: "#06b6d4" },
+        "➕": { icon: "plus", color: "var(--verde)" },
+        "🗑️": { icon: "trash", color: "#ef4444" },
+        "✏️": { icon: "pencil", color: "var(--verde)" },
+        "✅": { icon: "check", color: "#22c55e" },
+        "⚠️": { icon: "warning", color: "#f59e0b" },
+        "🚨": { icon: "warning", color: "#ef4444" },
+        "⏰": { icon: "bell", color: "#a855f7" },
+        "📥": { icon: "download", color: "var(--verde)" },
+        "🔌": { icon: "plug", color: "#ef4444" },
+        "🛒": { icon: "shopping-bag", color: "#ec4899" },
+        "🍿": { icon: "shopping-bag", color: "#a855f7" },
+        "🐾": { icon: "target", color: "#f97316" },
+        "💊": { icon: "target", color: "#ef4444" },
+        "📚": { icon: "clipboard-list", color: "#3b82f6" },
+        "💻": { icon: "settings", color: "#06b6d4" },
+        "🍽️": { icon: "banknote", color: "#f97316" },
+        "🎬": { icon: "sparkles", color: "#a855f7" },
+        "⛽": { icon: "trending-up", color: "#f59e0b" },
+        "💙": { icon: "target", color: "#3b82f6" },
+        "🏆": { icon: "sparkles", color: "#f59e0b" },
+        "💪": { icon: "target", color: "var(--verde)" }
+      };
+
+      function render3DEmoji(char, size = 18) {
+        const item = EMOJI_ICON_MAP[char];
+        if (!item) return char;
+        const iconKey = typeof item === "string" ? item : item.icon;
+        const color = typeof item === "object" ? item.color : "currentColor";
+        const path = HEROICONS_PATHS[iconKey];
+        if (path) {
+          return `<svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="${color}" style="width:${size}px;height:${size}px;vertical-align:-3px;display:inline-block;margin:0 3px;">${path}</svg>`;
+        }
+        return `<i data-lucide="${iconKey}" style="width:${size}px;height:${size}px;vertical-align:-3px;display:inline-block;color:${color};margin:0 3px;"></i>`;
       }
 
-      function reemplazarEmojisA3D(texto, size = 20) {
+      function reemplazarEmojisA3D(texto, size = 18) {
         if (typeof texto !== "string" || !texto) return texto;
         let res = texto;
-        Object.keys(EMOJI_3D_MAP).forEach(emoji => {
+        Object.keys(EMOJI_ICON_MAP).forEach(emoji => {
           if (res.includes(emoji)) {
             res = res.split(emoji).join(render3DEmoji(emoji, size));
           }
@@ -5667,13 +5725,13 @@
           ob4Titulo: "¡Todo listo! 🎉", ob4Desc: "¿Te gustaría ver un tutorial rápido sobre cómo funciona NOVYRA?", ob4Btn: "Ver tutorial 📖", ob4Skip: "Comenzar →",
           tutTitle: "📖 Tutorial", tutBtn: "📖 Ver tutorial", verTutorial: "Ver tutorial",
           tut: [
-            { icon: "🏠", titulo: "Pantalla principal", desc: "Registra gastos con monto, categoría y notas. Usa la calculadora integrada y consulta tu límite diario." },
-            { icon: "📋", titulo: "Historial", desc: "Todos tus gastos ordenados por fecha. Filtra por mes o categoría y busca por texto o valor." },
-            { icon: "📊", titulo: "Presupuesto", desc: "Define límites mensuales por categoría. NOVYRA te alertará al aproximarte al límite." },
-            { icon: "📈", titulo: "Tendencias", desc: "Compara tus gastos con el mes anterior y analiza tus proyecciones y tendencias de 6 meses." },
-            { icon: "📅", titulo: "Calendario y recordatorios", desc: "Toca cualquier fecha para ver gastos o agregar alertas de pagos futuros." },
-            { icon: "🎯", titulo: "Metas y límite diario", desc: "Configura tu ingreso, meta de ahorro y tope diario. El gráfico de progreso te mantiene enfocado." },
-            { icon: "⚙️", titulo: "Ajustes", desc: "Personaliza idioma, moneda, tema visual, notificaciones, copias de seguridad y cuentas de usuario." }
+            { icon: "💸", titulo: "1. Registro Rápido & Teclado Calculadora", desc: "Ingresa gastos en segundos. Escribe expresiones matemáticas directas (ej: 15000 + 5000), asigna categorías, etiquetas (✅ Necesario, 💜 Lujo) y adjunta fotos de tus recibos." },
+            { icon: "🤖", titulo: "2. NOVI AI Asesor & Escáner OCR", desc: "Tu coach financiero con Inteligencia Artificial. Obtén diagnósticos semanales de hábitos, recomendaciones de ahorro, simulador de compras y escaneo inteligente de facturas." },
+            { icon: "📊", titulo: "3. Presupuestos por Categoría & Alertas", desc: "Establece topes mensuales para comida, ocio y servicios. Recibe notificaciones y resplandor de advertencia cuando estés cerca de alcanzarlos o superarlos." },
+            { icon: "🎯", titulo: "4. Metas de Ahorro, Límite Diario & Racha", desc: "Monitorea tu tope de gasto diario, ahorra para tus metas con barras de progreso interactivas y mantén tu racha diaria de registro activa para crear hábitos sólidos." },
+            { icon: "🔒", titulo: "5. Suite de Seguridad & Modo Incógnito", desc: "Protege NOVYRA con PIN de 4 dígitos, Desbloqueo Biométrico (Huella/FaceID), Cifrado AES-256 local y el botón Modo Incógnito (👁️/🙈) para ocultar saldos en lugares públicos." },
+            { icon: "☁️", titulo: "6. Copia en la Nube con Google Drive v3.5", desc: "Respaldo automático con sincronización de 2s, detección bidireccional de copias más recientes de otros dispositivos, historial de snapshots por fecha y cifrado E2E." },
+            { icon: "💼", titulo: "7. Valor Neto, Flujo de Caja & Multi-Perfil", desc: "Administra tu dinero en cuentas bancarias, efectivo e inversiones en Valor Neto, controla deudas pendientes y gestiona múltiples perfiles (Personal/Trabajo)." }
           ],
           csvTitle: "🏦 Importar extracto bancario",
           csvDesc: "Sube un archivo CSV de tu banco. NOVYRA detectará automáticamente fechas, montos y descripciones.",
@@ -5815,13 +5873,13 @@
           ob4Titulo: "You're all set! 🎉", ob4Desc: "Would you like a quick walkthrough of NOVYRA's features?", ob4Btn: "View Tutorial 📖", ob4Skip: "Start →",
           tutTitle: "📖 Tutorial", tutBtn: "📖 View Tutorial", verTutorial: "View Tutorial",
           tut: [
-            { icon: "🏠", titulo: "Home Screen", desc: "Log expenses with amount, category, and notes. Use the built-in calculator and inspect your daily limit." },
-            { icon: "📋", titulo: "History", desc: "All expenses sorted chronologically. Search by text or amount, filter by month or category." },
-            { icon: "📊", titulo: "Budget", desc: "Set monthly category limits. NOVYRA alerts you when approaching your budget cap." },
-            { icon: "📈", titulo: "Trends", desc: "Compare spending with last month, see end-of-month projections, and analyze 6-month trends." },
-            { icon: "📅", titulo: "Calendar & Reminders", desc: "Tap any day to view expenses or set payment alerts. A yellow dot marks reminder dates." },
-            { icon: "🎯", titulo: "Goals & Daily Limit", desc: "Set income, savings goal, and daily limit. Real-time indicators keep you on budget." },
-            { icon: "⚙️", titulo: "Settings", desc: "Customize language, currency, visual theme, notifications, bank CSV imports, and accounts." }
+            { icon: "💸", titulo: "1. Quick Logging & Calculator Keyboard", desc: "Log expenses in seconds. Write direct math expressions (e.g. 15000 + 5000), assign categories, tags (✅ Necessary, 💜 Luxury), and attach receipt photos." },
+            { icon: "🤖", titulo: "2. NOVI AI Advisor & OCR Receipt Scanner", desc: "Your AI financial coach. Get weekly habit diagnostics, savings recommendations, purchase simulator, and smart invoice scanning." },
+            { icon: "📊", titulo: "3. Category Budgets & Alerts", desc: "Set monthly caps for food, leisure, and utilities. Receive notifications and glow warnings when approaching or exceeding limits." },
+            { icon: "🎯", titulo: "4. Savings Goals, Daily Limit & Streak", desc: "Monitor your daily spending cap, save for goals with interactive progress bars, and maintain your active daily streak." },
+            { icon: "🔒", titulo: "5. Security Suite & Privacy Mode", desc: "Protect NOVYRA with 4-digit PIN, Biometric Unlock (Fingerprint/FaceID), local AES-256 Encryption, and Privacy Mode (👁️/🙈) to hide balances in public." },
+            { icon: "☁️", titulo: "6. Cloud Sync with Google Drive v3.5", desc: "Automatic background backup with 2s sync, bi-directional cloud copy detection from other devices, date snapshot history, and E2E encryption." },
+            { icon: "💼", titulo: "7. Net Worth, Cash Flow & Multi-Profile", desc: "Track bank accounts, cash, and investments in Net Worth, control pending debts, and manage multiple profiles (Personal/Work)." }
           ],
           csvTitle: "🏦 Import Bank Statement",
           csvDesc: "Upload a CSV file from your bank. NOVYRA automatically detects dates, amounts, and descriptions.",
@@ -6282,14 +6340,25 @@ Be specific with numbers and very concise.`;
       }
       let modoIncognito = localStorage.getItem("modoIncognito") === "true";
 
+      function actualizarIconoIncognito() {
+        let btn = document.getElementById("btnModoIncognito");
+        if (!btn) return;
+        btn.innerHTML = modoIncognito
+          ? `<svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="#ef4444" style="width:20px;height:20px;transition:transform 0.2s ease, stroke 0.2s ease;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" /></svg>`
+          : `<svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="var(--verde)" style="width:20px;height:20px;transition:transform 0.2s ease, stroke 0.2s ease;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`;
+        btn.style.transform = "scale(0.88)";
+        setTimeout(() => { btn.style.transform = "scale(1)"; }, 150);
+      }
+
       function toggleModoIncognito() {
         modoIncognito = !modoIncognito;
         localStorage.setItem("modoIncognito", String(modoIncognito));
-        let btn = document.getElementById("btnModoIncognito");
-        if (btn) btn.innerHTML = modoIncognito ? "🙈" : "👁️";
+        actualizarIconoIncognito();
         mostrar();
-        toast(modoIncognito ? (idioma === "es" ? "Modo Incógnito activado 🙈" : "Privacy mode on 🙈") : (idioma === "es" ? "Saldos visibles 👁️" : "Balances visible 👁️"));
+        toast(modoIncognito ? (idioma === "es" ? "Modo Incógnito activado" : "Privacy mode on") : (idioma === "es" ? "Saldos visibles" : "Balances visible"));
       }
+
+      document.addEventListener("DOMContentLoaded", actualizarIconoIncognito);
 
       function fmtMoneda(cop, forceShow = false) {
         if (modoIncognito && !forceShow) {
@@ -6522,6 +6591,7 @@ Be specific with numbers and very concise.`;
             el.innerHTML = reemplazarEmojisA3D(txt);
           }
         }
+        if (typeof lucide !== "undefined") lucide.createIcons();
 
         const bioTitleEl = document.getElementById("bioTitle");
         if (bioTitleEl) bioTitleEl.innerText = idioma === "es"
@@ -9032,25 +9102,54 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       // ══════════════════════════════════════════
       // TUTORIAL
       // ══════════════════════════════════════════
-      function abrirTutorial() { tutorialPaso = 0; document.getElementById("tutorialModal").classList.add("visible"); renderTutorialPaso(); }
-      function cerrarTutorial() { document.getElementById("tutorialModal").classList.remove("visible"); }
+      function abrirTutorial() {
+        tutorialPaso = 0;
+        document.getElementById("tutorialModal").classList.add("visible");
+        renderTutorialPaso();
+      }
+
+      function cerrarTutorial() {
+        document.getElementById("tutorialModal").classList.remove("visible");
+        actualizarVisibilidadTutorial();
+      }
+
       function renderTutorialPaso() {
         let pasos = T("tut"), total = pasos.length, paso = pasos[tutorialPaso];
         document.getElementById("tutStepBadge").innerText = `${idioma === "es" ? "Paso" : "Step"} ${tutorialPaso + 1} ${idioma === "es" ? "de" : "of"} ${total}`;
         document.getElementById("tutProgreso").style.width = `${((tutorialPaso + 1) / total) * 100}%`;
         let dots = document.getElementById("tutDots"); dots.innerHTML = "";
-        for (let i = 0; i < total; i++)dots.innerHTML += `<div class="tut-dot ${i === tutorialPaso ? "activo" : ""}"></div>`;
-        document.getElementById("tutContenido").innerHTML = `<div class="tut-icon">${paso.icon}</div><div class="tut-titulo">${paso.titulo}</div><div class="tut-desc">${paso.desc}</div>`;
+        for (let i = 0; i < total; i++) dots.innerHTML += `<div class="tut-dot ${i === tutorialPaso ? "activo" : ""}"></div>`;
+        document.getElementById("tutContenido").innerHTML = `<div class="tut-icon">${reemplazarEmojisA3D(paso.icon, 36)}</div><div class="tut-titulo">${reemplazarEmojisA3D(paso.titulo)}</div><div class="tut-desc">${reemplazarEmojisA3D(paso.desc)}</div>`;
+        if (typeof lucide !== "undefined") lucide.createIcons();
         let ant = document.getElementById("tutBtnAnt"); ant.style.display = tutorialPaso > 0 ? "block" : "none";
         let sig = document.getElementById("tutBtnSig");
-        sig.innerText = tutorialPaso === total - 1 ? (idioma === "es" ? "✅ ¡Entendido!" : "✅ Got it!") : (idioma === "es" ? "Siguiente →" : "Next →");
+        sig.innerText = tutorialPaso === total - 1 ? (idioma === "es" ? "✅ ¡Completar tutorial!" : "✅ Complete tutorial!") : (idioma === "es" ? "Siguiente →" : "Next →");
       }
+
       function tutNav(dir) {
-        let total = T("tut").length; tutorialPaso += dir;
-        if (tutorialPaso >= total) { cerrarTutorial(); return; }
+        let total = T("tut").length;
+        tutorialPaso += dir;
+        if (tutorialPaso >= total) {
+          localStorage.setItem("tutorialCompletado", "true");
+          cerrarTutorial();
+          actualizarVisibilidadTutorial();
+          toast(idioma === "es" ? "¡Tutorial completado! 🎉" : "Tutorial completed! 🎉");
+          return;
+        }
         if (tutorialPaso < 0) tutorialPaso = 0;
         renderTutorialPaso();
       }
+
+      function actualizarVisibilidadTutorial() {
+        const completado = localStorage.getItem("tutorialCompletado") === "true";
+        const ids = ["cardBotonTutorial", "btnTutorialInicio", "L-verTutorialCard"];
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = completado ? "none" : "";
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", actualizarVisibilidadTutorial);
       document.getElementById("tutorialModal").addEventListener("click", function (e) { if (e.target === this) cerrarTutorial(); });
 
       // ══════════════════════════════════════════
@@ -9878,12 +9977,18 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         return false;
       }
 
+      let appDebeBloquear = false;
+
       function reiniciarAutoLock() {
         clearTimeout(pinAutoLockTimer);
         if (!pinActivo()) return;
         const ms = getPinTimeoutMs();
         if (ms > 0) {
-          pinAutoLockTimer = setTimeout(() => { _aesKey = null; mostrarPinLock("unlock"); }, ms);
+          pinAutoLockTimer = setTimeout(() => {
+            _aesKey = null;
+            appDebeBloquear = true;
+            if (!document.hidden) mostrarPinLock("unlock");
+          }, ms);
         }
       }
 
@@ -9897,18 +10002,20 @@ Sé específico con los números. Máximo 300 palabras en total.`;
         if (!pinActivo()) return;
         const timeoutMin = localStorage.getItem("pinTimeoutMin") || "5";
         if (document.hidden) {
+          clearTimeout(pinAutoLockTimer);
+          localStorage.setItem("pinLastHide", String(Date.now()));
           if (timeoutMin === "0") {
             _aesKey = null;
-            mostrarPinLock("unlock");
-          } else {
-            clearTimeout(pinAutoLockTimer);
-            localStorage.setItem("pinLastHide", String(Date.now()));
+            appDebeBloquear = true;
           }
         } else {
+          // El usuario re-abre o regresa a la app
           const lastHide = parseInt(localStorage.getItem("pinLastHide") || "0");
           const ms = getPinTimeoutMs();
-          if (ms > 0 && Date.now() - lastHide > ms) {
+          const debeBloquear = appDebeBloquear || (timeoutMin === "0") || (ms > 0 && Date.now() - lastHide > ms);
+          if (debeBloquear) {
             _aesKey = null;
+            appDebeBloquear = false;
             mostrarPinLock("unlock");
           } else {
             reiniciarAutoLock();
@@ -10921,7 +11028,6 @@ Assign null if unreadable.`;
       // ── Inicializar cliente OAuth ──────────────
       async function inicializarDrive() {
         try {
-          // En APK nativo el SDK de Google no carga — salir silenciosamente
           if (window.Capacitor?.isNativePlatform()) {
             if (driveAccessToken && localStorage.getItem("driveConectado") === "true") {
               iniciarAutoBackupDrive();
@@ -10929,7 +11035,6 @@ Assign null if unreadable.`;
             return;
           }
 
-          // --- todo lo que ya tenías abajo sin cambiar nada ---
           await cargarGoogleSDK();
           driveTokenClient = google.accounts.oauth2.initTokenClient({
             client_id: DRIVE_CLIENT_ID,
@@ -10954,6 +11059,395 @@ Assign null if unreadable.`;
         }
       }
 
+      // ── Buscar archivo en Drive y verificar nubes más recientes ────────────────
+      var driveSnapshotsList = [];
+
+      async function buscarArchivoDrive() {
+        if (!driveAccessToken) return;
+        try {
+          const res = await fetch(
+            `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name contains 'novyra_'&fields=files(id,name,modifiedTime,size)&orderBy=modifiedTime desc`,
+            { headers: { Authorization: `Bearer ${driveAccessToken}` } }
+          );
+          const data = await res.json();
+          if (data.files && data.files.length > 0) {
+            driveSnapshotsList = data.files;
+            const mainFile = data.files.find(f => f.name === DRIVE_FILE_NAME) || data.files[0];
+            driveFileId = mainFile.id;
+
+            // Verificar si el archivo en la nube es más reciente que el último backup local
+            const cloudDate = new Date(mainFile.modifiedTime).getTime();
+            const localStr = localStorage.getItem("driveUltimoBackup");
+            const localDate = localStr ? new Date(localStr).getTime() : 0;
+
+            if (cloudDate > localDate + 60000) {
+              const dateFmt = new Date(mainFile.modifiedTime).toLocaleString(T("locale"), { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" });
+              toast(idioma === "es"
+                ? `☁️ Copia más reciente en Drive (${dateFmt})`
+                : `☁️ Newer cloud backup found (${dateFmt})`, "info");
+              mostrarAvisoNubeMasReciente(dateFmt);
+            }
+          }
+        } catch (e) { console.error("Error buscando archivos Drive:", e); }
+      }
+
+      function mostrarAvisoNubeMasReciente(fechaStr) {
+        let banner = document.getElementById("driveCloudBanner");
+        if (!banner) {
+          banner = document.createElement("div");
+          banner.id = "driveCloudBanner";
+          banner.style.cssText = "background:rgba(14,158,142,0.15);border:1px solid var(--teal);border-radius:14px;padding:12px 16px;margin:10px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;";
+          const sec = document.getElementById("configDriveContenido");
+          if (sec) sec.prepend(banner);
+        }
+        banner.innerHTML = `
+          <div style="font-size:12px;color:var(--text);">
+            <strong>☁️ ${idioma === "es" ? "Nube más reciente" : "Newer Cloud Copy"} (${fechaStr})</strong>
+            <div style="color:var(--muted);font-size:11px;">${idioma === "es" ? "Hay datos nuevos de otro dispositivo" : "Newer data from another device"}</div>
+          </div>
+          <button onclick="restaurarDesdeDrive()" class="btn-sm btn-verde" style="font-size:11px;padding:6px 12px;margin:0;">
+            📥 ${idioma === "es" ? "Descargar" : "Download"}
+          </button>`;
+      }
+
+      async function subirBackupDrive(manual = false) {
+        if (driveSubiendoAhora) return;
+        if (!driveAccessToken) {
+          driveBackupPendiente = true;
+          if (localStorage.getItem("driveConectado") === "true") {
+            toast(idioma === "es" ? "Reconectando con Google Drive..." : "Reconnecting to Google Drive...", "info");
+            await conectarDrive();
+          } else if (manual) {
+            toast(idioma === "es" ? "Conecta tu cuenta de Google primero 🔌" : "Connect Google Drive account first 🔌", "warn");
+            await conectarDrive();
+          }
+          return;
+        }
+
+        driveSubiendoAhora = true;
+        renderDriveEstado(true); // Mostrar estado 'Sincronizando...'
+        if (manual) toast(idioma === "es" ? "Sincronizando con Google Drive ☁️..." : "Syncing with Google Drive ☁️...");
+
+        try {
+          // Extraer la totalidad de perfiles almacenados en localStorage
+          const todosLosDatos = {};
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && (k.includes("gastos") || k.includes("categorias") || k.includes("presupuesto") || k.includes("recurrentes") || k.includes("meta") || k.includes("recordatoriosCal") || k.startsWith("p_"))) {
+              todosLosDatos[k] = localStorage.getItem(k);
+            }
+          }
+
+          let datosConsolidados = {
+            gastos, categorias, presupuesto, recurrentes, meta, recordatoriosCal,
+            perfilesFull: todosLosDatos,
+            version: "3.5",
+            exportFecha: new Date().toISOString(),
+            cifradoE2E: false
+          };
+
+          // 🔒 Cifrado E2E si PIN está activo y clave AES disponible
+          let esCifrado = false;
+          if (pinActivo() && typeof _aesKey !== "undefined" && _aesKey) {
+            try {
+              const rawJson = JSON.stringify(datosConsolidados);
+              const encJson = await cifrar(rawJson, _aesKey);
+              datosConsolidados = {
+                cifradoE2E: true,
+                contenido: encJson,
+                exportFecha: new Date().toISOString(),
+                version: "3.5"
+              };
+              esCifrado = true;
+            } catch (errEnc) {
+              console.warn("Falló cifrado E2E Drive, usando formato estándar:", errEnc);
+            }
+          }
+
+          const json = JSON.stringify(datosConsolidados);
+          const blob = new Blob([json], { type: "application/json" });
+
+          let url, method;
+          if (driveFileId) {
+            url = `https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`;
+            method = "PATCH";
+          } else {
+            const boundary = "novyra_boundary";
+            const meta_req = { name: DRIVE_FILE_NAME, parents: ["appDataFolder"] };
+            const metaBlob = new Blob(
+              [`--${boundary}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(meta_req)}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${json}\r\n--${boundary}--`],
+              { type: `multipart/related; boundary=${boundary}` }
+            );
+            const res = await fetch(
+              "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id",
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${driveAccessToken}`,
+                  "Content-Type": `multipart/related; boundary=${boundary}`
+                },
+                body: metaBlob
+              }
+            );
+
+            if (res.status === 401) {
+              driveSubiendoAhora = false;
+              await manejarTokenExpirado();
+              return;
+            }
+
+            const data = await res.json();
+            driveFileId = data.id;
+            localStorage.setItem("driveUltimoBackup", new Date().toISOString());
+            localStorage.setItem("driveEsCifrado", esCifrado ? "true" : "false");
+            driveBackupPendiente = false;
+            renderDriveEstado();
+            driveSubiendoAhora = false;
+            subirSnapshotDiarioDrive(json);
+            if (manual) toast(idioma === "es" ? "Backup guardado en Google Drive ✅" : "Backup saved to Google Drive ✅");
+            return;
+          }
+
+          const res = await fetch(url, {
+            method,
+            headers: {
+              Authorization: `Bearer ${driveAccessToken}`,
+              "Content-Type": "application/json"
+            },
+            body: blob
+          });
+
+          if (res.status === 401) {
+            driveSubiendoAhora = false;
+            await manejarTokenExpirado();
+            return;
+          }
+
+          localStorage.setItem("driveUltimoBackup", new Date().toISOString());
+          localStorage.setItem("driveEsCifrado", esCifrado ? "true" : "false");
+          driveBackupPendiente = false;
+          renderDriveEstado();
+          subirSnapshotDiarioDrive(json);
+          if (manual) toast(idioma === "es" ? "Backup guardado en Google Drive ✅" : "Backup saved to Google Drive ✅");
+
+        } catch (e) {
+          console.error("Error subiendo backup Drive:", e);
+          driveBackupPendiente = true;
+          renderDriveEstado();
+          if (manual) toast(idioma === "es" ? "Error al guardar en Google Drive ❌" : "Error saving to Google Drive ❌", "error");
+        } finally {
+          driveSubiendoAhora = false;
+        }
+      }
+
+      // ── Crear Snapshot Diario en Drive ─────────
+      async function subirSnapshotDiarioDrive(jsonContent) {
+        if (!driveAccessToken) return;
+        const hoyStr = new Date().toISOString().split("T")[0];
+        const snapName = `novyra_snap_${hoyStr}.json`;
+        const yaExiste = driveSnapshotsList.some(f => f.name === snapName);
+        if (yaExiste) return; // Un snapshot por día
+
+        try {
+          const boundary = "novyra_snap_bound";
+          const meta_req = { name: snapName, parents: ["appDataFolder"] };
+          const metaBlob = new Blob(
+            [`--${boundary}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(meta_req)}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${jsonContent}\r\n--${boundary}--`],
+            { type: `multipart/related; boundary=${boundary}` }
+          );
+          await fetch(
+            "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${driveAccessToken}`,
+                "Content-Type": `multipart/related; boundary=${boundary}`
+              },
+              body: metaBlob
+            }
+          );
+          buscarArchivoDrive();
+        } catch (e) { console.warn("Snapshot diario omitido:", e); }
+      }
+
+      // ── Renovar token expirado ─────────────────
+      async function renovarTokenDrive() {
+        if (!driveTokenClient) return;
+        driveBackupPendiente = true;
+        try {
+          driveTokenClient.requestAccessToken({ prompt: "" });
+        } catch (e) {
+          console.warn("No se pudo renovar token Drive:", e);
+        }
+      }
+
+      // ── Restaurar desde un archivo de Drive ─────
+      async function restaurarDesdeDrive(specificFileId = null) {
+        if (!driveAccessToken) {
+          toast(idioma === "es" ? "Conecta Drive primero" : "Connect Drive first", "warn");
+          return;
+        }
+        const fileIdToUse = specificFileId || driveFileId;
+        if (!fileIdToUse) {
+          toast(idioma === "es" ? "No hay backup en Drive" : "No backup found in Drive", "warn");
+          return;
+        }
+        if (!confirm(idioma === "es"
+          ? "¿Restaurar desde Google Drive? Se reemplazarán los datos actuales."
+          : "Restore from Google Drive? Current data will be replaced.")) return;
+
+        try {
+          const res = await fetch(
+            `https://www.googleapis.com/drive/v3/files/${fileIdToUse}?alt=media`,
+            { headers: { Authorization: `Bearer ${driveAccessToken}` } }
+          );
+          let datos = await res.json();
+
+          // 🔒 Descifrado E2E si el backup está encriptado
+          if (datos.cifradoE2E && datos.contenido) {
+            if (typeof _aesKey === "undefined" || !_aesKey) {
+              toast(idioma === "es" ? "Ingresa tu PIN primero para descifrar la copia de la nube 🔒" : "Enter PIN first to decrypt cloud backup 🔒", "warn");
+              mostrarPinLock("unlock");
+              return;
+            }
+            try {
+              const jsonDecrypted = await descifrar(datos.contenido, _aesKey);
+              datos = JSON.parse(jsonDecrypted);
+            } catch (errDec) {
+              toast(idioma === "es" ? "PIN incorrecto para descifrar la nube ❌" : "Incorrect PIN for cloud decryption ❌", "error");
+              return;
+            }
+          }
+
+          // Restaurar perfiles adicionales si existen
+          if (datos.perfilesFull && typeof datos.perfilesFull === "object") {
+            Object.keys(datos.perfilesFull).forEach(k => {
+              localStorage.setItem(k, datos.perfilesFull[k]);
+            });
+          }
+
+          const { ok, errores } = validarBackup(datos);
+          if (!ok) { mostrarErroresImport(errores); return; }
+          const d = sanitizarDatos(datos);
+
+          gastos = d.gastos;
+          categorias = d.categorias;
+          presupuesto = d.presupuesto || {};
+          recurrentes = d.recurrentes || [];
+          meta = d.meta || { ahorro: 0, ingreso: 0 };
+          recordatoriosCal = d.recordatoriosCal || {};
+
+          guardarDatosPerfil();
+          cargarCategorias();
+          renderRec();
+          rellenarFiltros();
+          mostrar();
+          toast(idioma === "es" ? "Restaurado desde Drive ✅" : "Restored from Drive ✅");
+
+        } catch (e) {
+          console.error("Error restaurando desde Drive:", e);
+          toast(idioma === "es" ? "Error al restaurar ❌" : "Restore error ❌", "error");
+        }
+      }
+
+      // ── Render estado Drive ────────────────────
+      function renderDriveEstado(subiendo = false) {
+        const cont = document.getElementById("driveEstadoContenido");
+        const botones = document.getElementById("driveBotonesContenido");
+        if (!cont || !botones) return;
+
+        const conectado = localStorage.getItem("driveConectado") === "true";
+        const ultimoStr = localStorage.getItem("driveUltimoBackup");
+        const esCifrado = localStorage.getItem("driveEsCifrado") === "true";
+        const ultimo = ultimoStr
+          ? new Date(ultimoStr).toLocaleString(T("locale"), {
+            day: "numeric", month: "short",
+            hour: "2-digit", minute: "2-digit"
+          })
+          : null;
+
+        if (conectado) {
+          let estadoTexto = subiendo
+            ? (idioma === "es" ? "🔄 Sincronizando datos con Drive..." : "🔄 Syncing data with Drive...")
+            : ultimo
+              ? (idioma === "es" ? `Último backup: ${ultimo} (Auto-sync activo)` : `Last backup: ${ultimo} (Auto-sync active)`)
+              : (idioma === "es" ? "Conectado — primer backup en curso" : "Connected — first backup in progress");
+
+          let dotClass = subiendo ? "amarillo" : "verde";
+          let badgeCifrado = esCifrado
+            ? `<span style="font-size:11px;color:var(--verde);background:rgba(34,197,94,0.12);padding:2px 8px;border-radius:10px;font-weight:700;">🔒 Cifrado E2E AES-256</span>`
+            : `<span style="font-size:11px;color:var(--hint);background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:10px;">☁️ Estándar Cloud</span>`;
+
+          let snapsHTML = "";
+          if (driveSnapshotsList && driveSnapshotsList.length > 0) {
+            snapsHTML = `
+              <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
+                <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">📦 ${idioma === "es" ? "Puntos de Restauración en la Nube" : "Cloud Restore Points"}</div>
+                <div style="display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto;">
+                  ${driveSnapshotsList.slice(0, 5).map(f => {
+              const dFmt = new Date(f.modifiedTime).toLocaleString(T("locale"), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+              const sizeKb = f.size ? Math.round(f.size / 1024) + " KB" : "";
+              return `
+                      <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;font-size:11px;">
+                        <div>
+                          <span style="color:var(--text);font-weight:600;">📅 ${dFmt}</span>
+                          <span style="color:var(--hint);margin-left:6px;">${sizeKb}</span>
+                        </div>
+                        <button onclick="restaurarDesdeDrive('${f.id}')" class="btn-sm btn-gris" style="font-size:10px;padding:3px 8px;margin:0;">
+                          📥 ${idioma === "es" ? "Restaurar" : "Restore"}
+                        </button>
+                      </div>`;
+            }).join("")}
+                </div>
+              </div>`;
+          }
+
+          cont.innerHTML = `
+            <div class="drive-estado">
+              <div class="drive-avatar">🔵</div>
+              <div class="drive-info">
+                <div class="drive-nombre">Google Drive Cloud v3.5 ${badgeCifrado}</div>
+                <div class="drive-sub">${estadoTexto}</div>
+              </div>
+              <div class="drive-dot ${dotClass}"></div>
+            </div>
+            ${snapsHTML}`;
+
+          botones.innerHTML = `
+            <button onclick="subirBackupDrive(true)" class="btn-azul" style="font-size:13px;margin-bottom:8px;" ${subiendo ? "disabled" : ""}>
+              ${subiendo ? "⏳ " + (idioma === "es" ? "Guardando..." : "Saving...") : "☁️ " + (idioma === "es" ? "Subir backup ahora" : "Upload backup now")}
+            </button>
+            <button onclick="restaurarDesdeDrive()" class="btn-gris" style="font-size:13px;margin-bottom:8px;">
+              📥 ${idioma === "es" ? "Restaurar versión principal" : "Restore main version"}
+            </button>
+            <button onclick="desconectarDrive()" class="btn-peligro" style="font-size:13px;">
+              🔌 ${idioma === "es" ? "Desconectar Drive" : "Disconnect Drive"}
+            </button>`;
+        } else {
+          cont.innerHTML = `
+            <div class="drive-estado">
+              <div class="drive-avatar">☁️</div>
+              <div class="drive-info">
+                <div class="drive-nombre">Google Drive Cloud Backup v3.5</div>
+                <div class="drive-sub">${idioma === "es"
+                ? "Respaldo automático en tu cuenta Google"
+                : "Automatic backup to your Google account"}</div>
+              </div>
+              <div class="drive-dot gris"></div>
+            </div>
+            <div class="info-box" style="margin-bottom:10px;">
+              ${idioma === "es"
+                ? "Tus datos se guardan de forma segura con <strong>Cifrado E2E AES-256</strong> y detección bidireccional. Solo tú tienes acceso."
+                : "Your data is securely saved to Drive with <strong>E2E AES-256 Encryption</strong> and bi-directional sync."}
+            </div>`;
+
+          botones.innerHTML = `
+            <button onclick="conectarDrive()" class="btn-google" style="font-size:13px;">
+              <img src="https://www.google.com/favicon.ico" width="16" height="16">
+              ${idioma === "es" ? "Conectar con Google" : "Connect with Google"}
+            </button>`;
+        }
+      }
 
       function recibirTokenDrive(fragment) {
         try {
