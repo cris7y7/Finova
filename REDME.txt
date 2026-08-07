@@ -1,4 +1,4 @@
-#VERSION 0.1 de GastosApp  09/04/2026
+# VERSION 0.1 de GastosApp  09/04/2026
 Creamos la aplicación con funciones sencillas:
 - Agregar categoría de gastos
 - Colores y UX/UI agradable para el usuario
@@ -6,7 +6,7 @@ Creamos la aplicación con funciones sencillas:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 1.1 NOVYRA  10/04/2026
+# VERSION 1.1 NOVYRA  10/04/2026
 Agregamos nuevas funciones. También le cambiamos el nombre a NOVYRA.
 - Gráficas de gastos
 - Calendario para ver gastos por día
@@ -16,7 +16,7 @@ Agregamos nuevas funciones. También le cambiamos el nombre a NOVYRA.
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.0 NOVYRA  19/04/2026
+# VERSION 2.0 NOVYRA  19/04/2026
 Rediseño completo de la arquitectura y nuevas funcionalidades:
 
 Nuevas funciones:
@@ -43,7 +43,7 @@ Nuevas funciones:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.1 NOVYRA  21/04/2026
+# VERSION 2.1 NOVYRA  21/04/2026
 Módulo completo de seguridad:
 
 - PIN de 4 dígitos para proteger el acceso
@@ -60,7 +60,7 @@ Módulo completo de seguridad:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.2 NOVYRA  23/04/2026
+# VERSION 2.2 NOVYRA  23/04/2026
 Bug fixes y mejoras:
 
 - Fix fecha local vs UTC (ya no muestra el día siguiente en Colombia)
@@ -70,7 +70,7 @@ Bug fixes y mejoras:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.3 NOVYRA  28/04/2026
+# VERSION 2.3 NOVYRA  28/04/2026
 Nuevas funcionalidades:
 
 - Foto del recibo adjunta a cada gasto
@@ -104,7 +104,7 @@ Nuevas funcionalidades:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 2.4 NOVYRA  18/05/2026
+# VERSION 2.4 NOVYRA  18/05/2026
 Nuevas funcionalidades:
 
 - Backup automático en Google Drive
@@ -125,8 +125,8 @@ Nuevas funcionalidades:
 
 ---------------------------------------------------------------------------------------------------------
 
-#VERSION 3.0 NOVYRA  08/06/2026
-Mayor actualización hasta la fecha — IA integrada y rediseño completo:
+# VERSION 3.0 NOVYRA  08/06/2026
+IA integrada y rediseño completo:
 
 NOVI AI — Asistente financiero inteligente:
   · Chat conversacional sobre tus finanzas personales
@@ -138,91 +138,52 @@ NOVI AI — Asistente financiero inteligente:
   · Powered by Groq + Llama 3.3 70B (gratis para todos los usuarios)
   · Proxy seguro via Netlify Functions (API key nunca expuesta)
 
-Rediseño premium completo:
-  · Fondo negro puro #080808 con cards sutiles #111111
-  · Iconos Lucide en toda la interfaz (reemplaza emojis)
-  · Splash screen animado al abrir la app
-  · Transiciones suaves entre secciones
-  · Gráficas personalizadas con paleta NOVYRA (verdes y teales)
-  · Botón flotante de IA accesible globalmente
+---------------------------------------------------------------------------------------------------------
 
-Nuevas funcionalidades:
-  · Compartir resumen mensual como imagen (WhatsApp/redes)
-  · Reporte financiero en PDF con análisis de IA
-  · Notificaciones inteligentes de retención
-      - Recordatorio de almuerzo (1pm) con gastos del día
-      - Resumen nocturno personalizado (9pm)
-      - Alerta de racha en peligro (8pm si no registró nada)
-      - Alerta de fin de mes (últimos 3 días)
-      - Se reprograman automáticamente al registrar un gasto
-  · Onboarding simplificado — menos pasos, más directo
-  · Mini navegación en pantalla inicio — tabs de Semana, Límite, Racha y Meta en una sola card
+# VERSION 3.5 NOVYRA — GOOGLE DRIVE CLOUD v3.5 & SUITE DE SEGURIDAD  07/08/2026
+Avances mayores en almacenamiento en la nube y privacidad:
 
-Google Drive mejorado:
-  · Auto-refresh del token OAuth — se renueva automáticamente al expirar sin desconectar Drive
-  · Backup inmediato al agregar un gasto con manejo de token expirado
-  · Sin necesidad de reconectar manualmente cuando expira la sesión
+- Google Drive Cloud v3.5:
+  · Cifrado E2E AES-256 de respaldos antes de subirlos a la nube
+  · Sincronización inteligente bidireccional (detecta si hay un backup más reciente en Drive)
+  · Historial de Snapshots por fecha (`novyra_snap_YYYY-MM-DD.json`) con restauración a 1 toque
+  · Reconexión automática con Google OAuth en APK nativo de Android
+  · Notificaciones Toast explícitas de subida y estado
 
-Bug fixes:
-  · Fix bug de perfiles — los gastos ya no se pierden al cambiar de perfil
-  · Fix función T() no definida al iniciar la app
-  · Fix notificaciones no disponibles en APK Android
-  · Fix diseño botón predicciones NOVI AI
-  · Fix Google Drive no actualizaba al agregar un gasto
-
-Landing page profesional:
-  · novyranet.netlify.app — página de presentación
-  · novyranet.netlify.app/app — acceso directo a la app
-  · Capturas reales, sección de funciones, precios y CTA
-  · Diseño responsive para móvil y escritorio
-
-Publicación y distribución:
-  · Publicado en Product Hunt
-  · APK disponible en GitHub Releases
-  · Términos y condiciones + Política de privacidad (Ley 1581 Colombia)
+- Módulo de Seguridad & Auto-Lock Avanzado:
+  · Disparo automático de Biometría nativa (250ms) al abrir la app
+  · Selector configurable de tiempo de auto-bloqueo (`0m` inmediato, `1m`, `5m`, `15m`)
+  · Vibración y feedback háptico táctil en el teclado del PIN
+  · Solución definitiva al bug de re-apertura automática en background de Android WebView
 
 ---------------------------------------------------------------------------------------------------------
 
-PRÓXIMAS VERSIONES:
+# VERSION 3.6 NOVYRA — REDISEÑO DE INTERFAZ & ÍCONOS ARTESANALES HUMANOS  07/08/2026
+Reinvención estética y experiencia de usuario refinada:
 
-#VERSION 3.1 — Exportación avanzada
-- [ ] Exportar metas de ahorro en el backup JSON
-- [ ] Mejorar reporte PDF — portada más visual
+- Íconos Artesanales Hechos a Mano (Heroicons por Steve Schoger / Tailwind Labs):
+  · Reemplazo total del 100% de los emojis unicode por trazados vectoriales SVG hechos a mano por diseñadores humanos
+  · Renderizado 100% offline en 0 milisegundos sin llamadas a CDN externa ni consumo de datos
+  · Sensación visual cálida, profesional y cero genérica
 
-#VERSION 3.2 — Mejoras de experiencia
-- [ ] Resumen anual — ver el año completo de gastos
-- [ ] Estados vacíos ilustrados
-- [ ] Swipe para eliminar gastos en historial
+- Botón de Visibilidad Estilo Contraseña:
+  · Alternador de visibilidad de saldos con Ojo Abierto (verde) u Ojo Tachado con barra diagonal (rojo)
+  · Micro-animación elástica de escala al hacer clic
 
-#VERSION 4.0 — Sync y comunidad
-- [ ] Modo familiar (compartir perfil entre dispositivos)
-- [ ] Integración directa con bancos colombianos
-- [ ] Apple Watch / WearOS companion app
-- [ ] iOS — App Store
+- Header Simétrico Fintech:
+  · Layout en Grid de 3 columnas (`1fr auto 1fr`) con menú, modo incógnito, logo central con resplandor emerald y badge de perfiles
 
----------------------------------------------------------------------------------------------------------
-
-BUGS CONOCIDOS:
-- Ninguno actualmente ✅
+- Tutorial Guiado Interactivo:
+  · Ampliado a 7 pasos completos detallando todas las herramientas avanzadas
+  · Ocultamiento automático de la tarjeta del tutorial al finalizar el recorrido
 
 ---------------------------------------------------------------------------------------------------------
 
 NOTAS TÉCNICAS:
-- Stack: HTML + CSS + JavaScript vanilla (sin frameworks)
-- Empaquetado: Capacitor 8 para Android APK
-- Almacenamiento: localStorage con cifrado AES-256-GCM opcional
-- Gráficas: Chart.js con paleta personalizada NOVYRA
-- Tasas de cambio: Frankfurter API (tiempo real)
-- IA: Groq API (Llama 3.3 70B + Llama 4 Scout Vision) via Netlify Functions
-- OCR: Llama 4 Scout 17B con soporte de imágenes
-- PDF: jsPDF + html2canvas
-- Iconos: Lucide Icons
-- Seguridad: PIN + AES-256-GCM + CSP + biometría nativa
-- Google Drive: OAuth 2.0 con auto-refresh de token
-- Hosting: Netlify (web + serverless functions)
-- Distribución Android: GitHub Releases
-- Compatibilidad: Android 8+, iOS 14+, Chrome, Firefox, Safari
-- PWA: instalable en cualquier dispositivo
-- URLs: novyranet.netlify.app (landing) · novyranet.netlify.app/app (app)
-
-
+- Stack: HTML5 + CSS3 Vanilla + JavaScript ES6 (sin frameworks)
+- Íconos: Heroicons por Steve Schoger (SVG inline artesanal offline) + Lucide SVG
+- Empaquetado: Capacitor 8 para APK nativo de Android
+- Almacenamiento: localStorage con Cifrado E2E AES-256-GCM
+- Cloud: Google Drive Cloud v3.5 (OAuth 2.0 via System Browser Deep Link)
+- IA: Groq API (Llama 3.3 70B + Llama 4 Scout Vision OCR) via Netlify Functions
+- Distribución: APK Android + Netlify Web (novyranet.netlify.app)
