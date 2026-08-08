@@ -134,10 +134,9 @@
     }
 
     .container {
-      max-width: 430px;
+      max-width: 480px;
       margin: auto;
-      padding: 16px;
-      padding-bottom: 96px;
+      padding: 18px 18px 130px;
     }
 
     .logo-container {
@@ -214,9 +213,9 @@
 
     .card {
       background: var(--card);
-      border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 16px;
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 18px;
       border: 1px solid var(--border);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
@@ -227,14 +226,14 @@
     }
 
     .card h3 {
-      margin: 0 0 14px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
       color: #f8fafc;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .card h3 svg {
@@ -266,13 +265,13 @@
     select,
     textarea {
       width: 100%;
-      padding: 11.5px 14px;
-      margin-top: 9px;
-      border-radius: var(--radius-xs);
+      padding: 13px 16px;
+      margin-top: 6px;
+      border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.09);
       background: #141622;
       color: #f8fafc;
-      font-size: 13.5px;
+      font-size: 14px;
       outline: none;
       transition: border-color .2s, box-shadow .2s, background .2s;
       font-family: inherit;
@@ -300,12 +299,13 @@
     .input-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 12px;
+      margin-top: 10px;
     }
 
     .input-row input,
     .input-row select {
-      margin-top: 9px;
+      margin-top: 4px;
     }
 
     .input-icon-wrap {
@@ -328,12 +328,12 @@
 
     button {
       width: 100%;
-      padding: 12.5px 16px;
-      margin-top: 10px;
-      border-radius: var(--radius-sm);
+      padding: 13.5px 18px;
+      margin-top: 12px;
+      border-radius: 16px;
       border: none;
-      font-weight: 700;
-      font-size: 13.5px;
+      font-weight: 800;
+      font-size: 14px;
       letter-spacing: 0.2px;
       cursor: pointer;
       background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -697,6 +697,123 @@
     }
     .novi-btn-action:hover {
       background: rgba(30, 168, 78, 0.25);
+    }
+
+    /* ══════════════════════════════════════════
+       BOTTOM SHEET FINTECH SYSTEM
+       ══════════════════════════════════════════ */
+    .bottom-sheet-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bottom-sheet-backdrop.visible {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 1;
+    }
+
+    .bottom-sheet {
+      width: 100%;
+      max-width: 520px;
+      background: #0e111a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px 28px 0 0;
+      padding: 12px 20px 30px;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(34, 197, 94, 0.15);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .bottom-sheet-backdrop.visible .bottom-sheet {
+      transform: translateY(0);
+    }
+
+    .bottom-sheet-handle {
+      width: 40px;
+      height: 4.5px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      margin: 4px auto 14px;
+    }
+
+    .bottom-sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .bottom-sheet-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bottom-sheet-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--hint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      margin: 0;
+      padding: 0;
+    }
+
+    .bottom-sheet-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+
+    .btn-fab-agregar {
+      position: fixed;
+      bottom: 148px;
+      right: 18px;
+      width: 52px;
+      height: 52px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #022c16;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.45);
+      cursor: pointer;
+      z-index: 4800;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+
+    .btn-fab-agregar:active {
+      transform: scale(0.9);
+    }
+
+    .btn-fab-agregar:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.55);
     }
 
     /* SIMULADOR MODAL */
@@ -2981,8 +3098,10 @@
     #modalCalc {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .8);
-      z-index: 9200;
+      background: rgba(0, 0, 0, .85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10050;
       display: none;
       align-items: flex-end;
       justify-content: center;
@@ -4126,42 +4245,7 @@
     </div>
   </div>
 
-  <!-- CALCULADORA -->
-  <div id="modalCalc">
-    <div class="calc-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span style="font-size:14px;font-weight:800;color:var(--text);">🧮 Calculadora</span>
-        <button class="tut-close" onclick="cerrarCalc()">✕</button>
-      </div>
-      <div class="calc-pantalla">
-        <div class="calc-expr" id="calcExpr"></div>
-        <div class="calc-result" id="calcResult">0</div>
-      </div>
-      <div class="calc-grid">
-        <button class="calc-btn calc-ac" onclick="calcAC()">AC</button>
-        <button class="calc-btn calc-op" onclick="calcInput('(')">(</button>
-        <button class="calc-btn calc-op" onclick="calcInput(')')">)</button>
-        <button class="calc-btn calc-op" onclick="calcInput('/')">÷</button>
-        <button class="calc-btn calc-num" onclick="calcInput('7')">7</button>
-        <button class="calc-btn calc-num" onclick="calcInput('8')">8</button>
-        <button class="calc-btn calc-num" onclick="calcInput('9')">9</button>
-        <button class="calc-btn calc-op" onclick="calcInput('*')">×</button>
-        <button class="calc-btn calc-num" onclick="calcInput('4')">4</button>
-        <button class="calc-btn calc-num" onclick="calcInput('5')">5</button>
-        <button class="calc-btn calc-num" onclick="calcInput('6')">6</button>
-        <button class="calc-btn calc-op" onclick="calcInput('-')">−</button>
-        <button class="calc-btn calc-num" onclick="calcInput('1')">1</button>
-        <button class="calc-btn calc-num" onclick="calcInput('2')">2</button>
-        <button class="calc-btn calc-num" onclick="calcInput('3')">3</button>
-        <button class="calc-btn calc-op" onclick="calcInput('+')">+</button>
-        <button class="calc-btn calc-num" onclick="calcInput('0')" style="grid-column:span 2;">0</button>
-        <button class="calc-btn calc-num" onclick="calcInput('.')">.</button>
-        <button class="calc-btn calc-eq" onclick="calcIgual()">=</button>
-        <button class="calc-btn calc-ok" onclick="calcUsar()" style="grid-column:span 4;font-size:13px;"
-          id="L-calcUsar"></button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- QUICK -->
   <div id="quickClose" style="display:none;position:fixed;inset:0;z-index:8400;" onclick="cerrarQuick()"></div>
@@ -4229,85 +4313,18 @@
     <!-- INICIO -->
     <div class="seccion activa" id="sec-inicio">
 
-      <!-- Formulario agregar gasto — siempre visible -->
-      <div class="card">
-        <h3 id="L-h-registro">
-          <i data-lucide="plus-circle" style="width:18px;height:18px;color:var(--verde);"></i>
-          <span>Registrar Gasto</span>
-        </h3>
-
-        <!-- Monto Hero Input Widget -->
-        <div class="monto-hero-wrap">
-          <span class="monto-hero-sym" id="monedaSym">$</span>
-          <input type="number" id="monto" min="0" placeholder="0" class="monto-hero-input" autocomplete="off" step="any">
-          <button type="button" onclick="abrirCalc()" class="btn-calc-hero" title="Calculadora">
-            <i data-lucide="calculator" style="width:18px;height:18px;"></i>
-          </button>
-        </div>
-
-        <!-- Row: Fecha y Categoría Dropdown -->
-        <div class="input-row" style="margin-top:6px;">
-          <div>
-            <div class="form-sublabel" id="L-lblFecha">Fecha</div>
-            <input type="date" id="fechaGasto" style="margin-top:2px;">
-          </div>
-          <div>
-            <div class="form-sublabel" id="L-lblCategoria">Categoría</div>
-            <select id="categoria" style="margin-top:2px;" onchange="seleccionarCatChip(this.value)"></select>
-          </div>
-        </div>
-
-        <!-- Selector de Categorías (Chips con Emojis) -->
-        <div style="margin-top:10px;">
-          <div class="form-sublabel" id="L-lblCatRapidas">Categorías rápidas</div>
-          <div id="catChipsContainer" class="cat-chips-wrap"></div>
-        </div>
-
-        <div id="fechaChip" class="fecha-chip" style="display:none">
-          <i data-lucide="calendar" style="width:12px;height:12px;"></i> <span id="fechaTxt"></span>
-        </div>
-
-        <!-- Inline agregar nueva categoría (oculto por defecto, se activa con ➕ Nueva) -->
-        <div id="nuevaCatRow" style="display:none;gap:8px;margin-top:8px;">
-          <input type="text" id="nuevaCat" style="margin-top:0;flex:1;" placeholder="Nueva categoría custom...">
-          <button class="btn-gris btn-sm" onclick="agregarCategoria()" style="width:auto;margin-top:0;padding:0 14px;"><span id="L-addcat"></span></button>
-        </div>
-
-        <!-- Concepto / Nota -->
-        <textarea id="nota" rows="2" style="margin-top:10px;" placeholder="Nota o concepto (ej. Almuerzo con amigos)..." oninput="detectarAutoCategoria(this.value)"></textarea>
-
-        <!-- Etiquetas & Recibos -->
-        <div style="margin-top:10px;">
-          <div class="form-sublabel" id="L-etiquetaLabel">Etiqueta</div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
-            <span class="tag" id="et-ninguna" onclick="selEtiqueta('')">— Ninguna</span>
-            <span class="tag" id="et-necesario" onclick="selEtiqueta('necesario')">✅ Necesario</span>
-            <span class="tag" id="et-lujo" onclick="selEtiqueta('lujo')">💜 Lujo</span>
-            <span class="tag" id="et-urgente" onclick="selEtiqueta('urgente')">🔴 Urgente</span>
-            <span class="tag" id="et-ahorro" onclick="selEtiqueta('ahorro')">💙 Ahorro</span>
-          </div>
-
-          <div class="foto-recibo-wrap">
-            <div class="form-sublabel" id="L-fotoLabel">📷 Foto del recibo (opcional)</div>
-            <div class="foto-recibo-btns">
-              <button class="btn-gris" onclick="abrirCamara()" type="button">📷 <span id="L-fotoCamara">Cámara</span></button>
-              <button class="btn-gris" onclick="abrirGaleria()" type="button">🖼️ <span id="L-fotoGaleria">Galería</span></button>
-            </div>
-            <input type="file" id="inputFoto" accept="image/*" style="display:none;" onchange="procesarFoto(event)">
-            <input type="file" id="inputCamara" accept="image/*" capture="environment" style="display:none;" onchange="procesarFoto(event)">
-            <div id="fotoPreviewWrap" style="display:none;" class="foto-preview-wrap">
-              <img id="fotoPreview" class="foto-preview" onclick="verFotoCompleta(this.src)">
-              <button class="foto-delete" onclick="eliminarFotoTemp()">✕</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button id="btnGasto" onclick="agregarGasto()">
-          <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
-          <span id="L-btnGasto">Guardar gasto</span>
+      <!-- HERO ACTION BAR & TRIGGER REGISTRO DE GASTO -->
+      <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px;">
+        <button onclick="abrirBottomSheetGasto()" style="margin:0;padding:14px 18px;border-radius:18px;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 24px rgba(34,197,94,0.3);background:linear-gradient(135deg,#22c55e,#16a34a);color:#022c16;">
+          <i data-lucide="plus-circle" style="width:20px;height:20px;"></i>
+          <span id="L-h-registro-btn">Registrar Nuevo Gasto</span>
+        </button>
+        <button onclick="abrirSimuladorCompra()" class="btn-gris" style="margin:0;width:48px;height:48px;border-radius:18px;display:flex;align-items:center;justify-content:center;padding:0;" title="Simulador de Compra">
+          <i data-lucide="shopping-bag" style="width:20px;height:20px;color:var(--verde);"></i>
         </button>
       </div>
+
+
 
       <!-- CARD NUDGE PROACTIVO NOVI AI -->
       <div id="noviAiNudgeCard" class="novi-nudge-card"></div>
@@ -4575,6 +4592,10 @@
         </div>
         <input type="text" id="deudaDesc">
         <input type="date" id="deudaVence" style="margin-top:9px;">
+        <button onclick="agregarDeuda()" style="margin-top:12px;padding:13px;font-size:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+          <span id="L-addDeuda"></span>
+        </button>
       </div>
     </div>
 
@@ -5163,6 +5184,94 @@
         document.getElementById("modalLegal").style.display = "none";
       }
     </script>
+    <!-- BOTTOM SHEET: FORMULARIO AGREGAR / EDITAR GASTO GLOBAL -->
+    <div id="backdropGasto" class="bottom-sheet-backdrop" onclick="cerrarBottomSheetGastoOnBackdrop(event)">
+      <div class="bottom-sheet" id="sheetGastoContent">
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-header">
+          <div class="bottom-sheet-title">
+            <i data-lucide="plus-circle" style="width:20px;height:20px;color:var(--verde);"></i>
+            <span id="L-h-registro">Registrar Gasto</span>
+          </div>
+          <button class="bottom-sheet-close" onclick="cerrarBottomSheetGasto()">✕</button>
+        </div>
+
+        <!-- Monto Hero Input Widget -->
+        <div class="monto-hero-wrap">
+          <span class="monto-hero-sym" id="monedaSym">$</span>
+          <input type="number" id="monto" min="0" placeholder="0" class="monto-hero-input" autocomplete="off" step="any">
+        </div>
+
+        <!-- Row: Fecha y Categoría Dropdown -->
+        <div class="input-row" style="margin-top:8px;">
+          <div>
+            <div class="form-sublabel" id="L-lblFecha">Fecha</div>
+            <input type="date" id="fechaGasto" style="margin-top:2px;">
+          </div>
+          <div>
+            <div class="form-sublabel" id="L-lblCategoria">Categoría</div>
+            <select id="categoria" style="margin-top:2px;" onchange="seleccionarCatChip(this.value)"></select>
+          </div>
+        </div>
+
+        <!-- Selector de Categorías (Chips) -->
+        <div style="margin-top:12px;">
+          <div class="form-sublabel" id="L-lblCatRapidas">Categorías rápidas</div>
+          <div id="catChipsContainer" class="cat-chips-wrap"></div>
+        </div>
+
+        <div id="fechaChip" class="fecha-chip" style="display:none">
+          <i data-lucide="calendar" style="width:12px;height:12px;"></i> <span id="fechaTxt"></span>
+        </div>
+
+        <!-- Inline agregar nueva categoría -->
+        <div id="nuevaCatRow" style="display:none;gap:8px;margin-top:8px;">
+          <input type="text" id="nuevaCat" style="margin-top:0;flex:1;" placeholder="Nueva categoría custom...">
+          <button class="btn-gris btn-sm" onclick="agregarCategoria()" style="width:auto;margin-top:0;padding:0 14px;"><span id="L-addcat"></span></button>
+        </div>
+
+        <!-- Concepto / Nota -->
+        <textarea id="nota" rows="2" style="margin-top:12px;" placeholder="Nota o concepto (ej. Almuerzo con amigos)..." oninput="detectarAutoCategoria(this.value)"></textarea>
+
+        <!-- Etiquetas & Recibos -->
+        <div style="margin-top:12px;">
+          <div class="form-sublabel" id="L-etiquetaLabel">Etiqueta</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+            <span class="tag" id="et-ninguna" onclick="selEtiqueta('')">— Ninguna</span>
+            <span class="tag" id="et-necesario" onclick="selEtiqueta('necesario')">✅ Necesario</span>
+            <span class="tag" id="et-lujo" onclick="selEtiqueta('lujo')">💜 Lujo</span>
+            <span class="tag" id="et-urgente" onclick="selEtiqueta('urgente')">🔴 Urgente</span>
+            <span class="tag" id="et-ahorro" onclick="selEtiqueta('ahorro')">💙 Ahorro</span>
+          </div>
+
+          <div class="foto-recibo-wrap">
+            <div class="form-sublabel" id="L-fotoLabel">📷 Foto del recibo (opcional)</div>
+            <div class="foto-recibo-btns">
+              <button class="btn-gris" onclick="abrirCamara()" type="button">📷 <span id="L-fotoCamara">Cámara</span></button>
+              <button class="btn-gris" onclick="abrirGaleria()" type="button">🖼️ <span id="L-fotoGaleria">Galería</span></button>
+            </div>
+            <input type="file" id="inputFoto" accept="image/*" style="display:none;" onchange="procesarFoto(event)">
+            <input type="file" id="inputCamara" accept="image/*" capture="environment" style="display:none;" onchange="procesarFoto(event)">
+            <div id="fotoPreviewWrap" style="display:none;" class="foto-preview-wrap">
+              <img id="fotoPreview" class="foto-preview" onclick="verFotoCompleta(this.src)">
+              <button class="foto-delete" onclick="eliminarFotoTemp()">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="btnGasto" onclick="agregarGasto()" style="margin-top:16px;padding:14px;font-size:15px;border-radius:16px;">
+          <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+          <span id="L-btnGasto">Guardar gasto</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- BOTÓN FLOTANTE REGISTRAR GASTO -->
+    <button class="btn-fab-agregar" onclick="abrirBottomSheetGasto()" aria-label="Registrar Gasto" title="Registrar Gasto">
+      <i data-lucide="plus" style="width:28px;height:28px;"></i>
+    </button>
+
     <!-- BOTÓN FLOTANTE IA -->
     <button id="btnIAFlotante" class="btn-ia-flotante" onclick="toggleIAModal()" aria-label="Asistente NOVI AI">
       <i data-lucide="bot"></i>
@@ -7181,6 +7290,27 @@ Be specific with numbers and very concise.`;
         return `<span class="etiqueta ${M[e] || ''}">${L[e] || e}</span>`;
       }
 
+      // ══ BOTTOM SHEET GASTO HANDLERS ══
+      function abrirBottomSheetGasto() {
+        const backdrop = document.getElementById("backdropGasto");
+        if (!backdrop) return;
+        backdrop.style.display = "flex";
+        requestAnimationFrame(() => backdrop.classList.add("visible"));
+        setTimeout(() => { document.getElementById("monto")?.focus(); }, 150);
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
+
+      function cerrarBottomSheetGasto() {
+        const backdrop = document.getElementById("backdropGasto");
+        if (!backdrop) return;
+        backdrop.classList.remove("visible");
+        setTimeout(() => { backdrop.style.display = "none"; }, 300);
+      }
+
+      function cerrarBottomSheetGastoOnBackdrop(e) {
+        if (e.target.id === "backdropGasto") cerrarBottomSheetGasto();
+      }
+
       // ══════════════════════════════════════════
       // GASTOS
       // ══════════════════════════════════════════
@@ -7210,6 +7340,7 @@ Be specific with numbers and very concise.`;
         }
         guardar(); document.getElementById("monto").value = ""; document.getElementById("nota").value = ""; catManualModificada = false; renderCatChips(); mostrar();
         limpiarFormularioFoto(); programarNotificacionesInteligentes().catch(e => console.warn("Notif:", e));
+        cerrarBottomSheetGasto();
 
         // Al final de agregarGasto(), después de programarNotificacionesInteligentes
         if (localStorage.getItem("driveConectado") === "true" && driveAccessToken && !driveSubiendoAhora) {
@@ -7279,7 +7410,8 @@ Be specific with numbers and very concise.`;
         document.getElementById("nota").value = g.nota || "";
         etiquetaSel = g.etiqueta || ""; selEtiqueta(etiquetaSel);
         editandoId = id; document.getElementById("L-btnGasto").innerText = T("guardarCambios");
-        toast(T("tEditando")); irA("inicio");
+        toast(T("tEditando"));
+        abrirBottomSheetGasto();
         // Mostrar foto existente si tiene
         if (g.foto) {
           fotoTempBase64 = g.foto;
@@ -9186,26 +9318,7 @@ Sé específico con los números. Máximo 300 palabras en total.`;
   </div>`;
       }
 
-      // ══════════════════════════════════════════
-      // CALCULADORA
-      // ══════════════════════════════════════════
-      let calcExpr = "";
-      function abrirCalc() { calcExpr = ""; document.getElementById("calcExpr").innerText = ""; document.getElementById("calcResult").innerText = "0"; document.getElementById("modalCalc").classList.add("visible"); }
-      function cerrarCalc() { document.getElementById("modalCalc").classList.remove("visible"); }
-      function calcInput(v) {
-        calcExpr += v;
-        document.getElementById("calcExpr").innerText = calcExpr.replace(/\*/g, "×").replace(/\//g, "÷");
-        try { let r = Function('"use strict";return (' + calcExpr + ')')(); if (isFinite(r)) document.getElementById("calcResult").innerText = parseFloat(r.toFixed(4)); } catch { }
-      }
-      function calcAC() { calcExpr = ""; document.getElementById("calcExpr").innerText = ""; document.getElementById("calcResult").innerText = "0"; }
-      function calcIgual() {
-        try {
-          let r = Function('"use strict";return (' + calcExpr + ')')();
-          if (isFinite(r)) { document.getElementById("calcResult").innerText = parseFloat(r.toFixed(4)); document.getElementById("calcExpr").innerText = calcExpr.replace(/\*/g, "×").replace(/\//g, "÷") + " ="; calcExpr = String(parseFloat(r.toFixed(4))); }
-        } catch { }
-      }
-      function calcUsar() { let val = document.getElementById("calcResult").innerText; if (val && val !== "0") { document.getElementById("monto").value = parseFloat(val); cerrarCalc(); } }
-      document.getElementById("modalCalc").addEventListener("click", function (e) { if (e.target === this) cerrarCalc(); });
+
 
       // ══════════════════════════════════════════
       // QUICK RESUMEN
@@ -9978,13 +10091,15 @@ Sé específico con los números. Máximo 300 palabras en total.`;
       }
 
       let appDebeBloquear = false;
+      let _camaraOcrActiva = false;
 
       function reiniciarAutoLock() {
         clearTimeout(pinAutoLockTimer);
-        if (!pinActivo()) return;
+        if (!pinActivo() || _camaraOcrActiva) return;
         const ms = getPinTimeoutMs();
         if (ms > 0) {
           pinAutoLockTimer = setTimeout(() => {
+            if (_camaraOcrActiva) return;
             _aesKey = null;
             appDebeBloquear = true;
             if (!document.hidden) mostrarPinLock("unlock");
@@ -9994,12 +10109,12 @@ Sé específico con los números. Máximo 300 palabras en total.`;
 
       ["touchstart", "click", "keydown"].forEach(ev => {
         document.addEventListener(ev, () => {
-          if (pinActivo() && document.getElementById("pinLock").style.display === "none") reiniciarAutoLock();
+          if (pinActivo() && !_camaraOcrActiva && document.getElementById("pinLock").style.display === "none") reiniciarAutoLock();
         }, { passive: true });
       });
 
       document.addEventListener("visibilitychange", () => {
-        if (!pinActivo()) return;
+        if (!pinActivo() || _camaraOcrActiva) return;
         const timeoutMin = localStorage.getItem("pinTimeoutMin") || "5";
         if (document.hidden) {
           clearTimeout(pinAutoLockTimer);
@@ -10021,6 +10136,10 @@ Sé específico con los números. Máximo 300 palabras en total.`;
             reiniciarAutoLock();
           }
         }
+      });
+
+      window.addEventListener("focus", () => {
+        setTimeout(() => { _camaraOcrActiva = false; }, 1500);
       });
 
 
@@ -10754,14 +10873,17 @@ ${recurrentes.map(r => `${r.nombre}: ${fmtMoneda(r.monto)}`).join("\n") || "Ning
       let fotoOriginalBase64 = null; // foto original para OCR de alta calidad
 
       function abrirCamara() {
+        _camaraOcrActiva = true;
         document.getElementById("inputCamara").click();
       }
 
       function abrirGaleria() {
+        _camaraOcrActiva = true;
         document.getElementById("inputFoto").click();
       }
 
       function procesarFoto(event) {
+        setTimeout(() => { _camaraOcrActiva = false; }, 1000);
         const file = event.target.files[0];
         if (!file) return;
 
@@ -12151,8 +12273,12 @@ Assign null if unreadable.`;
         renderConfigBio();
       }
 
+      let _biometriaEnEjecucion = false;
+
       async function autenticarBiometria() {
         if (!window.Capacitor?.isNativePlatform()) return;
+        if (_biometriaEnEjecucion) return;
+        _biometriaEnEjecucion = true;
         try {
           const { BiometricAuthNative } = window.Capacitor.Plugins;
           await BiometricAuthNative.internalAuthenticate({
@@ -12192,6 +12318,8 @@ Assign null if unreadable.`;
         } catch (e) {
           // Usuario canceló o falló — no hacer nada, dejar PIN activo
           console.log("Biometría cancelada:", e.message);
+        } finally {
+          _biometriaEnEjecucion = false;
         }
       }
 
@@ -12213,8 +12341,6 @@ Assign null if unreadable.`;
         if (bioActiva() && window.Capacitor?.isNativePlatform()) {
           const soportada = await verificarSoporteBiometria();
           btn.style.display = soportada ? "flex" : "none";
-          // Auto-lanzar biometría al abrir el PIN
-          if (soportada) setTimeout(() => autenticarBiometria(), 500);
         } else {
           btn.style.display = "none";
         }
